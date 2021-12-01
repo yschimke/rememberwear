@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RememberWear</string>
+    <string name="intro_text">Swipe edge to exit the map.</string>
+    <string name="title_remember_wear">Remember Wear</string>
+</resources>
