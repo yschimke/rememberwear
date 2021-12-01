@@ -1,0 +1,36 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    resolutionStrategy.eachPlugin {
+        if (it.requested.id.id == "dagger.hilt.android.plugin") {
+            useModule("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
+        }
+    }
+    plugins {
+        id 'com.android.application' version '7.2.0-alpha02'
+        id 'com.android.library' version '7.2.0-alpha02'
+        id 'com.android.test' version '7.2.0-alpha02'
+        id 'org.jetbrains.kotlin.android' version '1.5.31'
+    }
+}
+enableFeaturePreview("VERSION_CATALOGS")
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "RememberWear"
+include ':wear'
+
+def benchmark = startParameter.projectProperties["benchmark"]
+
+if (benchmark != null) {
+    include ':benchmark'
+}
