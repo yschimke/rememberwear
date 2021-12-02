@@ -44,9 +44,12 @@ class DataRefreshWorker
         appDatabase.withTransaction {
             rememberWearDao.deleteAllTodos()
 
-            todosResponse.await().forEach {
-                rememberWearDao.upsertTodo(it)
-            }
+            val response = todosResponse.await()
+            println(response)
+//            await.forEach {
+//                println(it.elem)
+////                rememberWearDao.upsertTodo(it)
+//            }
         }
     }
 }

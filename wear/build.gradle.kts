@@ -83,6 +83,8 @@ android {
         resources.excludes.add("META-INF/licenses/**")
         resources.excludes.add("META-INF/AL2.0")
         resources.excludes.add("META-INF/LGPL2.1")
+        resources.excludes.add("META-INF/NOTICE.md")
+        resources.excludes.add("META-INF/LICENSE.md")
     }
 }
 
@@ -96,6 +98,10 @@ dependencies {
     implementation("androidx.wear:wear:1.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.5.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
 
     implementation("androidx.compose.ui:ui:1.0.5")
     implementation("androidx.activity:activity-compose:1.4.0")
@@ -113,8 +119,6 @@ dependencies {
     implementation("androidx.work:work-multiprocess:2.7.1")
     implementation("androidx.work:work-runtime-ktx:2.7.1")
 
-    implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
-
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.stdlibJdk8)
     implementation(libs.kotlin.reflect)
@@ -131,6 +135,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.39.1")
     kapt("com.google.dagger:hilt-compiler:2.39.1")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+    implementation("com.squareup.retrofit2:converter-simplexml:2.9.0")
 
     // For instrumentation tests
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.39.1")

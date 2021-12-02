@@ -10,6 +10,7 @@ import com.google.wear.rememberwear.db.Todo
 import com.google.wear.rememberwear.work.ScheduledWork
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,17 +19,16 @@ class RememberWearViewModel @Inject constructor(
     private val rememberWearDao: RememberWearDao,
     private val scheduledWork: ScheduledWork
 ) : ViewModel() {
-    var isRefreshing by mutableStateOf(false)
-        private set
+    val isRefreshing = MutableStateFlow(false)
 
     fun refetchAllData() {
         viewModelScope.launch {
-            isRefreshing = true
+            isRefreshing.value = true
 
             try {
                 scheduledWork.refetchAllDataWork()
             } finally {
-                isRefreshing = false
+                isRefreshing.value = false
             }
         }
     }

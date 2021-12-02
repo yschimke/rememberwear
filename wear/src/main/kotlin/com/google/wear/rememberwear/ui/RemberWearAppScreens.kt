@@ -30,7 +30,7 @@ fun CircleAppScreens(viewModel: RememberWearViewModel) {
                 Nav.Inbox.route,
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" })
             ) {
-                InboxScreen()
+                InboxScreen(viewModel = viewModel)
             }
 
             composable(

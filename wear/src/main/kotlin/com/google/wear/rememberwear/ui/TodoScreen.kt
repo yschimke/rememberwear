@@ -6,7 +6,7 @@ import androidx.wear.compose.material.Text
 import com.google.wear.rememberwear.RememberWearViewModel
 
 @Composable
-fun UserScreen(
+fun TodoScreen(
     modifier: Modifier = Modifier,
     userId: String,
     viewModel: RememberWearViewModel,

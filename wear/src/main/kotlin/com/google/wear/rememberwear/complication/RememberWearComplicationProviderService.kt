@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
@@ -21,7 +20,6 @@ import androidx.wear.complications.datasource.ComplicationDataSourceService
 import androidx.wear.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.complications.datasource.ComplicationRequest
 import coil.ImageLoader
-import com.google.wear.rememberwear.R
 import com.google.wear.rememberwear.RememberWearActivity
 import com.google.wear.rememberwear.db.RememberWearDao
 import com.google.wear.rememberwear.db.Todo
@@ -79,7 +77,6 @@ class RememberWearComplicationProviderService : ComplicationDataSourceService() 
     }
 
     override fun getPreviewData(type: ComplicationType): ComplicationData {
-        val bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_baseline_map_24)
         return toComplicationData(type, listOf())
     }
 

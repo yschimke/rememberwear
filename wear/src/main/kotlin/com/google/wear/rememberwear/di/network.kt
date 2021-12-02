@@ -1,6 +1,5 @@
 package com.google.wear.rememberwear.di
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.wear.rememberwear.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -8,17 +7,14 @@ import okhttp3.Response
 import okhttp3.logging.LoggingEventListener
 import okio.ByteString.Companion.encodeUtf8
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 fun retrofit(
     baseUrl: String,
     okHttpClient: OkHttpClient
 ): Retrofit {
-    val objectMapper = ObjectMapper()
-
     return Retrofit.Builder()
-        .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+        .addConverterFactory(SimpleXmlConverterFactory.create())
         .baseUrl(baseUrl)
         .client(okHttpClient)
         .build()
