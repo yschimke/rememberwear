@@ -9,26 +9,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.wear.rememberwear.RememberWearViewModel
-import com.google.wear.rememberwear.db.Todo
+import com.google.wear.rememberwear.db.TaskSeries
 import com.google.wear.rememberwear.previews.RememberTheMilkThemePreview
 
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
     scrollState: ScalingLazyListState = rememberScalingLazyListState(),
-    onClick: (Todo) -> Unit = {},
+    onClick: (TaskSeries) -> Unit = {},
     viewModel: RememberWearViewModel
 ) {
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 12.dp else 8.dp
 
-    val todos = listOf<Todo>()
+    val todos by viewModel.inbox().collectAsState(initial = listOf())
 
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
@@ -47,7 +46,7 @@ fun InboxScreen(
         ) {
             items(todos.size) {
                 val todo = todos[it]
-                TodoChip(todo = todo)
+                TodoChip(taskSeries = todo)
             }
         }
     }

@@ -1,12 +1,9 @@
 package com.google.wear.rememberwear;
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.wear.rememberwear.db.RememberWearDao
-import com.google.wear.rememberwear.db.Todo
+import com.google.wear.rememberwear.db.TaskSeries
 import com.google.wear.rememberwear.work.ScheduledWork
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +30,7 @@ class RememberWearViewModel @Inject constructor(
         }
     }
 
-    fun inbox(): Flow<List<Todo>> = rememberWearDao.getAllTodos()
+    fun inbox(): Flow<List<TaskSeries>> = rememberWearDao.getAllTodos()
 
     fun refetchIfStale() {
         viewModelScope.launch {

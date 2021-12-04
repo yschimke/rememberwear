@@ -1,11 +1,11 @@
-package com.google.wear.rememberwear.api.model
+package com.google.wear.rememberwear.api.model.lists
 
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 
 @Root(name = "list", strict = false)
-data class RTMList @JvmOverloads constructor(
+data class List @JvmOverloads constructor(
     @field:Attribute
     var id: String = "",
 

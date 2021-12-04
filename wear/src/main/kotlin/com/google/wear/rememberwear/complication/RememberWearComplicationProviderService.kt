@@ -22,7 +22,7 @@ import androidx.wear.complications.datasource.ComplicationRequest
 import coil.ImageLoader
 import com.google.wear.rememberwear.RememberWearActivity
 import com.google.wear.rememberwear.db.RememberWearDao
-import com.google.wear.rememberwear.db.Todo
+import com.google.wear.rememberwear.db.TaskSeries
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -82,9 +82,9 @@ class RememberWearComplicationProviderService : ComplicationDataSourceService() 
 
     fun toComplicationData(
         type: ComplicationType,
-        todos: List<Todo>,
+        taskSeries: List<TaskSeries>,
     ): ComplicationData {
-        val firstTodo = todos.firstOrNull() ?: return NoDataComplicationData()
+        val firstTodo = taskSeries.firstOrNull() ?: return NoDataComplicationData()
 
         return when (type) {
             ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
@@ -112,8 +112,8 @@ class RememberWearComplicationProviderService : ComplicationDataSourceService() 
         }
     }
 
-    private fun getAddressDescriptionText(todo: Todo): ComplicationText {
-        return PlainComplicationText.Builder(todo.toString()).build()
+    private fun getAddressDescriptionText(taskSeries: TaskSeries): ComplicationText {
+        return PlainComplicationText.Builder(taskSeries.toString()).build()
     }
 
     companion object {

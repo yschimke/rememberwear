@@ -1,7 +1,6 @@
 package com.google.wear.rememberwear.db
 
 import android.content.Context
-import android.location.Location
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -10,12 +9,12 @@ import androidx.room.TypeConverters
 import java.time.Instant
 
 @Database(
-    entities = [Todo::class],
-    version = 1,
+    entities = [TaskSeries::class],
+    version = 2,
     exportSchema = false
 )
-@TypeConverters(AppDatabase.Converters::class)
-abstract class AppDatabase : RoomDatabase() {
+@TypeConverters(RememberWearDatabase.Converters::class)
+abstract class RememberWearDatabase : RoomDatabase() {
     abstract fun rememberWearDao(): RememberWearDao
 
     class Converters {
@@ -31,14 +30,14 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     companion object {
-        private lateinit var INSTANCE: AppDatabase
+        private lateinit var INSTANCE: RememberWearDatabase
 
-        fun getDatabase(context: Context): AppDatabase {
+        fun getDatabase(context: Context): RememberWearDatabase {
             return synchronized(this) {
                 if (!Companion::INSTANCE.isInitialized) {
                     val instance = Room.databaseBuilder(
                         context,
-                        AppDatabase::class.java,
+                        RememberWearDatabase::class.java,
                         "rtm"
                     )
                         // TODO support migrations

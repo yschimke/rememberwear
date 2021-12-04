@@ -3,12 +3,26 @@ package com.google.wear.rememberwear.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.wear.compose.material.Text
-import com.google.wear.rememberwear.db.Todo
+import androidx.wear.compose.material.TitleCard
+import com.google.wear.rememberwear.db.TaskSeries
+import com.google.wear.rememberwear.db.TaskSeries.Companion.relativeTime
 
 @Composable
 fun TodoChip(
     modifier: Modifier = Modifier,
-    todo: Todo,
+    taskSeries: TaskSeries,
 ) {
-    Text(todo.toString())
+    TitleCard(
+        modifier = modifier,
+        onClick = {
+
+        },
+        title = {
+            Text(taskSeries.name)
+        },
+        time = {
+            Text(taskSeries.due.relativeTime())
+        }
+    ) {
+    }
 }

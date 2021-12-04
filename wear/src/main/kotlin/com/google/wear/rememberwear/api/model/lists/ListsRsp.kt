@@ -1,4 +1,4 @@
-package com.google.wear.rememberwear.api.model
+package com.google.wear.rememberwear.api.model.lists
 
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.ElementList
@@ -10,5 +10,5 @@ data class ListsRsp @JvmOverloads constructor(
     var stat: String = "",
 
     @field:ElementList
-    var lists: MutableList<RTMList> = mutableListOf()
+    var lists: MutableList<List> = mutableListOf()
 )

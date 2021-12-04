@@ -3,7 +3,7 @@ package com.google.wear.rememberwear.di
 import android.content.Context
 import androidx.work.WorkManager
 import com.google.wear.rememberwear.api.RememberTheMilkService
-import com.google.wear.rememberwear.db.AppDatabase
+import com.google.wear.rememberwear.db.RememberWearDatabase
 import com.google.wear.rememberwear.db.RememberWearDao
 import com.google.wear.rememberwear.ui.coilImageLoader
 import dagger.Module
@@ -38,7 +38,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRememberWearService(retrofit: Retrofit) = retrofit.create(RememberTheMilkService::class.java)
+    fun provideRememberWearService(retrofit: Retrofit): RememberTheMilkService = retrofit.create(RememberTheMilkService::class.java)
 
     @Singleton
     @Provides
@@ -47,14 +47,14 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideAppDatabase(@ApplicationContext application: Context): AppDatabase {
-        return AppDatabase.getDatabase(application)
+    fun provideAppDatabase(@ApplicationContext application: Context): RememberWearDatabase {
+        return RememberWearDatabase.getDatabase(application)
     }
 
     @Singleton
     @Provides
-    fun provideRememberWearDao(appDatabase: AppDatabase): RememberWearDao {
-        return appDatabase.rememberWearDao()
+    fun provideRememberWearDao(rememberWearDatabase: RememberWearDatabase): RememberWearDao {
+        return rememberWearDatabase.rememberWearDao()
     }
 
     @Singleton
