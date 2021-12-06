@@ -1,12 +1,22 @@
+/*
+ * Copyright 2021 Google Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.google.wear.rememberwear.kt
 
-import androidx.wear.tiles.ActionBuilders
-import androidx.wear.tiles.ColorBuilders
-import androidx.wear.tiles.DimensionBuilders
-import androidx.wear.tiles.LayoutElementBuilders
-import androidx.wear.tiles.ModifiersBuilders
-import androidx.wear.tiles.TileBuilders
-import androidx.wear.tiles.TimelineBuilders
+import androidx.wear.tiles.*
 
 fun text(fn: LayoutElementBuilders.Text.Builder.() -> Unit): LayoutElementBuilders.Text {
     val builder = LayoutElementBuilders.Text.Builder()
