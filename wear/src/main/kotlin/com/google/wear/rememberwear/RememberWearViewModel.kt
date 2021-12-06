@@ -23,6 +23,7 @@ import com.google.wear.rememberwear.db.RememberWearDao
 import com.google.wear.rememberwear.db.Task
 import com.google.wear.rememberwear.db.TaskSeries
 import com.google.wear.rememberwear.work.ScheduledWork
+import com.google.wear.rememberwear.work.TaskEditor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RememberWearViewModel @Inject constructor(
     private val rememberWearDao: RememberWearDao,
-    private val scheduledWork: ScheduledWork
+    private val scheduledWork: ScheduledWork,
+    private val taskEditor: TaskEditor,
 ) : ViewModel() {
     val isRefreshing = MutableStateFlow(false)
 
@@ -74,9 +76,15 @@ class RememberWearViewModel @Inject constructor(
     fun taskSeriesTasks(taskSeriesId: String): Flow<List<Task>> =
         rememberWearDao.getTasks(taskSeriesId)
 
-    fun uncomplete(taskSeries: TaskSeries) {
+    fun uncomplete(taskSeries: TaskSeries, task: Task) {
+        viewModelScope.launch {
+            taskEditor.uncomplete(taskSeries, task)
+        }
     }
 
-    fun complete(taskSeries: TaskSeries) {
+    fun complete(taskSeries: TaskSeries, task: Task) {
+        viewModelScope.launch {
+            taskEditor.complete(taskSeries, task)
+        }
     }
 }

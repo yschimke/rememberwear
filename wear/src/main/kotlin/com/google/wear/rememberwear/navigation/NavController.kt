@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.wear.rememberwear.db
+package com.google.wear.rememberwear.navigation
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.time.Instant
+import androidx.navigation.NavHostController
 
-@Entity
-data class TaskSeries(
-    @PrimaryKey val id: String,
-    val listId: String,
-    val name: String,
-    val due: Instant?,
-    val created: Instant,
-    val modified: Instant,
-    val isRepeating: Boolean
-)
+class NavController(val navController: NavHostController) {
+    fun navigateToInbox() {
+        navController.navigate(Screens.Inbox.route)
+    }
+
+    fun navigateToTaskSeries(taskSeriesId: String) {
+        navController.navigate(Screens.TaskSeries.route + "/" + taskSeriesId)
+    }
+}

@@ -20,6 +20,7 @@ import com.google.wear.rememberwear.db.Task
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Xml
 import java.time.Instant
+import java.time.ZoneId
 
 @Xml(name = "task")
 data class Task(
@@ -54,6 +55,7 @@ data class Task(
         this.id,
         taskSeriesId,
         this.due,
+        this.due?.atZone(ZoneId.systemDefault())?.toLocalDate(),
         this.added,
         this.completed,
         this.deleted,

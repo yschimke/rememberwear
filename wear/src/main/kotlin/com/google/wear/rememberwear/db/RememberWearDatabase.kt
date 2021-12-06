@@ -19,10 +19,12 @@ package com.google.wear.rememberwear.db
 import android.content.Context
 import androidx.room.*
 import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Database(
     entities = [TaskSeries::class, Tag::class, Note::class, Task::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(RememberWearDatabase.Converters::class)
@@ -39,6 +41,14 @@ abstract class RememberWearDatabase : RoomDatabase() {
         fun dateToTimestamp(date: Instant?): Long? {
             return date?.toEpochMilli()
         }
+
+        @TypeConverter
+        fun toDate(dateString: String?): LocalDate? = dateString?.let {
+            LocalDate.parse(dateString)
+        }
+
+        @TypeConverter
+        fun toDateString(date: LocalDate?): String? = date?.toString()
     }
 
     companion object {

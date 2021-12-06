@@ -22,6 +22,7 @@ import androidx.room.ForeignKey.CASCADE
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.Instant
+import java.time.LocalDate
 
 @Entity(
     foreignKeys = arrayOf(
@@ -38,6 +39,7 @@ data class Task(
     @PrimaryKey val id: String,
     val taskSeriesId: String,
     val due: Instant?,
+    val dueDate: LocalDate?,
     val added: Instant,
     val completed: Instant?,
     val deleted: Instant?,

@@ -17,9 +17,13 @@
 package com.google.wear.rememberwear.api
 
 import com.google.wear.rememberwear.api.model.lists.ListsRsp
+import com.google.wear.rememberwear.api.model.post.PostRsp
 import com.google.wear.rememberwear.api.model.tags.TagsRsp
 import com.google.wear.rememberwear.api.model.tasks.TasksRsp
+import com.google.wear.rememberwear.api.model.timeline.Timeline
+import com.google.wear.rememberwear.api.model.timeline.TimelineRsp
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 // https://api.rememberthemilk.com/services/rest/\?method\=rtm.lists.getList
@@ -32,4 +36,23 @@ interface RememberTheMilkService {
 
     @GET("/services/rest/?method=rtm.tags.getList")
     suspend fun tags(): TagsRsp
+
+    @POST("/services/rest/?method=rtm.timelines.create")
+    suspend fun timeline(): TimelineRsp
+
+    @POST("/services/rest/?method=rtm.tasks.complete")
+    suspend fun complete(
+        @Query("timeline") timeline: String,
+        @Query("list_id") list_id: String,
+        @Query("taskseries_id") taskseries_id: String,
+        @Query("task_id") task_id: String
+    ): PostRsp
+
+    @POST("/services/rest/?method=rtm.tasks.uncomplete")
+    suspend fun uncomplete(
+        @Query("timeline") timeline: String,
+        @Query("list_id") list_id: String,
+        @Query("taskseries_id") taskseries_id: String,
+        @Query("task_id") task_id: String
+    ): PostRsp
 }

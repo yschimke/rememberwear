@@ -66,31 +66,43 @@ class DataRefreshWorker
         rememberWearDatabase.withTransaction {
             rememberWearDao.deleteAllTaskSeries()
 
-            todosResponse.tasks?.taskSeries?.forEach { taskSeries ->
-                val relevant =
-                    taskSeries.task?.filter { it.completed == null || it.completed > cutoff }.orEmpty()
+            todosResponse.tasks?.list?.forEach { list ->
+                list.taskseries?.forEach { taskSeries ->
+                    val relevant =
+                        taskSeries.task?.filter { it.completed == null || it.completed > cutoff }
+                            .orEmpty()
 
-                val incomplete = relevant.filter { it.completed == null }
-                val due = incomplete.mapNotNull { it.due }.minOrNull()
+                    val incomplete = relevant.filter { it.completed == null }
+                    val due = incomplete.mapNotNull { it.due }.minOrNull()
 
-                val repeating = taskSeries.rrule != null
-                rememberWearDao.upsertTaskSeries(TaskSeries(taskSeries.id, taskSeries.name, due, taskSeries.created, taskSeries.modified, repeating))
+                    val repeating = taskSeries.rrule != null
+                    val taskSeries1 = TaskSeries(
+                        id = taskSeries.id,
+                        listId = list.id,
+                        name = taskSeries.name,
+                        due = due,
+                        created = taskSeries.created,
+                        modified = taskSeries.modified,
+                        isRepeating = repeating
+                    )
+                    rememberWearDao.upsertTaskSeries(taskSeries1)
 
-                if (relevant.isNotEmpty()) {
-                    taskSeries.notes?.forEach { note ->
-                        rememberWearDao.upsertNote(note.toDBNote(taskSeriesId = taskSeries.id))
-                    }
+                    if (relevant.isNotEmpty()) {
+                        taskSeries.notes?.forEach { note ->
+                            rememberWearDao.upsertNote(note.toDBNote(taskSeriesId = taskSeries.id))
+                        }
 
-                    relevant.forEach { task ->
-                        rememberWearDao.upsertTask(
-                            task.toDBTask(taskSeries.id)
-                        )
+                        relevant.forEach { task ->
+                            rememberWearDao.upsertTask(
+                                task.toDBTask(taskSeries.id)
+                            )
+                        }
                     }
                 }
-            }
 
-            tags.tags?.forEach {
-                rememberWearDao.upsertTag(it.toDBTag())
+                tags.tags?.forEach {
+                    rememberWearDao.upsertTag(it.toDBTag())
+                }
             }
         }
     }

@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package com.google.wear.rememberwear
+package com.google.wear.rememberwear.api.model.timeline
 
-sealed class Nav(val route: String) {
-    object Inbox : Nav("inbox")
-    object List : Nav("list")
-    object TaskSeries : Nav("taskSeries")
-}
+import com.tickaroo.tikxml.annotation.Attribute
+import com.tickaroo.tikxml.annotation.Element
+import com.tickaroo.tikxml.annotation.Xml
 
+@Xml(name = "rsp")
+data class TimelineRsp(
+    @Attribute
+    val stat: String,
+
+    @Element
+    var timeline: Timeline
+)

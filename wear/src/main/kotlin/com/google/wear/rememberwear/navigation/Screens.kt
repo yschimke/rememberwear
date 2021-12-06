@@ -14,19 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.wear.rememberwear.db
+package com.google.wear.rememberwear.navigation
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.time.Instant
+sealed class Screens(val route: String) {
+    object Inbox : Screens("inbox")
+    object List : Screens("list")
+    object TaskSeries : Screens("taskSeries")
+}
 
-@Entity
-data class TaskSeries(
-    @PrimaryKey val id: String,
-    val listId: String,
-    val name: String,
-    val due: Instant?,
-    val created: Instant,
-    val modified: Instant,
-    val isRepeating: Boolean
-)

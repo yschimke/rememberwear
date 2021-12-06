@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.wear.rememberwear.db
+package com.google.wear.rememberwear.api.model.timeline
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.time.Instant
+import com.tickaroo.tikxml.annotation.TextContent
+import com.tickaroo.tikxml.annotation.Xml
 
-@Entity
-data class TaskSeries(
-    @PrimaryKey val id: String,
-    val listId: String,
-    val name: String,
-    val due: Instant?,
-    val created: Instant,
-    val modified: Instant,
-    val isRepeating: Boolean
+@Xml(name = "timeline")
+data class Timeline(
+    @TextContent
+    val timeline: String
 )

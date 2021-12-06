@@ -24,7 +24,7 @@ import androidx.navigation.navDeepLink
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.google.wear.rememberwear.Nav
+import com.google.wear.rememberwear.navigation.Screens
 import com.google.wear.rememberwear.RememberWearViewModel
 
 val uri = "https://www.rememberthemilk.com/"
@@ -40,20 +40,20 @@ fun CircleAppScreens(viewModel: RememberWearViewModel) {
 
         SwipeDismissableNavHost(
             navController = navController,
-            startDestination = Nav.Inbox.route
+            startDestination = Screens.Inbox.route
         ) {
             composable(
-                Nav.Inbox.route,
+                Screens.Inbox.route,
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" })
             ) {
                 InboxScreen(viewModel = viewModel, onClick = {
-                    println("Click " + Nav.TaskSeries.route + "/" + it.id)
-                    navController.navigate(Nav.TaskSeries.route + "/" + it.id)
+                    println("Click " + Screens.TaskSeries.route + "/" + it.id)
+                    navController.navigate(Screens.TaskSeries.route + "/" + it.id)
                 })
             }
 
             composable(
-                Nav.TaskSeries.route + "/{taskSeriesId}", arguments = listOf(
+                Screens.TaskSeries.route + "/{taskSeriesId}", arguments = listOf(
                     navArgument("taskSeriesId", builder = {
                         this.type = NavType.StringType
                     })

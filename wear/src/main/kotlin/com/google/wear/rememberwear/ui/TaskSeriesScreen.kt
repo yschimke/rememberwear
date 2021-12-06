@@ -16,18 +16,23 @@
 
 package com.google.wear.rememberwear.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.TitleCard
 import androidx.wear.compose.material.ToggleChip
 import com.google.wear.rememberwear.RememberWearViewModel
 import com.google.wear.rememberwear.util.relativeTime
+import java.time.LocalDate
 
 @Composable
 fun TaskSeriesScreen(
@@ -35,56 +40,54 @@ fun TaskSeriesScreen(
     viewModel: RememberWearViewModel,
     taskSeriesId: String
 ) {
-    val taskSeries by viewModel.taskSeries(taskSeriesId).collectAsState(initial = null)
-    val notes by viewModel.taskSeriesNotes(taskSeriesId).collectAsState(listOf())
-    val tasks by viewModel.taskSeriesTasks(taskSeriesId).collectAsState(listOf())
+    val taskSeries = viewModel.taskSeries(taskSeriesId).collectAsState(initial = null).value
+    val notes = viewModel.taskSeriesNotes(taskSeriesId).collectAsState(listOf()).value
+    val tasks = viewModel.taskSeriesTasks(taskSeriesId).collectAsState(listOf()).value
 
-    Box(
+    val today = remember {
+        LocalDate.now()
+    }
+
+    ScalingLazyColumn(
         modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 8.dp),
-        contentAlignment = Alignment.Center
+            .fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val taskSeries = taskSeries
         if (taskSeries != null) {
-            TitleCard(
-                modifier = modifier,
-                title = {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(0.7f),
-                        text = taskSeries.name,
-                        maxLines = 2
-                    )
-                },
-                onClick = {}
-            ) {
-                Column {
-                    if (taskSeries.due != null) {
-                        val completed = false
+            val todayTask = if (taskSeries.isRepeating) {
+                tasks.find { it.dueDate == today }
+            } else {
+                tasks.firstOrNull()
+            }
 
-                        ToggleChip(checked = completed, onCheckedChange = {
-                            if (completed) {
-                                viewModel.uncomplete(taskSeries)
-                            } else {
-                                viewModel.complete(taskSeries)
-                            }
-                        }, label = {
-                            Text(
-                                text = taskSeries.due.relativeTime(),
-                            )
-                        })
-                    }
+            item {
+                Text(
+                    modifier = Modifier.fillMaxWidth(0.7f),
+                    text = taskSeries.name,
+                    style = MaterialTheme.typography.title1,
+                    maxLines = 2,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            if (todayTask != null) {
+                item {
+                    ToggleChip(checked = todayTask.completed != null, onCheckedChange = {
+                        if (it) {
+                            viewModel.complete(taskSeries, todayTask)
+                        } else {
+                            viewModel.uncomplete(taskSeries, todayTask)
+                        }
+                    }, label = {
+                        Text(
+                            text = todayTask.due?.relativeTime() ?: "Completed",
+                        )
+                    })
                 }
-
-                notes.forEach {
-                    Text(it.body)
-                }
-
-                if (taskSeries.isRepeating) {
-                    tasks.forEach {
-
-                    }
-                }
+            }
+            items(notes.size) {
+                Text(notes[it].body)
             }
         }
     }

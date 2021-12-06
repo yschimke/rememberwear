@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.google.wear.rememberwear.db
+package com.google.wear.rememberwear.api.model.post
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.time.Instant
+import com.google.wear.rememberwear.api.model.tasks.TaskList
+import com.tickaroo.tikxml.annotation.Attribute
+import com.tickaroo.tikxml.annotation.Element
+import com.tickaroo.tikxml.annotation.Xml
 
-@Entity
-data class TaskSeries(
-    @PrimaryKey val id: String,
-    val listId: String,
-    val name: String,
-    val due: Instant?,
-    val created: Instant,
-    val modified: Instant,
-    val isRepeating: Boolean
+@Xml(name = "rsp")
+data class PostRsp(
+    @Attribute
+    val stat: String,
+
+    @Element
+    var list: TaskList
 )
