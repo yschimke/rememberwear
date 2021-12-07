@@ -28,6 +28,9 @@ interface RememberWearDao {
     @Query("SELECT * FROM taskseries order by due")
     fun getAllTaskSeries(): Flow<List<TaskSeries>>
 
+    @Query("SELECT * FROM taskseries order by due")
+    fun getAllTaskSeriesAndTasks(): Flow<List<TaskSeriesAndTasks>>
+
     @Query("SELECT * FROM taskseries where due < :time order by due")
     fun getOverdueTaskSeries(time: Instant): Flow<List<TaskSeries>>
 

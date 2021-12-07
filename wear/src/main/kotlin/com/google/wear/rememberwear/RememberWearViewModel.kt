@@ -22,11 +22,15 @@ import com.google.wear.rememberwear.db.Note
 import com.google.wear.rememberwear.db.RememberWearDao
 import com.google.wear.rememberwear.db.Task
 import com.google.wear.rememberwear.db.TaskSeries
+import com.google.wear.rememberwear.db.TaskSeriesAndTasks
 import com.google.wear.rememberwear.work.ScheduledWork
 import com.google.wear.rememberwear.work.TaskEditor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.Instant
@@ -52,7 +56,10 @@ class RememberWearViewModel @Inject constructor(
         }
     }
 
-    fun inbox(): Flow<List<TaskSeries>> = rememberWearDao.getAllTaskSeries()
+    val inbox = rememberWearDao.getAllTaskSeriesAndTasks().stateIn(
+        viewModelScope, started = SharingStarted.WhileSubscribed(5000),
+        initialValue = listOf()
+    )
 
     fun refetchIfStale() {
         viewModelScope.launch {
