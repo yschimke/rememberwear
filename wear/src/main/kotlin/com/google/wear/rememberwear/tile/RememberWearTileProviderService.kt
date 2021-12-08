@@ -26,15 +26,18 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.wear.rememberwear.RememberWearActivity
 import com.google.wear.rememberwear.db.RememberWearDao
+import com.google.wear.rememberwear.db.TaskAndTaskSeries
 import com.google.wear.rememberwear.kt.*
+import com.google.wear.rememberwear.util.relativeTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.guava.asListenableFuture
-import java.time.Instant
+import java.time.LocalDate
 import javax.inject.Inject
 
 const val STABLE_RESOURCES_VERSION = "1"
@@ -67,12 +70,23 @@ class RememberWearTileProviderService : androidx.wear.tiles.TileService() {
     }
 
     private suspend fun suspendTileRequest(requestParams: RequestBuilders.TileRequest): Tile {
-        Log.i("RememberWear", "tileRequest $requestParams")
+        val today = LocalDate.now()
 
-        val todos = rememberWearDao.getOverdueTaskSeries(Instant.now()).first()
+        val tasks = rememberWearDao.getAllTaskAndTaskSeries().map {
+            it.filter {
+                it.isUrgentUncompleted(today) ||
+                        it.isRecentCompleted(today) ||
+                        it.isCompletedOn(today)
+            }.sortedBy { it.task.dueDate ?: LocalDate.MAX }
+        }.first()
 
-        // TODO Force a refresh if we have stale (> 20 minutes) results or errors
+        return renderTile(tasks, today)
+    }
 
+    private fun renderTile(
+        tasks: List<TaskAndTaskSeries>,
+        today: LocalDate
+    ): Tile {
         return tile {
             setResourcesVersion(STABLE_RESOURCES_VERSION)
             setFreshnessIntervalMillis(0L)
@@ -94,7 +108,7 @@ class RememberWearTileProviderService : androidx.wear.tiles.TileService() {
                                     )
                                 }
                             )
-                            if (todos.isEmpty()) {
+                            if (tasks.isEmpty()) {
                                 addContent(
                                     text {
                                         setModifiers(
@@ -111,22 +125,43 @@ class RememberWearTileProviderService : androidx.wear.tiles.TileService() {
                                     }
                                 )
                             }
-                            todos.forEach { todo ->
+                            tasks.forEach { task ->
+                                val dueDate = task.task.dueDate
                                 addContent(
                                     text {
                                         setModifiers(
                                             modifiers {
-                                                setSemantics(todo.name.toContentDescription())
+                                                setSemantics(task.taskSeries.name.toContentDescription())
                                             }
                                         )
 
-                                        setMaxLines(1)
+                                        setMaxLines(2)
                                         setFontStyle(fontStyle {
                                             setSize(16f.toSpProp())
                                         })
-                                        setText(todo.name)
+                                        setText(task.taskSeries.name)
                                     }
                                 )
+                                if (task.task.dueDate != null) {
+                                    val relativeTime = dueDate.relativeTime(today)
+                                    addContent(
+                                        text {
+                                            setModifiers(
+                                                modifiers {
+                                                    setSemantics(
+                                                        relativeTime.toContentDescription()
+                                                    )
+                                                }
+                                            )
+
+                                            setMaxLines(1)
+                                            setFontStyle(fontStyle {
+                                                setSize(12f.toSpProp())
+                                            })
+                                            setText(relativeTime)
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
@@ -134,6 +169,7 @@ class RememberWearTileProviderService : androidx.wear.tiles.TileService() {
             }
         }
     }
+
 
     companion object {
         fun forceTileUpdate(applicationContext: Context) {

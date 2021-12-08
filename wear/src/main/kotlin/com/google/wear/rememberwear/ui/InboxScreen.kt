@@ -31,6 +31,7 @@ import androidx.wear.compose.material.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.wear.rememberwear.RememberWearViewModel
+import com.google.wear.rememberwear.db.TaskAndTaskSeries
 import com.google.wear.rememberwear.db.TaskSeries
 import com.google.wear.rememberwear.previews.RememberTheMilkThemePreview
 
@@ -38,12 +39,12 @@ import com.google.wear.rememberwear.previews.RememberTheMilkThemePreview
 fun InboxScreen(
     modifier: Modifier = Modifier,
     scrollState: ScalingLazyListState = rememberScalingLazyListState(),
-    onClick: (TaskSeries) -> Unit = {},
+    onClick: (TaskAndTaskSeries) -> Unit = {},
     viewModel: RememberWearViewModel
 ) {
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
 
-    val taskSeries by viewModel.inbox().collectAsState(initial = listOf())
+    val tasks = viewModel.inbox.collectAsState(initial = listOf()).value
 
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
@@ -68,9 +69,8 @@ fun InboxScreen(
                     textAlign = TextAlign.Center
                 )
             }
-            items(taskSeries.size) {
-                val taskSeries = taskSeries[it]
-                TaskSeriesChip(taskSeries = taskSeries, onClick = { onClick(taskSeries) })
+            items(tasks.size) {
+                TaskSeriesChip(task = tasks[it], onClick = { onClick(tasks[it]) })
             }
         }
     }

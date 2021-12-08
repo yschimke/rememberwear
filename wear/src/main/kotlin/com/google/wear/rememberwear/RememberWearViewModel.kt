@@ -18,11 +18,14 @@ package com.google.wear.rememberwear;
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.wear.rememberwear.complication.RememberWearComplicationProviderService
 import com.google.wear.rememberwear.db.Note
 import com.google.wear.rememberwear.db.RememberWearDao
 import com.google.wear.rememberwear.db.Task
+import com.google.wear.rememberwear.db.TaskAndTaskSeries
 import com.google.wear.rememberwear.db.TaskSeries
 import com.google.wear.rememberwear.db.TaskSeriesAndTasks
+import com.google.wear.rememberwear.work.ExternalUpdates
 import com.google.wear.rememberwear.work.ScheduledWork
 import com.google.wear.rememberwear.work.TaskEditor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +33,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.Instant
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,6 +46,7 @@ class RememberWearViewModel @Inject constructor(
     private val rememberWearDao: RememberWearDao,
     private val scheduledWork: ScheduledWork,
     private val taskEditor: TaskEditor,
+    private val externalUpdates: ExternalUpdates,
 ) : ViewModel() {
     val isRefreshing = MutableStateFlow(false)
 
@@ -56,10 +62,20 @@ class RememberWearViewModel @Inject constructor(
         }
     }
 
-    val inbox = rememberWearDao.getAllTaskSeriesAndTasks().stateIn(
-        viewModelScope, started = SharingStarted.WhileSubscribed(5000),
-        initialValue = listOf()
-    )
+    // TODO update this and refresh flow
+    val today = LocalDate.now()
+
+    val inbox = rememberWearDao.getAllTaskAndTaskSeries().map {
+        it.filter {
+            it.isUrgentUncompleted(today.plusDays(1)) ||
+                    it.isRecentCompleted(today) ||
+                    it.isCompletedOn(today)
+        }.sortedBy { it.task.completed }
+    }
+        .stateIn(
+            viewModelScope, started = SharingStarted.WhileSubscribed(5000),
+            initialValue = listOf()
+        )
 
     fun refetchIfStale() {
         viewModelScope.launch {
@@ -74,6 +90,10 @@ class RememberWearViewModel @Inject constructor(
         }
     }
 
+    fun taskAndTaskSeries(taskId: String): Flow<TaskAndTaskSeries?> {
+        return rememberWearDao.getTaskAndTaskSeries(taskId)
+    }
+
     fun taskSeries(taskSeriesId: String): Flow<TaskSeries?> =
         rememberWearDao.getTaskSeries(taskSeriesId)
 
@@ -86,12 +106,14 @@ class RememberWearViewModel @Inject constructor(
     fun uncomplete(taskSeries: TaskSeries, task: Task) {
         viewModelScope.launch {
             taskEditor.uncomplete(taskSeries, task)
+            externalUpdates.forceUpdates()
         }
     }
 
     fun complete(taskSeries: TaskSeries, task: Task) {
         viewModelScope.launch {
             taskEditor.complete(taskSeries, task)
+            externalUpdates.forceUpdates()
         }
     }
 }

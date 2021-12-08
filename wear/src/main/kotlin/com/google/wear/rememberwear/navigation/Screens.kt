@@ -19,6 +19,6 @@ package com.google.wear.rememberwear.navigation
 sealed class Screens(val route: String) {
     object Inbox : Screens("inbox")
     object List : Screens("list")
-    object TaskSeries : Screens("taskSeries")
+    object Task : Screens("taskSeries")
 }
 

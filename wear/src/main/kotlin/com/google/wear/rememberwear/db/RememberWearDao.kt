@@ -20,19 +20,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
 @Dao
 interface RememberWearDao {
-    @Query("SELECT * FROM taskseries order by due")
+    @Query("SELECT * FROM taskseries order by created")
     fun getAllTaskSeries(): Flow<List<TaskSeries>>
 
-    @Query("SELECT * FROM taskseries order by due")
+    @Transaction
+    @Query("SELECT * FROM taskseries order by created")
     fun getAllTaskSeriesAndTasks(): Flow<List<TaskSeriesAndTasks>>
 
-    @Query("SELECT * FROM taskseries where due < :time order by due")
-    fun getOverdueTaskSeries(time: Instant): Flow<List<TaskSeries>>
+    @Transaction
+    @Query("SELECT * FROM task order by dueDate, taskSeriesId")
+    fun getAllTaskAndTaskSeries(): Flow<List<TaskAndTaskSeries>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertTaskSeries(taskSeries: TaskSeries)
@@ -63,4 +66,8 @@ interface RememberWearDao {
 
     @Query("SELECT * FROM task where taskSeriesId = :taskSeriesId")
     fun getTasks(taskSeriesId: String): Flow<List<Task>>
+
+    @Transaction
+    @Query("SELECT * FROM task where id = :taskId")
+    fun getTaskAndTaskSeries(taskId: String): Flow<TaskAndTaskSeries?>
 }

@@ -18,12 +18,22 @@ package com.google.wear.rememberwear.db
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import java.time.LocalDate
+import java.time.ZoneId
 
-data class TaskSeriesAndTasks(
-    @Embedded val taskSeries: TaskSeries,
+data class TaskAndTaskSeries(
+    @Embedded val task: Task,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "taskSeriesId"
+        parentColumn = "taskSeriesId",
+        entityColumn = "id"
     )
-    val tasks: List<Task>
-)
+    val taskSeries: TaskSeries
+) {
+    fun isRecentCompleted(today: LocalDate?) = task.completed != null && task.dueDate == today
+
+    fun isUrgentUncompleted(lastDay: LocalDate?) =
+        task.completed == null && (task.dueDate == null || task.dueDate <= lastDay)
+
+    fun isCompletedOn(today: LocalDate?) =
+        task.completed?.atZone(ZoneId.systemDefault())?.toLocalDate() == today
+}

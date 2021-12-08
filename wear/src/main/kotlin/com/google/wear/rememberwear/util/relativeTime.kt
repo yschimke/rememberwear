@@ -19,6 +19,7 @@ package com.google.wear.rememberwear.util
 import android.text.format.DateUtils
 import android.text.format.DateUtils.MINUTE_IN_MILLIS
 import java.time.Instant
+import java.time.LocalDate
 
 fun Instant.relativeTime() = DateUtils.getRelativeTimeSpanString(
     toEpochMilli(),
@@ -26,3 +27,13 @@ fun Instant.relativeTime() = DateUtils.getRelativeTimeSpanString(
     MINUTE_IN_MILLIS,
     DateUtils.FORMAT_ABBREV_ALL
 ).toString()
+
+fun LocalDate?.relativeTime(today: LocalDate = LocalDate.now()): String {
+    return when {
+        this == null -> ""
+        this == today -> "Today"
+        this == today.minusDays(1) -> "Yesterday"
+        this == today.plusDays(1) -> "Tomorrow"
+        else -> this.toString()
+    }
+}

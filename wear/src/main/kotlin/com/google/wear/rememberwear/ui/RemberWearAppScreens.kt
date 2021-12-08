@@ -26,6 +26,7 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.rememberwear.navigation.Screens
 import com.google.wear.rememberwear.RememberWearViewModel
+import com.google.wear.rememberwear.navigation.NavController
 
 val uri = "https://www.rememberthemilk.com/"
 
@@ -34,9 +35,10 @@ val uri = "https://www.rememberthemilk.com/"
     androidx.wear.compose.material.ExperimentalWearMaterialApi::class
 )
 @Composable
-fun CircleAppScreens(viewModel: RememberWearViewModel) {
+fun RememberWearAppScreens(viewModel: RememberWearViewModel) {
     RememberTheMilkTheme {
         val navController = rememberSwipeDismissableNavController()
+        val rtmNavController = NavController(navController)
 
         SwipeDismissableNavHost(
             navController = navController,
@@ -47,20 +49,19 @@ fun CircleAppScreens(viewModel: RememberWearViewModel) {
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" })
             ) {
                 InboxScreen(viewModel = viewModel, onClick = {
-                    println("Click " + Screens.TaskSeries.route + "/" + it.id)
-                    navController.navigate(Screens.TaskSeries.route + "/" + it.id)
+                    rtmNavController.navigateToTask(it.task.id)
                 })
             }
 
             composable(
-                Screens.TaskSeries.route + "/{taskSeriesId}", arguments = listOf(
-                    navArgument("taskSeriesId", builder = {
+                Screens.Task.route + "/{taskId}", arguments = listOf(
+                    navArgument("taskId", builder = {
                         this.type = NavType.StringType
                     })
-                ), deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskSeriesId}" })
+                ), deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" })
             ) {
-                val taskSeriesId = it.arguments?.getString("taskSeriesId")
-                TaskSeriesScreen(viewModel = viewModel, taskSeriesId = taskSeriesId!!)
+                val taskId = it.arguments?.getString("taskId")
+                TaskScreen(viewModel = viewModel, taskId = taskId!!)
             }
         }
     }

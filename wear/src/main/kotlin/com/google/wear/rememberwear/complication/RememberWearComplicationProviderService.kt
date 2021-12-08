@@ -30,15 +30,16 @@ import androidx.wear.complications.datasource.ComplicationRequest
 import coil.ImageLoader
 import com.google.wear.rememberwear.RememberWearActivity
 import com.google.wear.rememberwear.db.RememberWearDao
-import com.google.wear.rememberwear.db.TaskSeries
+import com.google.wear.rememberwear.db.TaskAndTaskSeries
+import com.google.wear.rememberwear.util.relativeTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.util.concurrent.TimeUnit
+import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -79,18 +80,23 @@ class RememberWearComplicationProviderService : ComplicationDataSourceService() 
     suspend fun onComplicationUpdate(complicationRequest: ComplicationRequest): ComplicationData {
         Log.i("RememberWear", "onComplicationUpdate $complicationRequest")
 
-        val todos = rememberWearDao.getOverdueTaskSeries(Instant.now()).first()
+        val today = LocalDate.now()
 
-        return toComplicationData(complicationRequest.complicationType, todos)
+        val todos = rememberWearDao.getAllTaskAndTaskSeries().map {
+            it.filter { it.isUrgentUncompleted(today) }
+        }
+
+        return toComplicationData(complicationRequest.complicationType, todos.first(), today)
     }
 
     override fun getPreviewData(type: ComplicationType): ComplicationData {
-        return toComplicationData(type, listOf())
+        return toComplicationData(type, listOf(), LocalDate.now())
     }
 
     fun toComplicationData(
         type: ComplicationType,
-        overdue: List<TaskSeries>,
+        overdue: List<TaskAndTaskSeries>,
+        today: LocalDate
     ): ComplicationData {
         val firstTodo = overdue.firstOrNull()
 
@@ -99,30 +105,24 @@ class RememberWearComplicationProviderService : ComplicationDataSourceService() 
                 getAddressDescriptionText(firstTodo),
                 getAddressDescriptionText(firstTodo)
             )
-                .setTitle(getTimeAgoComplicationText(firstTodo?.due))
+                .setTitle(getTimeAgoComplicationText(firstTodo?.task?.dueDate, today))
                 .setTapAction(applicationContext.tapAction())
                 .build()
             else -> throw IllegalArgumentException("Unexpected complication type $type")
         }
     }
 
-    private fun getTimeAgoComplicationText(fromTime: Instant?): ComplicationText {
+    private fun getTimeAgoComplicationText(fromTime: LocalDate?, today: LocalDate): ComplicationText {
         return if (fromTime != null) {
-            TimeDifferenceComplicationText.Builder(
-                TimeDifferenceStyle.SHORT_SINGLE_UNIT,
-                CountUpTimeReference(fromTime)
-            ).apply {
-                setMinimumTimeUnit(TimeUnit.MINUTES)
-                setDisplayAsNow(true)
-            }.build()
+            PlainComplicationText.Builder(fromTime.relativeTime(today)).build()
         } else {
             PlainComplicationText.Builder("No Due Tasks").build()
         }
     }
 
-    private fun getAddressDescriptionText(taskSeries: TaskSeries?): ComplicationText {
-        if (taskSeries != null) {
-            return PlainComplicationText.Builder(taskSeries.name).build()
+    private fun getAddressDescriptionText(task: TaskAndTaskSeries?): ComplicationText {
+        if (task?.taskSeries != null) {
+            return PlainComplicationText.Builder(task.taskSeries.name).build()
         } else {
             return PlainComplicationText.Builder("Up to date").build()
         }

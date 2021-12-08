@@ -25,7 +25,6 @@ data class TaskSeries(
     @PrimaryKey val id: String,
     val listId: String,
     val name: String,
-    val due: Instant?,
     val created: Instant,
     val modified: Instant,
     val isRepeating: Boolean

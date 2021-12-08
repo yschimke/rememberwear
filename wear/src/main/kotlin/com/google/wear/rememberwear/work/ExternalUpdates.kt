@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package com.google.wear.rememberwear.navigation
+package com.google.wear.rememberwear.work
 
-import androidx.navigation.NavHostController
+import android.content.Context
+import com.google.wear.rememberwear.complication.RememberWearComplicationProviderService
+import com.google.wear.rememberwear.tile.RememberWearTileProviderService
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class NavController(val navController: NavHostController) {
-    fun navigateToInbox() {
-        navController.navigate(Screens.Inbox.route)
-    }
-
-    fun navigateToTask(taskId: String) {
-        navController.navigate(Screens.Task.route + "/" + taskId)
+class ExternalUpdates @Inject constructor(
+    @ApplicationContext val application: Context
+) {
+    fun forceUpdates() {
+        RememberWearComplicationProviderService.forceComplicationUpdate(application)
+        RememberWearTileProviderService.forceTileUpdate(application)
     }
 }

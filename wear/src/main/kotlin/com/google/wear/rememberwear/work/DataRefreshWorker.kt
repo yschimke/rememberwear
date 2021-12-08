@@ -72,15 +72,11 @@ class DataRefreshWorker
                         taskSeries.task?.filter { it.completed == null || it.completed > cutoff }
                             .orEmpty()
 
-                    val incomplete = relevant.filter { it.completed == null }
-                    val due = incomplete.mapNotNull { it.due }.minOrNull()
-
                     val repeating = taskSeries.rrule != null
                     val taskSeries1 = TaskSeries(
                         id = taskSeries.id,
                         listId = list.id,
                         name = taskSeries.name,
-                        due = due,
                         created = taskSeries.created,
                         modified = taskSeries.modified,
                         isRepeating = repeating

@@ -35,18 +35,24 @@ import com.google.wear.rememberwear.util.relativeTime
 import java.time.LocalDate
 
 @Composable
-fun TaskSeriesScreen(
+fun TaskScreen(
     modifier: Modifier = Modifier,
     viewModel: RememberWearViewModel,
-    taskSeriesId: String
+    taskId: String
 ) {
-    val taskSeries = viewModel.taskSeries(taskSeriesId).collectAsState(initial = null).value
-    val notes = viewModel.taskSeriesNotes(taskSeriesId).collectAsState(listOf()).value
-    val tasks = viewModel.taskSeriesTasks(taskSeriesId).collectAsState(listOf()).value
+    val task = viewModel.taskAndTaskSeries(taskId).collectAsState(initial = null).value
+    val notes = if (task?.taskSeries?.id != null) {
+        viewModel.taskSeriesNotes(task.taskSeries.id).collectAsState(listOf()).value
+    } else {
+        listOf()
+    }
 
     val today = remember {
         LocalDate.now()
     }
+
+    val taskSeries = task?.taskSeries
+    val todayTask = task?.task
 
     ScalingLazyColumn(
         modifier = modifier
@@ -55,12 +61,6 @@ fun TaskSeriesScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (taskSeries != null) {
-            val todayTask = if (taskSeries.isRepeating) {
-                tasks.find { it.dueDate == today }
-            } else {
-                tasks.firstOrNull()
-            }
-
             item {
                 Text(
                     modifier = Modifier.fillMaxWidth(0.7f),
@@ -81,7 +81,7 @@ fun TaskSeriesScreen(
                         }
                     }, label = {
                         Text(
-                            text = todayTask.due?.relativeTime() ?: "Completed",
+                            text = todayTask.dueDate?.relativeTime(today) ?: "Completed",
                         )
                     })
                 }

@@ -22,27 +22,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Chip
+import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
-import com.google.wear.rememberwear.db.TaskSeries
+import com.google.wear.rememberwear.db.TaskAndTaskSeries
 import com.google.wear.rememberwear.util.relativeTime
 
 @Composable
 fun TaskSeriesChip(
     modifier: Modifier = Modifier,
-    taskSeries: TaskSeries,
+    task: TaskAndTaskSeries,
     onClick: () -> Unit,
 ) {
-    val due = taskSeries.due
+    val due = task.task.dueDate
 
     Chip(
         modifier = modifier,
         onClick = onClick,
+        colors = if (task.task.completed == null)
+            ChipDefaults.primaryChipColors()
+        else ChipDefaults.secondaryChipColors(),
         label = {
             Row {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = taskSeries.name, maxLines = 2,
+                    text = task.taskSeries.name, maxLines = 2,
                     color = MaterialTheme.colors.onSurfaceVariant2,
                     style = MaterialTheme.typography.title3,
                 )

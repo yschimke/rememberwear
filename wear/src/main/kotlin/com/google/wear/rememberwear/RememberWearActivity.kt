@@ -23,7 +23,7 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.CompositionLocalProvider
 import coil.ImageLoader
 import coil.compose.LocalImageLoader
-import com.google.wear.rememberwear.ui.CircleAppScreens
+import com.google.wear.rememberwear.ui.RememberWearAppScreens
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -43,7 +43,7 @@ class RememberWearActivity : ComponentActivity() {
             CompositionLocalProvider(
                 LocalImageLoader provides imageLoader
             ) {
-                CircleAppScreens(viewModel)
+                RememberWearAppScreens(viewModel)
             }
         }
     }

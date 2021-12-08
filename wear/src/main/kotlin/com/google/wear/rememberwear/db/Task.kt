@@ -38,7 +38,6 @@ import java.time.LocalDate
 data class Task(
     @PrimaryKey val id: String,
     val taskSeriesId: String,
-    val due: Instant?,
     val dueDate: LocalDate?,
     val added: Instant,
     val completed: Instant?,

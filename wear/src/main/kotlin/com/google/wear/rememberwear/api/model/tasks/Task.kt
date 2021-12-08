@@ -54,7 +54,6 @@ data class Task(
     fun toDBTask(taskSeriesId: String): Task = Task(
         this.id,
         taskSeriesId,
-        this.due,
         this.due?.atZone(ZoneId.systemDefault())?.toLocalDate(),
         this.added,
         this.completed,
