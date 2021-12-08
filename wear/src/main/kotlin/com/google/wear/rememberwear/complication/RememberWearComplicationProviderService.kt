@@ -108,6 +108,13 @@ class RememberWearComplicationProviderService : ComplicationDataSourceService() 
                 .setTitle(getTimeAgoComplicationText(firstTodo?.task?.dueDate, today))
                 .setTapAction(applicationContext.tapAction())
                 .build()
+            ComplicationType.LONG_TEXT -> LongTextComplicationData.Builder(
+                getAddressDescriptionText(firstTodo),
+                getAddressDescriptionText(firstTodo)
+            )
+                .setTitle(getTimeAgoComplicationText(firstTodo?.task?.dueDate, today))
+                .setTapAction(applicationContext.tapAction())
+                .build()
             else -> throw IllegalArgumentException("Unexpected complication type $type")
         }
     }
