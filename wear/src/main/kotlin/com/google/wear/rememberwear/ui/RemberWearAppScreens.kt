@@ -18,6 +18,8 @@ package com.google.wear.rememberwear.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
@@ -27,6 +29,9 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.rememberwear.navigation.Screens
 import com.google.wear.rememberwear.RememberWearViewModel
 import com.google.wear.rememberwear.navigation.NavController
+import com.google.wear.rememberwear.util.LocalRotaryEventDispatcher
+import com.google.wear.rememberwear.util.RotaryEventDispatcher
+import com.google.wear.rememberwear.util.RotaryEventHandlerSetup
 
 val uri = "https://www.rememberthemilk.com/"
 
@@ -36,34 +41,41 @@ val uri = "https://www.rememberthemilk.com/"
 )
 @Composable
 fun RememberWearAppScreens(viewModel: RememberWearViewModel) {
-    RememberTheMilkTheme {
-        val navController = rememberSwipeDismissableNavController()
-        val rtmNavController = NavController(navController)
+    val rotaryEventDispatcher = remember { RotaryEventDispatcher() }
 
-        SwipeDismissableNavHost(
-            navController = navController,
-            startDestination = Screens.Inbox.route
-        ) {
-            composable(
-                Screens.Inbox.route,
-                deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" })
+    CompositionLocalProvider(
+        LocalRotaryEventDispatcher provides rotaryEventDispatcher
+    ) {
+        RememberTheMilkTheme {
+            val navController = rememberSwipeDismissableNavController()
+            val rtmNavController = NavController(navController)
+
+            RotaryEventHandlerSetup(rotaryEventDispatcher)
+
+            SwipeDismissableNavHost(
+                navController = navController,
+                startDestination = Screens.Inbox.route
             ) {
-                InboxScreen(viewModel = viewModel, onClick = {
-                    rtmNavController.navigateToTask(it.task.id)
-                })
-            }
-
-            composable(
-                Screens.Task.route + "/{taskId}", arguments = listOf(
-                    navArgument("taskId", builder = {
-                        this.type = NavType.StringType
+                composable(
+                    Screens.Inbox.route,
+                    deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" })
+                ) {
+                    InboxScreen(viewModel = viewModel, onClick = {
+                        rtmNavController.navigateToTask(it.task.id)
                     })
-                ), deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" })
-            ) {
-                val taskId = it.arguments?.getString("taskId")
-                TaskScreen(viewModel = viewModel, taskId = taskId!!)
+                }
+
+                composable(
+                    Screens.Task.route + "/{taskId}", arguments = listOf(
+                        navArgument("taskId", builder = {
+                            this.type = NavType.StringType
+                        })
+                    ), deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" })
+                ) {
+                    val taskId = it.arguments?.getString("taskId")
+                    TaskScreen(viewModel = viewModel, taskId = taskId!!)
+                }
             }
         }
     }
-
 }

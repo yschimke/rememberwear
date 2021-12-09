@@ -41,13 +41,13 @@ class DataRefreshWorker
     @Assisted workerParams: WorkerParameters,
     val rememberWearDatabase: RememberWearDatabase,
     val rememberWearDao: RememberWearDao,
-    val rememberTheMilkService: RememberTheMilkService
+    val rememberTheMilkService: RememberTheMilkService,
+    val externalUpdates: ExternalUpdates
 ) : RemoteCoroutineWorker(appContext, workerParams) {
     override suspend fun doRemoteWork(): Result {
         refreshDatabase(rememberWearDatabase, rememberWearDao, rememberTheMilkService)
 
-        RememberWearTileProviderService.forceTileUpdate(applicationContext)
-        RememberWearComplicationProviderService.forceComplicationUpdate(applicationContext)
+        externalUpdates.forceUpdates()
 
         return Result.success()
     }

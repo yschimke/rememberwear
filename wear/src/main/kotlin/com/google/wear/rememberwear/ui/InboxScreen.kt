@@ -34,6 +34,7 @@ import com.google.wear.rememberwear.RememberWearViewModel
 import com.google.wear.rememberwear.db.TaskAndTaskSeries
 import com.google.wear.rememberwear.db.TaskSeries
 import com.google.wear.rememberwear.previews.RememberTheMilkThemePreview
+import com.google.wear.rememberwear.util.RotaryEventState
 
 @Composable
 fun InboxScreen(
@@ -47,6 +48,8 @@ fun InboxScreen(
     val tasks = viewModel.inbox.collectAsState(initial = listOf()).value
 
     val isRefreshing by viewModel.isRefreshing.collectAsState()
+
+    RotaryEventState(scrollState)
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),

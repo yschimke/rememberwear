@@ -28,9 +28,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
+import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.wear.rememberwear.RememberWearViewModel
+import com.google.wear.rememberwear.util.RotaryEventState
 import com.google.wear.rememberwear.util.relativeTime
 import java.time.LocalDate
 
@@ -54,7 +57,11 @@ fun TaskScreen(
     val taskSeries = task?.taskSeries
     val todayTask = task?.task
 
+    val scrollState = rememberScalingLazyListState()
+    RotaryEventState(scrollState)
+
     ScalingLazyColumn(
+        state = scrollState,
         modifier = modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
