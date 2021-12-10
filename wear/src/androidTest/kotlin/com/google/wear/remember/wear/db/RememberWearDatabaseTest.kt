@@ -14,22 +14,27 @@
  * limitations under the License.
  */
 
-package com.google.wear.remember.wear
+package com.google.wear.remember.wear.db
 
+import android.content.Context
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.wear.rememberwear.api.RememberTheMilkService
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
+import com.google.wear.rememberwear.db.RememberWearDao
+import com.google.wear.rememberwear.db.RememberWearDatabase
+import com.google.wear.rememberwear.db.TaskSeries
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
+import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import javax.inject.Inject
-import org.assertj.core.api.Assertions.*
+import java.time.Instant
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -38,51 +43,40 @@ import org.assertj.core.api.Assertions.*
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
-@HiltAndroidTest
-class RememberTheMilkApiTest {
-    @get:Rule
-    var hiltRule = HiltAndroidRule(this)
+class RememberWearDatabaseTest {
+    private lateinit var mediaDao: RememberWearDao
+    private lateinit var db: RememberWearDatabase
 
     private val testDispatcher = TestCoroutineDispatcher()
     private val testScope = TestCoroutineScope(testDispatcher)
 
-    @Inject
-    lateinit var service: RememberTheMilkService
-
     @Before
-    fun init() {
-        hiltRule.inject()
+    fun createDb() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(
+            context, RememberWearDatabase::class.java
+        ).build()
+        mediaDao = db.rememberWearDao()
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
+        testDispatcher.cancel()
     }
 
     @Test
-    fun tasks() {
+    fun useInsertAndRead() {
+        // TODO debug and use runTestBlocking
         runBlocking(testScope.coroutineContext) {
-            val tasks = service.tasks()
-            assertThat(tasks.tasks?.taskSeries).isNotEmpty
-        }
-    }
+            val now = Instant.now()
+            val todo = TaskSeries("1", "all", "Tablets", now, now, false)
 
-    @Test
-    fun tasksInWearTag() {
-        runBlocking(testScope.coroutineContext) {
-            val tasks = service.tasks("tag:wear")
-            assertThat(tasks.tasks?.taskSeries).isNotEmpty
-        }
-    }
+            mediaDao.upsertTaskSeries(todo)
 
-    @Test
-    fun lists() {
-        runBlocking(testScope.coroutineContext) {
-            val lists = service.lists()
-            assertThat(lists).isNotNull
-        }
-    }
+            val todoCopy = mediaDao.getAllTaskSeries().first().single()
 
-    @Test
-    fun tags() {
-        runBlocking(testScope.coroutineContext) {
-            val tags = service.tags()
-            assertThat(tags.tags).isNotEmpty
+            assertEquals(todo, todoCopy)
         }
     }
 }

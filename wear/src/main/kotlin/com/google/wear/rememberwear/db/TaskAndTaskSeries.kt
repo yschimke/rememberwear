@@ -29,6 +29,9 @@ data class TaskAndTaskSeries(
     )
     val taskSeries: TaskSeries
 ) {
+    val isCompleted: Boolean
+        get() = task.completed != null
+
     fun isRecentCompleted(today: LocalDate?) = task.completed != null && task.dueDate == today
 
     fun isUrgentUncompleted(lastDay: LocalDate?) =
