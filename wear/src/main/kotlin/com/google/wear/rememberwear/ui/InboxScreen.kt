@@ -32,8 +32,8 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.wear.rememberwear.RememberWearViewModel
 import com.google.wear.rememberwear.db.TaskAndTaskSeries
-import com.google.wear.rememberwear.db.TaskSeries
 import com.google.wear.rememberwear.previews.RememberTheMilkThemePreview
+import com.google.wear.rememberwear.previews.TaskAndSeriesProvider
 import com.google.wear.rememberwear.util.RotaryEventState
 
 @Composable
@@ -43,8 +43,6 @@ fun InboxScreen(
     onClick: (TaskAndTaskSeries) -> Unit = {},
     viewModel: RememberWearViewModel
 ) {
-    val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
-
     val tasks = viewModel.inbox.collectAsState(initial = listOf()).value
 
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -56,25 +54,37 @@ fun InboxScreen(
         onRefresh = { viewModel.refetchAllData() },
         refreshTriggerDistance = 16.dp
     ) {
-        ScalingLazyColumn(
-            modifier = modifier,
-            contentPadding = PaddingValues(
-                horizontal = 8.dp,
-                vertical = paddingHeight,
-            ),
-            state = scrollState
-        ) {
-            item {
-                Text(
-                    modifier = Modifier.fillMaxWidth(1f),
-                    text = "Task List",
-                    style = MaterialTheme.typography.title1,
-                    textAlign = TextAlign.Center
-                )
-            }
-            items(tasks.size) {
-                TaskSeriesChip(task = tasks[it], onClick = { onClick(tasks[it]) })
-            }
+        InboxScreen(modifier, scrollState, tasks, onClick)
+    }
+}
+
+@Composable
+fun InboxScreen(
+    modifier: Modifier = Modifier,
+    scrollState: ScalingLazyListState = rememberScalingLazyListState(),
+    tasks: List<TaskAndTaskSeries>,
+    onClick: (TaskAndTaskSeries) -> Unit
+) {
+    val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
+
+    ScalingLazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(
+            horizontal = 8.dp,
+            vertical = paddingHeight,
+        ),
+        state = scrollState
+    ) {
+        item {
+            Text(
+                modifier = Modifier.fillMaxWidth(1f),
+                text = "Task List",
+                style = MaterialTheme.typography.title1,
+                textAlign = TextAlign.Center
+            )
+        }
+        items(tasks.size) {
+            TaskChip(task = tasks[it], onClick = { onClick(tasks[it]) })
         }
     }
 }
@@ -88,5 +98,6 @@ fun InboxScreen(
 @Composable
 fun CirclesListPreview() {
     RememberTheMilkThemePreview(round = true) {
+        InboxScreen(tasks = TaskAndSeriesProvider.taskAndTaskSeries, onClick = {})
     }
 }

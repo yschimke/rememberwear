@@ -28,12 +28,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import com.google.wear.rememberwear.ui.RememberTheMilkTheme
+import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.ZoneOffset
 
 object Previews {
-    val timestamp = LocalDateTime.of(2021, 10, 26, 12, 34).toInstant(ZoneOffset.UTC)
-
+    val localDateTime = LocalDate.now().atTime(12, 35)
+    val timestamp = localDateTime.toInstant(ZoneOffset.UTC)
 }
 
 @Composable

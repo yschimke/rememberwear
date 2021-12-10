@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-package com.google.wear.remember.wear
+package com.google.wear.remember.wear.api
 
-import android.content.Context
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.wear.rememberwear.db.RememberWearDao
-import com.google.wear.rememberwear.db.RememberWearDatabase
-import com.google.wear.rememberwear.db.TaskSeries
+import com.google.wear.rememberwear.api.RememberTheMilkService
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
-import org.junit.After
-import org.junit.Assert.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.time.Instant
+import javax.inject.Inject
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -43,40 +38,51 @@ import java.time.Instant
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
-class RememberWearDatabaseTest {
-    private lateinit var mediaDao: RememberWearDao
-    private lateinit var db: RememberWearDatabase
+@HiltAndroidTest
+class RememberTheMilkApiTest {
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     private val testDispatcher = TestCoroutineDispatcher()
     private val testScope = TestCoroutineScope(testDispatcher)
 
-    @Before
-    fun createDb() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-            context, RememberWearDatabase::class.java
-        ).build()
-        mediaDao = db.rememberWearDao()
-    }
+    @Inject
+    lateinit var service: RememberTheMilkService
 
-    @After
-    fun tearDown() {
-        db.close()
-        testDispatcher.cancel()
+    @Before
+    fun init() {
+        hiltRule.inject()
     }
 
     @Test
-    fun useInsertAndRead() {
-        // TODO debug and use runTestBlocking
+    fun tasks() {
         runBlocking(testScope.coroutineContext) {
-            val now = Instant.now()
-            val todo = TaskSeries("1", "Tablets", now, now, now, false)
+            val tasks = service.tasks()
+            assertThat(tasks.tasks?.taskSeries).isNotEmpty
+        }
+    }
 
-            mediaDao.upsertTaskSeries(todo)
+    @Test
+    fun tasksInWearTag() {
+        runBlocking(testScope.coroutineContext) {
+            val tasks = service.tasks("tag:wear")
+            assertThat(tasks.tasks?.taskSeries).isNotEmpty
+        }
+    }
 
-            val todoCopy = mediaDao.getAllTaskSeries().first().single()
+    @Test
+    fun lists() {
+        runBlocking(testScope.coroutineContext) {
+            val lists = service.lists()
+            assertThat(lists).isNotNull
+        }
+    }
 
-            assertEquals(todo, todoCopy)
+    @Test
+    fun tags() {
+        runBlocking(testScope.coroutineContext) {
+            val tags = service.tags()
+            assertThat(tags.tags).isNotEmpty
         }
     }
 }
