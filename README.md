@@ -28,11 +28,16 @@ functionality - See relevent tasks tagged with "wear", mark as completed.
 
 ### Tile
 
-Shows the top 3 urgent tasks
+Shows the top urgent tasks
+
+<img width="465" alt="image" src="https://user-images.githubusercontent.com/231923/145682092-6bbdfbf8-5999-41ed-b38e-4e0b7bea5d09.png">
+
 
 ### Complication
 
 Shows the most urgent task
+
+<img width="461" alt="image" src="https://user-images.githubusercontent.com/231923/145682076-89371e84-ed20-4159-a55a-50ddf9ac43d5.png">
 
 ## Contributing
 
