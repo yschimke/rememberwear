@@ -1,7 +1,38 @@
-# Remember The Milk - Wear
+# Soyted - Remember The Milk for Wear
 
 This project is a Wear app for [RememberTheMilk](https://rememberthemilk.com).  
 It uses the [Public API.](https://www.rememberthemilk.com/services/api/)
+
+Soyted - to avoid Remember and Milk in accordance with branding guidelines.
+
+Icon from https://freesvg.org/soymilkcarton
+
+## Status
+
+Requires auth tokens in local.properties until Oauth setup it approved by RememberTheMilk.
+
+
+```
+API_KEY=FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+API_SECRET=FFFFFFFFFFFFFFFF
+TOKEN=FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+```
+
+### App 
+
+functionality - See relevent tasks tagged with "wear", mark as completed.
+
+<img width="470" alt="image" src="https://user-images.githubusercontent.com/231923/145681807-e01388be-61cb-45fa-865c-62bef47139a3.png">
+
+<img width="465" alt="image" src="https://user-images.githubusercontent.com/231923/145681815-1c8b969a-df72-46bb-9592-20a5a4e41da8.png">
+
+### Tile
+
+Shows the top 3 urgent tasks
+
+### Complication
+
+Shows the most urgent task
 
 ## Contributing
 
