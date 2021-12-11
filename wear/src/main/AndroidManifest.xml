@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.google.wear.rememberwear">
+    package="com.google.wear.soyted">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -10,9 +10,9 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <application
-        android:name=".RememberWearApplication"
+        android:name="com.google.wear.soyted.RememberWearApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_rtmicon"
+        android:icon="@drawable/ic_milk"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
@@ -26,7 +26,7 @@
             android:required="false" />
 
         <activity
-            android:name=".RememberWearActivity"
+            android:name="com.google.wear.soyted.RememberWearActivity"
             android:exported="true"
             android:label="@string/app_name">
 
@@ -47,15 +47,15 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="com.google.wear.rememberwear.ACTIVITY" />
+                <action android:name="com.google.wear.soyted.ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <service
-            android:name=".tile.RememberWearTileProviderService"
+            android:name="com.google.wear.soyted.tile.RememberWearTileProviderService"
             android:exported="true"
-            android:icon="@drawable/ic_rtmicon"
+            android:icon="@drawable/ic_milk"
             android:label="@string/title_remember_wear"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER"
             android:process=":data">
@@ -69,9 +69,9 @@
         </service>
 
         <service
-            android:name=".complication.RememberWearComplicationProviderService"
+            android:name="com.google.wear.soyted.complication.RememberWearComplicationProviderService"
             android:exported="true"
-            android:icon="@drawable/ic_rtmicon"
+            android:icon="@drawable/ic_milk"
             android:label="@string/app_name"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER"
             android:process=":data">

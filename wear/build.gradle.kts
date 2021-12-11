@@ -16,7 +16,7 @@ android {
     compileSdk = 31
 
     defaultConfig {
-        applicationId = "com.google.wear.rememberwear"
+        applicationId = "com.google.wear.soyted"
         minSdk = 26
         targetSdk = 30
         testInstrumentationRunner = "com.google.wear.remember.wear.junit.CustomTestRunner"
