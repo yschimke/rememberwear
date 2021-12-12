@@ -16,15 +16,23 @@
 
 package com.google.wear.soyted
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
+import androidx.activity.result.registerForActivityResult
 import androidx.activity.viewModels
 import androidx.compose.runtime.CompositionLocalProvider
 import coil.ImageLoader
 import coil.compose.LocalImageLoader
 import com.google.wear.soyted.ui.RememberWearAppScreens
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,6 +41,32 @@ class RememberWearActivity : ComponentActivity() {
 
     @Inject
     lateinit var imageLoader: ImageLoader
+
+    val voicePromptLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+
+            putExtra(
+                RecognizerIntent.EXTRA_PROMPT,
+                "Task to remember"
+            )
+        }
+    ) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val spokenText: String? =
+                it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)
+
+            if (spokenText != null) {
+                viewModel.createTask(spokenText)
+            }
+        } else {
+            Toast.makeText(this, "Failed adding toast", Toast.LENGTH_SHORT)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +77,9 @@ class RememberWearActivity : ComponentActivity() {
             CompositionLocalProvider(
                 LocalImageLoader provides imageLoader
             ) {
-                RememberWearAppScreens(viewModel)
+                RememberWearAppScreens(viewModel, onVoicePrompt = {
+                    voicePromptLauncher.launch()
+                })
             }
         }
     }

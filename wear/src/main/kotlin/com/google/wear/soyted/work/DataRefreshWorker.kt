@@ -70,15 +70,7 @@ class DataRefreshWorker
                         taskSeries.task?.filter { it.completed == null || it.completed > cutoff }
                             .orEmpty()
 
-                    val repeating = taskSeries.rrule != null
-                    val taskSeries1 = TaskSeries(
-                        id = taskSeries.id,
-                        listId = list.id,
-                        name = taskSeries.name,
-                        created = taskSeries.created,
-                        modified = taskSeries.modified,
-                        isRepeating = repeating
-                    )
+                    val taskSeries1 = taskSeries.toDBTaskSeries(list.id)
                     rememberWearDao.upsertTaskSeries(taskSeries1)
 
                     if (relevant.isNotEmpty()) {

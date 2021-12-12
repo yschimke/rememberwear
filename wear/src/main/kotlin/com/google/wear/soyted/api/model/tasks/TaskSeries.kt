@@ -61,4 +61,15 @@ data class TaskSeries(
 
     @Element
     var rrule: RRule?,
-)
+) {
+    fun toDBTaskSeries(listId: String): com.google.wear.soyted.db.TaskSeries {
+        return com.google.wear.soyted.db.TaskSeries(
+            id = id,
+            listId = listId,
+            name = name,
+            created = created,
+            modified = modified,
+            isRepeating = rrule != null
+        )
+    }
+}
