@@ -31,6 +31,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import coil.ImageLoader
 import coil.compose.LocalImageLoader
 import com.google.wear.soyted.ui.RememberWearAppScreens
+import com.google.wear.soyted.util.Toaster
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
@@ -41,6 +42,9 @@ class RememberWearActivity : ComponentActivity() {
 
     @Inject
     lateinit var imageLoader: ImageLoader
+
+    @Inject
+    lateinit var toaster: Toaster
 
     val voicePromptLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -64,7 +68,7 @@ class RememberWearActivity : ComponentActivity() {
                 viewModel.createTask(spokenText)
             }
         } else {
-            Toast.makeText(this, "Failed adding toast", Toast.LENGTH_SHORT)
+            toaster.makeToast("Failed adding task")
         }
     }
 
