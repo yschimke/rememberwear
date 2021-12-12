@@ -29,7 +29,7 @@ import java.time.temporal.ChronoUnit
 
 private val RememberTheMilkColorPalette = Colors(
     primary = Color(0xff0060bfL), // #0060bf
-    primaryVariant = Color(0xffe4eef8L), // #e4eef8
+    primaryVariant = Color(0xff668888L), // #e4eef8
     onPrimary = Color(0xFFffffffL),
     secondary = Color(0xfffffac0L), // #fffac0
     secondaryVariant = Color(0xff240047L),

@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.ChipDefaults.chipColors
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.google.wear.soyted.db.TaskAndTaskSeries
@@ -43,10 +44,17 @@ fun TaskChip(
     onClick: () -> Unit,
 ) {
     val due = task.task.dueDate
-    val yesterday = remember { LocalDate.now().minusDays(1) }
+    val today = LocalDate.now()
+    val yesterday = remember { today.minusDays(1) }
 
     val chipColor =
-        if (!task.isCompleted) ChipDefaults.primaryChipColors() else ChipDefaults.secondaryChipColors()
+        when {
+            task.isCompleted -> ChipDefaults.secondaryChipColors()
+            due != null && due > today -> chipColors(
+                backgroundColor = MaterialTheme.colors.primaryVariant
+            )
+            else -> ChipDefaults.primaryChipColors()
+        }
     Chip(
         modifier = modifier,
         onClick = onClick,
