@@ -61,7 +61,7 @@ fun RememberWearAppScreens(
 
     val loginAction = keyboardPromptLauncher(
         onTextEntered = {
-            viewModel.enterLoginToken(it)
+            viewModel.enterLoginToken()
         }, onError = {
             viewModel.toaster.makeToast(it)
         }

@@ -16,14 +16,9 @@
 
 package com.google.wear.soyted.api.model.lists
 
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Xml
+import com.google.wear.soyted.api.model.Err
 
-@Xml(name = "err")
-data class Err(
-    @Attribute
-    val code: String,
-
-    @Attribute
-    val msg: String,
-)
+interface Rsp {
+    val stat: String
+    val err: Err?
+}

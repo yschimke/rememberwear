@@ -17,6 +17,7 @@
 package com.google.wear.soyted.api
 
 import com.google.wear.soyted.api.model.lists.AuthRsp
+import com.google.wear.soyted.api.model.lists.FrobRsp
 import com.google.wear.soyted.api.model.lists.ListsRsp
 import com.google.wear.soyted.api.model.post.PostRsp
 import com.google.wear.soyted.api.model.tags.TagsRsp
@@ -28,8 +29,16 @@ import retrofit2.http.Query
 
 // https://api.rememberthemilk.com/services/rest/\?method\=rtm.lists.getList
 interface RememberTheMilkService {
+    @GET("/services/rest/?method=rtm.auth.getFrob")
+    suspend fun frob(): FrobRsp
+
     @GET("/services/rest/?method=rtm.auth.checkToken")
-    suspend fun auth(@Query("auth_token") token: String): AuthRsp
+    suspend fun auth(): AuthRsp
+
+    @GET("/services/rest/?method=rtm.auth.getToken")
+    suspend fun token(
+        @Query("frob") frob: String,
+    ): AuthRsp
 
     @GET("/services/rest/?method=rtm.lists.getList")
     suspend fun lists(): ListsRsp

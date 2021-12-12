@@ -40,7 +40,7 @@ object KeyboardPrompt {
         return rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             it.data?.let { data ->
                 val results: Bundle = RemoteInput.getResultsFromIntent(data)
-                val text: String? = results.getString("text")
+                val text: String? = results.getCharSequence("text")?.toString()
 
                 if (text != null) {
                     onTextEntered(text)

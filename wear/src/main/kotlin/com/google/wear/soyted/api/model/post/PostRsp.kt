@@ -16,7 +16,8 @@
 
 package com.google.wear.soyted.api.model.post
 
-import com.google.wear.soyted.api.model.lists.Err
+import com.google.wear.soyted.api.model.Err
+import com.google.wear.soyted.api.model.lists.Rsp
 import com.google.wear.soyted.api.model.tasks.TaskList
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Element
@@ -25,14 +26,14 @@ import com.tickaroo.tikxml.annotation.Xml
 @Xml(name = "rsp")
 data class PostRsp(
     @Attribute
-    val stat: String,
+    override val stat: String,
 
     @Element
-    val err: Err?,
+    override val err: Err?,
 
     @Element
     var transaction: Transaction?,
 
     @Element
     var list: TaskList
-)
+): Rsp

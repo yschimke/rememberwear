@@ -143,9 +143,9 @@ class RememberWearViewModel @Inject constructor(
         }
     }
 
-    fun enterLoginToken(it: String) {
+    fun enterLoginToken() {
         viewModelScope.launch {
-            loginFlow.enterToken(it)
+            loginFlow.enterToken()
             scheduledWork.refetchAllDataWork()
         }
     }

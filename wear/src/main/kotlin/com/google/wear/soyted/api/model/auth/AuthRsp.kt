@@ -16,19 +16,19 @@
 
 package com.google.wear.soyted.api.model.lists
 
+import com.google.wear.soyted.api.model.Err
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.Path
 import com.tickaroo.tikxml.annotation.Xml
 
 @Xml(name = "rsp")
 data class AuthRsp(
     @Attribute
-    val stat: String,
+    override val stat: String,
 
     @Element
-    val err: Err?,
+    override val err: Err?,
 
     @Element
     var auth: Auth?
-)
+): Rsp

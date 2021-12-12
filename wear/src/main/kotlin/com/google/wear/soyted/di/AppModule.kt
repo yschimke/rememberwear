@@ -65,11 +65,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun imageLoader(@ApplicationContext application: Context, client: Provider<OkHttpClient>) =
-        coilImageLoader(application, client)
-
-    @Singleton
-    @Provides
     fun provideAppDatabase(@ApplicationContext application: Context): RememberWearDatabase {
         return RememberWearDatabase.getDatabase(application)
     }

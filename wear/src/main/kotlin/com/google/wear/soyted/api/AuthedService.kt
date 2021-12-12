@@ -16,7 +16,13 @@
 
 package com.google.wear.soyted.api
 
+import com.google.wear.soyted.api.model.lists.AuthRsp
+import com.google.wear.soyted.api.model.lists.FrobRsp
+import com.google.wear.soyted.api.model.lists.ListsRsp
+import com.google.wear.soyted.api.model.lists.Rsp
+import com.google.wear.soyted.api.model.tags.TagsRsp
 import com.google.wear.soyted.api.model.tasks.TasksRsp
+import com.google.wear.soyted.api.model.timeline.TimelineRsp
 import com.google.wear.soyted.login.AuthRepository
 import java.io.IOException
 
@@ -25,13 +31,53 @@ class AuthedService(val delegate: RememberTheMilkService, val authRepository: Au
 
     override suspend fun tasks(tag: String?): TasksRsp {
         return delegate.tasks(tag).also {
-            if (it.stat != "ok") {
-                if (it.err?.code == "98") {
+            it.validate()
+        }
+    }
+
+    override suspend fun auth(): AuthRsp {
+        return delegate.auth().also {
+            it.validate()
+        }
+    }
+
+    override suspend fun frob(): FrobRsp {
+        return delegate.frob().also {
+            it.validate()
+        }
+    }
+
+    override suspend fun token(frob: String): AuthRsp {
+        return delegate.token(frob).also {
+            it.validate()
+        }
+    }
+
+    override suspend fun lists(): ListsRsp {
+        return delegate.lists().also {
+            it.validate()
+        }
+    }
+
+    override suspend fun tags(): TagsRsp {
+        return delegate.tags().also {
+            it.validate()
+        }
+    }
+
+    override suspend fun timeline(): TimelineRsp {
+        return delegate.timeline().also {
+            it.validate()
+        }
+    }
+
+    fun Rsp.validate() {
+            if (stat != "ok") {
+                if (err?.code == "98") {
                     println("401: Logging out")
                     authRepository.setToken(null)
                 }
-                throw IOException("Error: ${it.err?.msg}")
+                throw IOException("Error: ${err?.msg}")
             }
-        }
     }
 }

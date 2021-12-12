@@ -19,18 +19,12 @@ package com.google.wear.soyted
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.launch
 import androidx.activity.viewModels
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.lifecycle.lifecycleScope
-import coil.ImageLoader
-import coil.compose.LocalImageLoader
-import com.google.wear.soyted.input.VoicePrompt.voicePromptLauncher
+import com.google.wear.soyted.login.AuthRepository
 import com.google.wear.soyted.login.LoginFlow
 import com.google.wear.soyted.ui.RememberWearAppScreens
 import com.google.wear.soyted.util.Toaster
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,13 +32,13 @@ class RememberWearActivity : ComponentActivity() {
     private val viewModel by viewModels<RememberWearViewModel>()
 
     @Inject
-    lateinit var imageLoader: ImageLoader
-
-    @Inject
     lateinit var toaster: Toaster
 
     @Inject
     lateinit var loginFlow: LoginFlow
+
+    @Inject
+    lateinit var authRepository: AuthRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +46,7 @@ class RememberWearActivity : ComponentActivity() {
         viewModel.refetchIfStale()
 
         setContent {
-            CompositionLocalProvider(
-                LocalImageLoader provides imageLoader
-            ) {
-                RememberWearAppScreens(viewModel)
-            }
+            RememberWearAppScreens(viewModel)
         }
     }
 }

@@ -23,11 +23,15 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
-import androidx.wear.complications.data.*
+import androidx.wear.complications.data.ComplicationData
+import androidx.wear.complications.data.ComplicationText
+import androidx.wear.complications.data.ComplicationType
+import androidx.wear.complications.data.LongTextComplicationData
+import androidx.wear.complications.data.PlainComplicationText
+import androidx.wear.complications.data.ShortTextComplicationData
 import androidx.wear.complications.datasource.ComplicationDataSourceService
 import androidx.wear.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.complications.datasource.ComplicationRequest
-import coil.ImageLoader
 import com.google.wear.soyted.RememberWearActivity
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.TaskAndTaskSeries
@@ -50,9 +54,6 @@ class RememberWearComplicationProviderService : ComplicationDataSourceService() 
 
     @Inject
     lateinit var rememberWearDao: RememberWearDao
-
-    @Inject
-    lateinit var imageLoader: ImageLoader
 
     override fun onDestroy() {
         super.onDestroy()

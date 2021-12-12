@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.core.content.edit
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.Wearable
 import com.google.wear.soyted.BuildConfig
@@ -30,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.tasks.await
+import okio.ByteString.Companion.decodeHex
 import okio.ByteString.Companion.encodeUtf8
 import javax.inject.Inject
 
@@ -40,6 +42,12 @@ class LoginFlow @Inject constructor(
     @ApplicationContext val application: Context
 ) {
     suspend fun startLogin() {
+        val frob = api.frob().frob?.frob
+
+        authRepository.authPrefs.edit {
+            this.putString("frob", frob)
+        }
+
         val remoteActivityHelper =
             RemoteActivityHelper(application, Dispatchers.IO.asExecutor())
 
@@ -50,10 +58,12 @@ class LoginFlow @Inject constructor(
             Toast.makeText(application, "No connected mobile", Toast.LENGTH_SHORT).show()
         } else {
             try {
-                val sig = "${BuildConfig.API_SECRET}api_key${BuildConfig.API_KEY}permsdelete".encodeUtf8().md5().hex()
+                val sig =
+                    "${BuildConfig.API_SECRET}api_key${BuildConfig.API_KEY}frob${frob}permsdelete".encodeUtf8()
+                        .md5().hex()
 
                 val loginUrl =
-                    "https://www.rememberthemilk.com/services/auth/?api_key=${BuildConfig.API_KEY}&perms=delete&api_sig=$sig"
+                    "https://www.rememberthemilk.com/services/auth/?api_key=${BuildConfig.API_KEY}&perms=delete&frob=$frob&api_sig=$sig"
 
                 remoteActivityHelper.startRemoteActivity(
                     Intent(Intent.ACTION_VIEW)
@@ -69,14 +79,22 @@ class LoginFlow @Inject constructor(
         }
     }
 
-    suspend fun enterToken(token: String) {
-        val user = api.auth(token)
+    suspend fun enterToken() {
+        val frob = authRepository.authPrefs.getString("frob", null)
 
-        if (user.err != null) {
-            toaster.makeToast("Invalid token: ${user.err.msg}")
-        } else {
-            toaster.makeToast("Logged in as ${user.auth?.user?.fullname}")
-            authRepository.setToken(token)
+        if (frob == null) {
+            toaster.makeToast("Missing frob")
+            return
         }
+
+        val auth = api.token(frob)
+
+        if (auth.err != null) {
+            toaster.makeToast("Invalid token: ${auth.err.msg}")
+        } else {
+            toaster.makeToast("Logged in as ${auth.auth?.user?.fullname}")
+        }
+
+        authRepository.setToken(auth.auth?.token)
     }
 }

@@ -21,6 +21,7 @@ import com.google.wear.soyted.api.model.util.InstantTypeConverter
 import com.google.wear.soyted.login.AuthRepository
 import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -63,35 +64,54 @@ fun okHttpClient(authRepository: AuthRepository) = OkHttpClient.Builder()
 fun authInterceptor(authRepository: AuthRepository) = Interceptor { chain ->
     var request = chain.request()
 
-    val token = request.url.queryParameter("auth_token") ?: authRepository.token.value
+    val queryToken = request.url.queryParameter("auth_token")
+    val token = queryToken ?: authRepository.token.value
 
-    println("Token $token")
+    val method = request.url.queryParameter("method")
 
     if (token == null) {
         println("401: No token")
         return@Interceptor Response.Builder().code(401).build()
     }
 
-    val unsignedUrl = request.url.newBuilder()
-        .addQueryParameter("api_key", BuildConfig.API_KEY)
-        .addQueryParameter("auth_token", token)
-        .build()
+    if (method == "rtm.auth.getFrob" || method == "rtm.auth.getToken") {
+        val unsignedUrl = request.url.newBuilder()
+            .addQueryParameter("api_key", BuildConfig.API_KEY)
+            .build()
 
-    val sig =
-        BuildConfig.API_SECRET + unsignedUrl.queryParameterNames.sorted()
-            .map { it + unsignedUrl.queryParameter(it) }
-            .joinToString("")
+        val signedUrl =
+            unsignedUrl.newBuilder().addQueryParameter("api_sig", unsignedUrl.signature().encodeUtf8().md5().hex())
+                .build()
 
-    val signedUrl =
-        unsignedUrl.newBuilder().addQueryParameter("api_sig", sig.encodeUtf8().md5().hex()).build()
+        request = request.newBuilder()
+            .url(signedUrl)
+            .build()
+    } else {
+        val unsignedUrl = request.url.newBuilder()
+            .addQueryParameter("api_key", BuildConfig.API_KEY)
+            .setQueryParameter("auth_token", token)
+            .build()
 
-    request = request.newBuilder()
-        .url(signedUrl)
-        .build()
+        val signedUrl =
+            unsignedUrl.newBuilder().addQueryParameter("api_sig", unsignedUrl.signature().encodeUtf8().md5().hex())
+                .build()
+
+        request = request.newBuilder()
+            .url(signedUrl)
+            .build()
+    }
 
     val response = chain.proceed(request)
 
     response
+}
+
+fun HttpUrl.signature(): String {
+    val sig =
+        BuildConfig.API_SECRET + queryParameterNames.sorted()
+            .map { it + queryParameter(it) }
+            .joinToString("")
+    return sig
 }
 
 // Rewrite the Cache-Control header to cache all responses for a week.
