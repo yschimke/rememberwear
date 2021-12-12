@@ -20,7 +20,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import androidx.core.content.edit
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.Wearable
 import com.google.wear.soyted.BuildConfig
@@ -31,7 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.tasks.await
-import okio.ByteString.Companion.decodeHex
 import okio.ByteString.Companion.encodeUtf8
 import javax.inject.Inject
 
@@ -44,9 +42,7 @@ class LoginFlow @Inject constructor(
     suspend fun startLogin() {
         val frob = api.frob().frob?.frob
 
-        authRepository.authPrefs.edit {
-            this.putString("frob", frob)
-        }
+        authRepository.setFrob(frob)
 
         val remoteActivityHelper =
             RemoteActivityHelper(application, Dispatchers.IO.asExecutor())
@@ -80,7 +76,7 @@ class LoginFlow @Inject constructor(
     }
 
     suspend fun enterToken() {
-        val frob = authRepository.authPrefs.getString("frob", null)
+        val frob = authRepository.getFrob()
 
         if (frob == null) {
             toaster.makeToast("Missing frob")
@@ -95,6 +91,12 @@ class LoginFlow @Inject constructor(
             toaster.makeToast("Logged in as ${auth.auth?.user?.fullname}")
         }
 
-        authRepository.setToken(auth.auth?.token)
+        val token = auth.auth?.token
+
+        if (token == null) {
+            toaster.makeToast("No token")
+        }
+
+        authRepository.setToken(token)
     }
 }

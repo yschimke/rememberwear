@@ -23,16 +23,17 @@ import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.RememberWearDatabase
 import com.google.wear.soyted.login.AuthRepository
-import com.google.wear.soyted.ui.coilImageLoader
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Named
-import javax.inject.Provider
 import javax.inject.Singleton
 
 // TODO avoid so many singletons
@@ -53,6 +54,12 @@ object AppModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, @Named(BaseUrl) baseUrl: String): Retrofit =
         retrofit(baseUrl, okHttpClient)
+
+    @Singleton
+    @Provides
+    fun providesCoroutineScope(): CoroutineScope {
+        return CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    }
 
     @Singleton
     @Provides

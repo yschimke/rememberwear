@@ -70,4 +70,10 @@ interface RememberWearDao {
     @Transaction
     @Query("SELECT * FROM task where id = :taskId")
     fun getTaskAndTaskSeries(taskId: String): Flow<TaskAndTaskSeries?>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAuth(auth: Auth)
+
+    @Query("SELECT * FROM auth where id = :id")
+    fun getAuth(id: Int): Flow<Auth?>
 }

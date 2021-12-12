@@ -24,7 +24,6 @@ import androidx.work.multiprocess.RemoteCoroutineWorker
 import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.RememberWearDatabase
-import com.google.wear.soyted.db.TaskSeries
 import com.google.wear.soyted.login.AuthRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

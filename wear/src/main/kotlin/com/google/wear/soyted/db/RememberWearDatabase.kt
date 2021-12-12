@@ -22,8 +22,8 @@ import java.time.Instant
 import java.time.LocalDate
 
 @Database(
-    entities = [TaskSeries::class, Tag::class, Note::class, Task::class],
-    version = 1,
+    entities = [TaskSeries::class, Tag::class, Note::class, Task::class, Auth::class],
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(RememberWearDatabase.Converters::class)

@@ -16,50 +16,47 @@
 
 package com.google.wear.soyted.login
 
-import android.content.Context
-import androidx.core.content.edit
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM
+import com.google.wear.soyted.db.Auth
+import com.google.wear.soyted.db.RememberWearDao
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Singleton
 
 @Singleton
 class AuthRepository @Inject constructor(
-    @ApplicationContext val application: Context
+    val dao: RememberWearDao,
+    val coroutineScope: CoroutineScope
 ) {
-    val keyAlias by lazy {
-        MasterKey.Builder(application).setKeyScheme(AES256_GCM).build()
-    }
-
-    val authPrefs by lazy {
-        EncryptedSharedPreferences.create(
-            application,
-            "soundcloudauthkeys",
-            keyAlias,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-    }
+    val token = MutableStateFlow<String?>(null)
 
     init {
-        authPrefs.registerOnSharedPreferenceChangeListener { _, _ ->
-            val tokenString = authPrefs.getString("token", null)
-            isLoggedIn.value = tokenString != null
-            token.value = tokenString
+        coroutineScope.launch {
+            dao.getAuth(1).collect {
+                token.value = it?.token
+                isLoggedIn.value = it?.token != null
+            }
         }
     }
 
-    val token = MutableStateFlow(authPrefs.getString("token", null))
-
-    val isLoggedIn: MutableStateFlow<Boolean> = MutableStateFlow(token.value != null)
+    val isLoggedIn = MutableStateFlow(false)
 
     fun setToken(tokenString: String?) {
-        authPrefs.edit {
-            putString("token", tokenString)
+        coroutineScope.launch {
+            dao.upsertAuth(Auth(1, tokenString))
         }
+    }
+
+    fun setFrob(frob: String?) {
+        coroutineScope.launch {
+            dao.upsertAuth(Auth(2, frob))
+        }
+    }
+
+    suspend fun getFrob(): String? {
+        return dao.getAuth(2).first()?.token
     }
 }
