@@ -16,6 +16,7 @@
 
 package com.google.wear.soyted;
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.db.Note
@@ -23,6 +24,7 @@ import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.Task
 import com.google.wear.soyted.db.TaskAndTaskSeries
 import com.google.wear.soyted.db.TaskSeries
+import com.google.wear.soyted.util.Toaster
 import com.google.wear.soyted.work.ExternalUpdates
 import com.google.wear.soyted.work.ScheduledWork
 import com.google.wear.soyted.work.TaskCreator
@@ -34,6 +36,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -46,6 +49,7 @@ class RememberWearViewModel @Inject constructor(
     private val taskCreator: TaskCreator,
     private val taskEditor: TaskEditor,
     private val externalUpdates: ExternalUpdates,
+    private val toaster: Toaster
 ) : ViewModel() {
     val isRefreshing = MutableStateFlow(false)
 
@@ -104,22 +108,34 @@ class RememberWearViewModel @Inject constructor(
 
     fun uncomplete(taskSeries: TaskSeries, task: Task) {
         viewModelScope.launch {
-            taskEditor.uncomplete(taskSeries, task)
-            externalUpdates.forceUpdates()
+            try {
+                taskEditor.uncomplete(taskSeries, task)
+                externalUpdates.forceUpdates()
+            } catch (ioe: IOException) {
+                toaster.makeToast("Unable to connect to server")
+            }
         }
     }
 
     fun complete(taskSeries: TaskSeries, task: Task) {
         viewModelScope.launch {
-            taskEditor.complete(taskSeries, task)
-            externalUpdates.forceUpdates()
+            try {
+                taskEditor.complete(taskSeries, task)
+                externalUpdates.forceUpdates()
+            } catch (ioe: IOException) {
+                toaster.makeToast("Unable to connect to server")
+            }
         }
     }
 
     fun createTask(spokenText: String) {
         viewModelScope.launch {
-            taskCreator.create(spokenText)
-            externalUpdates.forceUpdates()
+            try {
+                taskCreator.create(spokenText)
+                externalUpdates.forceUpdates()
+            } catch (ioe: IOException) {
+                toaster.makeToast("Unable to connect to server")
+            }
         }
     }
 }
