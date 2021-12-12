@@ -16,10 +16,12 @@ android {
     compileSdk = 31
 
     defaultConfig {
-        applicationId = "com.google.wear.soyted"
+        applicationId = "ee.schimke.wear.soyted"
         minSdk = 26
         targetSdk = 30
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
+        versionCode = 2
+        versionName = "1.1"
     }
 
     buildFeatures {
@@ -34,6 +36,15 @@ android {
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/yschimke/keystores/upload-keystores.jks")
+            keyAlias = localProperties["keyAlias"] as String?
+            keyPassword = localProperties["keyPassword"] as String?
+            storePassword = localProperties["storePassword"] as String?
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField(
@@ -45,11 +56,6 @@ android {
                 "String",
                 "API_SECRET",
                 "\"${localProperties["API_SECRET"]}\""
-            )
-            buildConfigField(
-                "String",
-                "TOKEN",
-                "\"${localProperties["TOKEN"]}\""
             )
         }
         release {
@@ -63,19 +69,13 @@ android {
                 "API_SECRET",
                 "\"${localProperties["API_SECRET"]}\""
             )
-            buildConfigField(
-                "String",
-                "TOKEN",
-                "\"${localProperties["TOKEN"]}\""
-            )
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -97,6 +97,12 @@ dependencies {
     kaptTest("com.google.dagger:hilt-android-compiler:2.40.4")
 
     debugImplementation("androidx.wear.tiles:tiles-renderer:1.0.0")
+    implementation("androidx.activity:activity-ktx:1.4.0")
+    implementation("androidx.wear:wear-phone-interactions:1.0.0")
+    implementation("androidx.wear:wear-remote-interactions:1.0.0")
+    implementation("androidx.wear:wear-input:1.2.0-alpha02")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2")
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
     implementation("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.compose.material:material-icons-core:1.0.5")
     implementation("androidx.compose.ui:ui-tooling:1.0.5")
@@ -147,13 +153,6 @@ dependencies {
     implementation("com.tickaroo.tikxml:core:0.9.3-SNAPSHOT")
     kapt("com.tickaroo.tikxml:processor:0.9.3-SNAPSHOT")
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.15")
-
-    implementation("androidx.activity:activity-ktx:1.4.0")
-    implementation("androidx.wear:wear-phone-interactions:1.0.0")
-    implementation("androidx.wear:wear-remote-interactions:1.0.0")
-    implementation("androidx.wear:wear-input:1.2.0-alpha02")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2")
-    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
 
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.40.4")
     testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.4")
