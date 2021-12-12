@@ -39,6 +39,13 @@ Shows the most urgent task
 
 <img width="461" alt="image" src="https://user-images.githubusercontent.com/231923/145682076-89371e84-ed20-4159-a55a-50ddf9ac43d5.png">
 
+## Add task
+
+![image](https://user-images.githubusercontent.com/231923/145708027-af8a97ec-a28b-4906-b8ae-1e7ef04770d7.png)
+
+![image](https://user-images.githubusercontent.com/231923/145708034-c52b22e4-e3d6-436d-955b-446496d83afd.png)
+
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for details.
