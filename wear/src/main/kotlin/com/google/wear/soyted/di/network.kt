@@ -24,6 +24,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.brotli.BrotliInterceptor
+import okhttp3.logging.HttpLoggingInterceptor
 import okio.ByteString.Companion.encodeUtf8
 import retrofit2.Retrofit
 import java.time.Instant
@@ -48,9 +49,9 @@ fun okHttpClient() = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
 //            eventListenerFactory(LoggingEventListener.Factory())
 
-//            addInterceptor(HttpLoggingInterceptor().apply {
-//                this.level = HttpLoggingInterceptor.Level.BODY
-//            })
+            addInterceptor(HttpLoggingInterceptor().apply {
+                this.level = HttpLoggingInterceptor.Level.BASIC
+            })
         }
     }
     .addInterceptor(BrotliInterceptor)

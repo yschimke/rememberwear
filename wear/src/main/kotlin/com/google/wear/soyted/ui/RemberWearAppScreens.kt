@@ -40,7 +40,7 @@ val uri = "https://www.rememberthemilk.com/"
     androidx.wear.compose.material.ExperimentalWearMaterialApi::class
 )
 @Composable
-fun RememberWearAppScreens(viewModel: RememberWearViewModel) {
+fun RememberWearAppScreens(viewModel: RememberWearViewModel, onVoicePrompt: () -> Unit) {
     val rotaryEventDispatcher = remember { RotaryEventDispatcher() }
 
     CompositionLocalProvider(
@@ -62,7 +62,7 @@ fun RememberWearAppScreens(viewModel: RememberWearViewModel) {
                 ) {
                     InboxScreen(viewModel = viewModel, onClick = {
                         rtmNavController.navigateToTask(it.task.id)
-                    })
+                    }, voicePromptQuery = onVoicePrompt)
                 }
 
                 composable(

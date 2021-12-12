@@ -16,19 +16,14 @@
 
 package com.google.wear.soyted.api.model.post
 
-import com.google.wear.soyted.api.model.tasks.TaskList
 import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.Xml
 
-@Xml(name = "rsp")
-data class PostRsp(
+@Xml(name = "transaction")
+data class Transaction(
     @Attribute
-    val stat: String,
+    val id: String,
 
-    @Element
-    var transaction: Transaction?,
-
-    @Element
-    var list: TaskList
+    @Attribute
+    var undoable: String
 )

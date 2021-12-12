@@ -19,9 +19,12 @@ package com.google.wear.soyted.ui
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
@@ -41,7 +44,8 @@ fun InboxScreen(
     modifier: Modifier = Modifier,
     scrollState: ScalingLazyListState = rememberScalingLazyListState(),
     onClick: (TaskAndTaskSeries) -> Unit = {},
-    viewModel: RememberWearViewModel
+    viewModel: RememberWearViewModel,
+    voicePromptQuery: () -> Unit
 ) {
     val tasks = viewModel.inbox.collectAsState(initial = listOf()).value
 
@@ -54,7 +58,13 @@ fun InboxScreen(
         onRefresh = { viewModel.refetchAllData() },
         refreshTriggerDistance = 16.dp
     ) {
-        InboxScreen(modifier, scrollState, tasks, onClick)
+        InboxScreen(
+            modifier = modifier,
+            scrollState = scrollState,
+            tasks = tasks,
+            onClick = onClick,
+            voicePromptQuery = voicePromptQuery
+        )
     }
 }
 
@@ -63,7 +73,8 @@ fun InboxScreen(
     modifier: Modifier = Modifier,
     scrollState: ScalingLazyListState = rememberScalingLazyListState(),
     tasks: List<TaskAndTaskSeries>,
-    onClick: (TaskAndTaskSeries) -> Unit
+    onClick: (TaskAndTaskSeries) -> Unit,
+    voicePromptQuery: () -> Unit
 ) {
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
 
@@ -73,7 +84,8 @@ fun InboxScreen(
             horizontal = 8.dp,
             vertical = paddingHeight,
         ),
-        state = scrollState
+        state = scrollState,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             Text(
@@ -85,6 +97,11 @@ fun InboxScreen(
         }
         items(tasks.size) {
             TaskChip(task = tasks[it], onClick = { onClick(tasks[it]) })
+        }
+        item {
+            Button(onClick = voicePromptQuery) {
+                Icon(imageVector = Icons.Default.AddCircle, contentDescription = "Add Task")
+            }
         }
     }
 }
@@ -98,6 +115,9 @@ fun InboxScreen(
 @Composable
 fun CirclesListPreview() {
     RememberTheMilkThemePreview(round = true) {
-        InboxScreen(tasks = TaskAndSeriesProvider.taskAndTaskSeries, onClick = {})
+        InboxScreen(
+            tasks = TaskAndSeriesProvider.taskAndTaskSeries,
+            onClick = {},
+            voicePromptQuery = {})
     }
 }

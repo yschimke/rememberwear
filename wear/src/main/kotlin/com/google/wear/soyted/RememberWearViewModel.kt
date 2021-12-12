@@ -25,6 +25,7 @@ import com.google.wear.soyted.db.TaskAndTaskSeries
 import com.google.wear.soyted.db.TaskSeries
 import com.google.wear.soyted.work.ExternalUpdates
 import com.google.wear.soyted.work.ScheduledWork
+import com.google.wear.soyted.work.TaskCreator
 import com.google.wear.soyted.work.TaskEditor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +43,7 @@ import javax.inject.Inject
 class RememberWearViewModel @Inject constructor(
     private val rememberWearDao: RememberWearDao,
     private val scheduledWork: ScheduledWork,
+    private val taskCreator: TaskCreator,
     private val taskEditor: TaskEditor,
     private val externalUpdates: ExternalUpdates,
 ) : ViewModel() {
@@ -110,6 +112,13 @@ class RememberWearViewModel @Inject constructor(
     fun complete(taskSeries: TaskSeries, task: Task) {
         viewModelScope.launch {
             taskEditor.complete(taskSeries, task)
+            externalUpdates.forceUpdates()
+        }
+    }
+
+    fun createTask(spokenText: String) {
+        viewModelScope.launch {
+            taskCreator.create(spokenText)
             externalUpdates.forceUpdates()
         }
     }

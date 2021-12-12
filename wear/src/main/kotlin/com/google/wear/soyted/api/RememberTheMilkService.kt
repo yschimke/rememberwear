@@ -39,6 +39,23 @@ interface RememberTheMilkService {
     @POST("/services/rest/?method=rtm.timelines.create")
     suspend fun timeline(): TimelineRsp
 
+    @POST("/services/rest/?method=rtm.tasks.setTags")
+    suspend fun setTags(
+        @Query("timeline") timeline: String,
+        @Query("list_id") list_id: String,
+        @Query("taskseries_id") taskseries_id: String,
+        @Query("task_id") task_id: String,
+        @Query("tags") tags: String,
+    ): PostRsp
+
+    @POST("/services/rest/?method=rtm.tasks.add")
+    suspend fun addTask(
+        @Query("timeline") timeline: String,
+        @Query("name") name: String,
+        @Query("parse") parse: String,
+        @Query("list_id") list_id: String,
+    ): PostRsp
+
     @POST("/services/rest/?method=rtm.tasks.complete")
     suspend fun complete(
         @Query("timeline") timeline: String,
