@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted;
+package com.google.wear.soyted
 
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
@@ -143,7 +143,7 @@ class RememberWearViewModel @Inject constructor(
         }
     }
 
-    fun enterLoginToken() {
+    fun continueLogin() {
         viewModelScope.launch {
             loginFlow.enterToken()
             scheduledWork.refetchAllDataWork()

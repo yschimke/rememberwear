@@ -20,18 +20,18 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import androidx.wear.compose.material.AlertDialog
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.Text
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.soyted.navigation.Screens
 import com.google.wear.soyted.RememberWearViewModel
-import com.google.wear.soyted.input.KeyboardPrompt
-import com.google.wear.soyted.input.KeyboardPrompt.keyboardPromptIntent
-import com.google.wear.soyted.input.KeyboardPrompt.keyboardPromptLauncher
-import com.google.wear.soyted.input.VoicePrompt
 import com.google.wear.soyted.input.VoicePrompt.voicePromptIntent
 import com.google.wear.soyted.input.VoicePrompt.voicePromptLauncher
 import com.google.wear.soyted.navigation.NavController
@@ -54,14 +54,6 @@ fun RememberWearAppScreens(
     val addTaskVoicePrompt = voicePromptLauncher(
         onCreateTask = {
             viewModel.createTask(it)
-        }, onError = {
-            viewModel.toaster.makeToast(it)
-        }
-    )
-
-    val loginAction = keyboardPromptLauncher(
-        onTextEntered = {
-            viewModel.enterLoginToken()
         }, onError = {
             viewModel.toaster.makeToast(it)
         }
@@ -94,7 +86,7 @@ fun RememberWearAppScreens(
                         },
                         loginAction = {
                             viewModel.startLoginFlow()
-                            loginAction.launch(keyboardPromptIntent)
+                            rtmNavController.navigateToLoginDialog()
                         }
                     )
                 }
@@ -108,6 +100,31 @@ fun RememberWearAppScreens(
                 ) {
                     val taskId = it.arguments?.getString("taskId")
                     TaskScreen(viewModel = viewModel, taskId = taskId!!)
+                }
+
+                composable(
+                    Screens.LoginDialog.route
+                ) {
+                    AlertDialog(
+                        title = {
+                            Text("Login")
+                        },
+                        positiveButton = {
+                            Button(onClick = {
+                                viewModel.continueLogin()
+                                navController.popBackStack()
+                            }) {
+                                Text("Login")
+                            }
+                        },
+                        negativeButton = {
+                        },
+                    ) {
+                        Text(
+                            text = "Continue after login on mobile",
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             }
         }

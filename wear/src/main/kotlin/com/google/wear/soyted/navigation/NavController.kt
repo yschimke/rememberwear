@@ -26,4 +26,8 @@ class NavController(val navController: NavHostController) {
     fun navigateToTask(taskId: String) {
         navController.navigate(Screens.Task.route + "/" + taskId)
     }
+
+    fun navigateToLoginDialog() {
+        navController.navigate(Screens.LoginDialog.route)
+    }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.api.model.util;
+package com.google.wear.soyted.api.model.util
 
 import java.time.Instant
 

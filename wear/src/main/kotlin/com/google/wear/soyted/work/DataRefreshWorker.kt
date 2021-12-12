@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.work;
+package com.google.wear.soyted.work
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker

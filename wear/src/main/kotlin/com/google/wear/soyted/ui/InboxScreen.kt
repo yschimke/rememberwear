@@ -106,13 +106,13 @@ fun InboxScreen(
         item {
 
         }
-//        if (!isLoggedIn) {
+        if (!isLoggedIn) {
             item {
                 Button(onClick = loginAction) {
                     Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Login")
                 }
             }
-//        }
+        }
         items(tasks.size) {
             TaskChip(task = tasks[it], onClick = { onClick(tasks[it]) })
         }

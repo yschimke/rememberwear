@@ -24,6 +24,7 @@ import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.brotli.BrotliInterceptor
 import okhttp3.logging.HttpLoggingInterceptor
@@ -69,11 +70,6 @@ fun authInterceptor(authRepository: AuthRepository) = Interceptor { chain ->
 
     val method = request.url.queryParameter("method")
 
-    if (token == null) {
-        println("401: No token")
-        return@Interceptor Response.Builder().code(401).build()
-    }
-
     if (method == "rtm.auth.getFrob" || method == "rtm.auth.getToken") {
         val unsignedUrl = request.url.newBuilder()
             .addQueryParameter("api_key", BuildConfig.API_KEY)
@@ -87,6 +83,16 @@ fun authInterceptor(authRepository: AuthRepository) = Interceptor { chain ->
             .url(signedUrl)
             .build()
     } else {
+        if (token == null) {
+            println("401: No token")
+            return@Interceptor Response.Builder()
+                .request(request)
+                .code(401)
+                .protocol(Protocol.HTTP_2)
+                .message("No token")
+                .build()
+        }
+
         val unsignedUrl = request.url.newBuilder()
             .addQueryParameter("api_key", BuildConfig.API_KEY)
             .setQueryParameter("auth_token", token)
