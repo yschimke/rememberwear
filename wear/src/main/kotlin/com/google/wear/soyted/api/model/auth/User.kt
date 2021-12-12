@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.api.model.tags
+package com.google.wear.soyted.api.model.lists
 
-import com.google.wear.soyted.api.model.Err
-import com.google.wear.soyted.api.model.lists.Rsp
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.Path
 import com.tickaroo.tikxml.annotation.Xml
 
-@Xml(name = "rsp")
-data class TagsRsp(
+@Xml(name = "user")
+data class User(
     @Attribute
-    override val stat: String,
+    val id: String,
 
-    @Element
-    override val err: Err?,
+    @Attribute
+    val username: String,
 
-    @Path("tags")
-    @Element
-    var tags: List<Tag>?
-): Rsp
+    @Attribute
+    val fullname: String,
+)

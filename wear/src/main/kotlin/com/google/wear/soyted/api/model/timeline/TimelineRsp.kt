@@ -16,6 +16,8 @@
 
 package com.google.wear.soyted.api.model.timeline
 
+import com.google.wear.soyted.api.model.Err
+import com.google.wear.soyted.api.model.lists.Rsp
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.Xml
@@ -23,8 +25,11 @@ import com.tickaroo.tikxml.annotation.Xml
 @Xml(name = "rsp")
 data class TimelineRsp(
     @Attribute
-    val stat: String,
+    override val stat: String,
+
+    @Element
+    override val err: Err?,
 
     @Element
     var timeline: Timeline
-)
+): Rsp

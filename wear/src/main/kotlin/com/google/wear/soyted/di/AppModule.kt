@@ -18,9 +18,11 @@ package com.google.wear.soyted.di
 
 import android.content.Context
 import androidx.work.WorkManager
+import com.google.wear.soyted.api.AuthedService
 import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.RememberWearDatabase
+import com.google.wear.soyted.login.AuthRepository
 import com.google.wear.soyted.ui.coilImageLoader
 import dagger.Module
 import dagger.Provides
@@ -45,7 +47,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient() = okHttpClient()
+    fun provideOkHttpClient(authRepository: AuthRepository) = okHttpClient(authRepository)
 
     @Singleton
     @Provides
@@ -54,12 +56,12 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRememberWearService(retrofit: Retrofit): RememberTheMilkService = retrofit.create(RememberTheMilkService::class.java)
-
-    @Singleton
-    @Provides
-    fun imageLoader(@ApplicationContext application: Context, client: Provider<OkHttpClient>) =
-        coilImageLoader(application, client)
+    fun provideRememberWearService(
+        retrofit: Retrofit,
+        authRepository: AuthRepository
+    ): RememberTheMilkService {
+        return AuthedService(retrofit.create(RememberTheMilkService::class.java), authRepository)
+    }
 
     @Singleton
     @Provides

@@ -28,6 +28,12 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.soyted.navigation.Screens
 import com.google.wear.soyted.RememberWearViewModel
+import com.google.wear.soyted.input.KeyboardPrompt
+import com.google.wear.soyted.input.KeyboardPrompt.keyboardPromptIntent
+import com.google.wear.soyted.input.KeyboardPrompt.keyboardPromptLauncher
+import com.google.wear.soyted.input.VoicePrompt
+import com.google.wear.soyted.input.VoicePrompt.voicePromptIntent
+import com.google.wear.soyted.input.VoicePrompt.voicePromptLauncher
 import com.google.wear.soyted.navigation.NavController
 import com.google.wear.soyted.util.LocalRotaryEventDispatcher
 import com.google.wear.soyted.util.RotaryEventDispatcher
@@ -40,8 +46,26 @@ val uri = "https://www.rememberthemilk.com/"
     androidx.wear.compose.material.ExperimentalWearMaterialApi::class
 )
 @Composable
-fun RememberWearAppScreens(viewModel: RememberWearViewModel, onVoicePrompt: () -> Unit) {
+fun RememberWearAppScreens(
+    viewModel: RememberWearViewModel
+) {
     val rotaryEventDispatcher = remember { RotaryEventDispatcher() }
+
+    val addTaskVoicePrompt = voicePromptLauncher(
+        onCreateTask = {
+            viewModel.createTask(it)
+        }, onError = {
+            viewModel.toaster.makeToast(it)
+        }
+    )
+
+    val loginAction = keyboardPromptLauncher(
+        onTextEntered = {
+            viewModel.enterLoginToken()
+        }, onError = {
+            viewModel.toaster.makeToast(it)
+        }
+    )
 
     CompositionLocalProvider(
         LocalRotaryEventDispatcher provides rotaryEventDispatcher
@@ -60,9 +84,19 @@ fun RememberWearAppScreens(viewModel: RememberWearViewModel, onVoicePrompt: () -
                     Screens.Inbox.route,
                     deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" })
                 ) {
-                    InboxScreen(viewModel = viewModel, onClick = {
-                        rtmNavController.navigateToTask(it.task.id)
-                    }, voicePromptQuery = onVoicePrompt)
+                    InboxScreen(
+                        viewModel = viewModel,
+                        onClick = {
+                            rtmNavController.navigateToTask(it.task.id)
+                        },
+                        voicePromptQuery = {
+                            addTaskVoicePrompt.launch(voicePromptIntent)
+                        },
+                        loginAction = {
+                            viewModel.startLoginFlow()
+                            loginAction.launch(keyboardPromptIntent)
+                        }
+                    )
                 }
 
                 composable(

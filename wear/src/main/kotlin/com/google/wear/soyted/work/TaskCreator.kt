@@ -20,7 +20,10 @@ import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
 import java.lang.IllegalStateException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+
+@Singleton
 class TaskCreator @Inject constructor(
     val service: RememberTheMilkService,
     val dao: RememberWearDao

@@ -25,6 +25,7 @@ import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.RememberWearDatabase
 import com.google.wear.soyted.db.TaskSeries
+import com.google.wear.soyted.login.AuthRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -40,9 +41,14 @@ class DataRefreshWorker
     val rememberWearDatabase: RememberWearDatabase,
     val rememberWearDao: RememberWearDao,
     val rememberTheMilkService: RememberTheMilkService,
-    val externalUpdates: ExternalUpdates
+    val externalUpdates: ExternalUpdates,
+    val authRepository: AuthRepository
 ) : RemoteCoroutineWorker(appContext, workerParams) {
     override suspend fun doRemoteWork(): Result {
+        if (!authRepository.isLoggedIn.value) {
+            return Result.failure()
+        }
+
         refreshDatabase(rememberWearDatabase, rememberWearDao, rememberTheMilkService)
 
         externalUpdates.forceUpdates()

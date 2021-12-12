@@ -16,24 +16,15 @@
 
 package com.google.wear.soyted
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.speech.RecognizerIntent
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.launch
-import androidx.activity.result.registerForActivityResult
 import androidx.activity.viewModels
-import androidx.compose.runtime.CompositionLocalProvider
-import coil.ImageLoader
-import coil.compose.LocalImageLoader
+import com.google.wear.soyted.login.AuthRepository
+import com.google.wear.soyted.login.LoginFlow
 import com.google.wear.soyted.ui.RememberWearAppScreens
 import com.google.wear.soyted.util.Toaster
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,36 +32,13 @@ class RememberWearActivity : ComponentActivity() {
     private val viewModel by viewModels<RememberWearViewModel>()
 
     @Inject
-    lateinit var imageLoader: ImageLoader
-
-    @Inject
     lateinit var toaster: Toaster
 
-    val voicePromptLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(
-                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-            )
+    @Inject
+    lateinit var loginFlow: LoginFlow
 
-            putExtra(
-                RecognizerIntent.EXTRA_PROMPT,
-                "Task to remember"
-            )
-        }
-    ) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val spokenText: String? =
-                it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)
-
-            if (spokenText != null) {
-                viewModel.createTask(spokenText)
-            }
-        } else {
-            toaster.makeToast("Failed adding task")
-        }
-    }
+    @Inject
+    lateinit var authRepository: AuthRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,13 +46,7 @@ class RememberWearActivity : ComponentActivity() {
         viewModel.refetchIfStale()
 
         setContent {
-            CompositionLocalProvider(
-                LocalImageLoader provides imageLoader
-            ) {
-                RememberWearAppScreens(viewModel, onVoicePrompt = {
-                    voicePromptLauncher.launch()
-                })
-            }
+            RememberWearAppScreens(viewModel)
         }
     }
 }
