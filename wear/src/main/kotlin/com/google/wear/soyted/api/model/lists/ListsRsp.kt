@@ -26,6 +26,9 @@ data class ListsRsp(
     @Attribute
     val stat: String,
 
+    @Element
+    val err: Err?,
+
     @Path("lists")
     @Element
     var lists: List<RTMList>

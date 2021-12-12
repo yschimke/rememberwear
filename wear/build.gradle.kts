@@ -85,6 +85,7 @@ android {
         resources.excludes.add("META-INF/LGPL2.1")
         resources.excludes.add("META-INF/NOTICE.md")
         resources.excludes.add("META-INF/LICENSE.md")
+        resources.excludes.add("build-data.properties")
     }
 }
 
@@ -148,6 +149,11 @@ dependencies {
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.15")
 
     implementation("androidx.activity:activity-ktx:1.4.0")
+    implementation("androidx.wear:wear-phone-interactions:1.0.0")
+    implementation("androidx.wear:wear-remote-interactions:1.0.0")
+    implementation("androidx.wear:wear-input:1.2.0-alpha02")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2")
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
 
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.40.4")
     testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.4")

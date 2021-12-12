@@ -18,6 +18,7 @@ package com.google.wear.soyted.di
 
 import com.google.wear.soyted.BuildConfig
 import com.google.wear.soyted.api.model.util.InstantTypeConverter
+import com.google.wear.soyted.login.AuthRepository
 import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import okhttp3.Interceptor
@@ -44,31 +45,36 @@ fun retrofit(
         .build()
 }
 
-fun okHttpClient() = OkHttpClient.Builder()
+fun okHttpClient(authRepository: AuthRepository) = OkHttpClient.Builder()
     .apply {
         if (BuildConfig.DEBUG) {
 //            eventListenerFactory(LoggingEventListener.Factory())
 
             addInterceptor(HttpLoggingInterceptor().apply {
-                this.level = HttpLoggingInterceptor.Level.BASIC
+                this.level = HttpLoggingInterceptor.Level.BODY
             })
         }
     }
     .addInterceptor(BrotliInterceptor)
-    .addInterceptor(authInterceptor())
+    .addInterceptor(authInterceptor(authRepository))
     .addNetworkInterceptor(cacheImagesInterceptor())
     .build()
 
-fun authInterceptor() = Interceptor { chain ->
+fun authInterceptor(authRepository: AuthRepository) = Interceptor { chain ->
     var request = chain.request()
+
+    val token = request.url.queryParameter("auth_token") ?: authRepository.token.value
+
+    println("Token $token")
+
+    if (token == null) {
+        println("401: No token")
+        return@Interceptor Response.Builder().code(401).build()
+    }
 
     val unsignedUrl = request.url.newBuilder()
         .addQueryParameter("api_key", BuildConfig.API_KEY)
-        .apply {
-            if (BuildConfig.TOKEN != null) {
-                addQueryParameter("auth_token", BuildConfig.TOKEN)
-            }
-        }
+        .addQueryParameter("auth_token", token)
         .build()
 
     val sig =
@@ -83,7 +89,9 @@ fun authInterceptor() = Interceptor { chain ->
         .url(signedUrl)
         .build()
 
-    chain.proceed(request)
+    val response = chain.proceed(request)
+
+    response
 }
 
 // Rewrite the Cache-Control header to cache all responses for a week.

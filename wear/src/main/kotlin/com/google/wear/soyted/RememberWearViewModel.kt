@@ -24,6 +24,8 @@ import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.Task
 import com.google.wear.soyted.db.TaskAndTaskSeries
 import com.google.wear.soyted.db.TaskSeries
+import com.google.wear.soyted.login.AuthRepository
+import com.google.wear.soyted.login.LoginFlow
 import com.google.wear.soyted.util.Toaster
 import com.google.wear.soyted.work.ExternalUpdates
 import com.google.wear.soyted.work.ScheduledWork
@@ -49,7 +51,9 @@ class RememberWearViewModel @Inject constructor(
     private val taskCreator: TaskCreator,
     private val taskEditor: TaskEditor,
     private val externalUpdates: ExternalUpdates,
-    private val toaster: Toaster
+    val authRepository: AuthRepository,
+    val toaster: Toaster,
+    val loginFlow: LoginFlow
 ) : ViewModel() {
     val isRefreshing = MutableStateFlow(false)
 
@@ -136,6 +140,19 @@ class RememberWearViewModel @Inject constructor(
             } catch (ioe: IOException) {
                 toaster.makeToast("Unable to connect to server")
             }
+        }
+    }
+
+    fun enterLoginToken(it: String) {
+        viewModelScope.launch {
+            loginFlow.enterToken(it)
+            scheduledWork.refetchAllDataWork()
+        }
+    }
+
+    fun startLoginFlow() {
+        viewModelScope.launch {
+            loginFlow.startLogin()
         }
     }
 }

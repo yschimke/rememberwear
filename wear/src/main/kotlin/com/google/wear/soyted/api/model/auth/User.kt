@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.api.model.timeline
+package com.google.wear.soyted.api.model.lists
 
-import com.google.wear.soyted.api.model.lists.Err
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.Xml
 
-@Xml(name = "rsp")
-data class TimelineRsp(
+@Xml(name = "user")
+data class User(
     @Attribute
-    val stat: String,
+    val id: String,
 
-    @Element
-    val err: Err?,
+    @Attribute
+    val username: String,
 
-    @Element
-    var timeline: Timeline
+    @Attribute
+    val fullname: String,
 )

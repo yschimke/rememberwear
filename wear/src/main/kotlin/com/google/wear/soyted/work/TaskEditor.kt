@@ -22,7 +22,10 @@ import com.google.wear.soyted.db.Task
 import com.google.wear.soyted.db.TaskSeries
 import java.time.Instant
 import javax.inject.Inject
+import javax.inject.Singleton
 
+
+@Singleton
 class TaskEditor @Inject constructor(
     val service: RememberTheMilkService,
     val dao: RememberWearDao

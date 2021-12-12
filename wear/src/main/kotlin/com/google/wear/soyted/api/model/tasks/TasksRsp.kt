@@ -16,6 +16,7 @@
 
 package com.google.wear.soyted.api.model.tasks
 
+import com.google.wear.soyted.api.model.lists.Err
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.Xml
@@ -24,6 +25,9 @@ import com.tickaroo.tikxml.annotation.Xml
 data class TasksRsp(
     @Attribute
     var stat: String,
+
+    @Element
+    val err: Err?,
 
     @Element
     var tasks: Tasks?

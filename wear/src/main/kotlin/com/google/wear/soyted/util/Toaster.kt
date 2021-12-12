@@ -25,6 +25,6 @@ class Toaster @Inject constructor(
     @ApplicationContext val application: Context
 ) {
     fun makeToast(message: String) {
-        Toast.makeText(application, "Failed adding task", Toast.LENGTH_SHORT).show()
+        Toast.makeText(application, message, Toast.LENGTH_SHORT).show()
     }
 }

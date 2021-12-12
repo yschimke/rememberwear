@@ -16,6 +16,7 @@
 
 package com.google.wear.soyted.api.model.tags
 
+import com.google.wear.soyted.api.model.lists.Err
 import com.tickaroo.tikxml.annotation.Attribute
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.Path
@@ -25,6 +26,9 @@ import com.tickaroo.tikxml.annotation.Xml
 data class TagsRsp(
     @Attribute
     val stat: String,
+
+    @Element
+    val err: Err?,
 
     @Path("tags")
     @Element
