@@ -9,13 +9,12 @@ Icon from https://freesvg.org/soymilkcarton
 
 ## Status
 
-Requires auth tokens in local.properties until Oauth setup it approved by RememberTheMilk.
+Building locally requires auth tokens in local.properties until Oauth setup.
 
 
 ```
 API_KEY=FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 API_SECRET=FFFFFFFFFFFFFFFF
-TOKEN=FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 ```
 
 ### App 
