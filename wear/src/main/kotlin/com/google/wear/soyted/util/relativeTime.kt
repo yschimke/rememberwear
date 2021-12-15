@@ -32,8 +32,8 @@ fun LocalDate?.relativeTime(today: LocalDate = LocalDate.now()): String {
     return when {
         this == null -> ""
         this == today -> "Today"
-        this == today.minusDays(1) -> "Yesterday"
-        this == today.plusDays(1) -> "Tomorrow"
+        this == today.minusDays(1) -> "Yest."
+        this == today.plusDays(1) -> "Tom."
         else -> this.toString()
     }
 }

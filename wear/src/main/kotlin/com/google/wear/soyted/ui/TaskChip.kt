@@ -77,7 +77,7 @@ fun TaskChip(
                         MaterialTheme.colors.secondaryVariant
                     }
                     Text(
-                        modifier = Modifier.sizeIn(minWidth = 32.dp, maxWidth = 48.dp),
+                        modifier = Modifier.sizeIn(minWidth = 36.dp, maxWidth = 48.dp),
                         text = due.relativeTime(),
                         color = color,
                         maxLines = 2,
