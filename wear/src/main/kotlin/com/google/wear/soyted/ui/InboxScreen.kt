@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -49,6 +50,12 @@ fun InboxScreen(
     voicePromptQuery: () -> Unit,
     loginAction: () -> Unit,
 ) {
+    val config = LocalConfiguration.current
+
+    SideEffect {
+        println("" + config.screenHeightDp + " " + config.screenWidthDp)
+    }
+
     val tasks = viewModel.inbox.collectAsState(initial = listOf()).value
 
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -123,24 +130,5 @@ fun InboxScreen(
                 }
             }
         }
-    }
-}
-
-@Preview(
-    widthDp = 300,
-    heightDp = 300,
-    apiLevel = 26,
-    uiMode = Configuration.UI_MODE_TYPE_WATCH
-)
-@Composable
-fun CirclesListPreview() {
-    RememberTheMilkThemePreview(round = true) {
-        InboxScreen(
-            tasks = TaskAndSeriesProvider.taskAndTaskSeries,
-            onClick = {},
-            voicePromptQuery = {},
-            loginAction = {},
-            isLoggedIn = true
-        )
     }
 }

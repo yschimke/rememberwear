@@ -1,11 +1,11 @@
 [versions]
-androidPlugin = "7.1.0-beta01"
+androidPlugin = "7.1.0-beta05"
 kotlin = "1.5.31"
 okhttp = "5.0.0-alpha.2"
 junit = "5.7.1"
 okio = "3.0.0"
 hilt = "2.40.4"
-compose = "1.1.0-beta01"
+compose = "1.1.0-beta03"
 coil = "2.0.0-alpha02"
 
 [libraries]

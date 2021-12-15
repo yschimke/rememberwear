@@ -38,43 +38,11 @@ object Previews {
 
 @Composable
 fun RememberTheMilkThemePreview(
-    round: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     RememberTheMilkTheme {
-        if (round) {
-            val configuration =
-                LocalConfiguration.current.let {
-                    Configuration(it).apply {
-                        screenLayout =
-                            (screenLayout or Configuration.SCREENLAYOUT_ROUND_YES) //xor Configuration.SCREENLAYOUT_ROUND_YES
-                    }
-                }
-
-            CompositionLocalProvider(LocalConfiguration provides configuration) {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .background(Color.White)
-                ) {
-                }
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(CircleShape)
-                        .background(Color.DarkGray)
-                ) {
-                    content()
-                }
-            }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.DarkGray)
-            ) {
-                content()
-            }
+        RoundWatchPreviewScaffold() {
+            content()
         }
     }
 }
