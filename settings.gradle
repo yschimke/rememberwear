@@ -10,9 +10,9 @@ pluginManagement {
         }
     }
     plugins {
-        id 'com.android.application' version '7.2.0-alpha02'
-        id 'com.android.library' version '7.2.0-alpha02'
-        id 'com.android.test' version '7.2.0-alpha02'
+        id 'com.android.application' version '7.1.0-beta05'
+        id 'com.android.library' version '7.1.0-beta05'
+        id 'com.android.test' version '7.1.0-beta05'
         id 'org.jetbrains.kotlin.android' version '1.5.31'
     }
 }
@@ -26,15 +26,9 @@ dependencyResolutionManagement {
         maven {
             url 'https://oss.sonatype.org/content/repositories/snapshots'
         }
-//        maven { url 'https://jitpack.io' }
     }
 }
 
 rootProject.name = "RememberWear"
 include ':wear'
-
-def benchmark = startParameter.projectProperties["benchmark"]
-
-if (benchmark != null) {
-    include ':benchmark'
-}
+//include ':benchmark'

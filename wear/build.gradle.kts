@@ -20,8 +20,8 @@ android {
         minSdk = 26
         targetSdk = 30
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
-        versionCode = 3
-        versionName = "1.3"
+        versionCode = 4
+        versionName = "1.4"
     }
 
     buildFeatures {
@@ -77,6 +77,25 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
         }
+        create("benchmark") {
+            buildConfigField(
+                "String",
+                "API_KEY",
+                "\"${localProperties["API_KEY"]}\""
+            )
+            buildConfigField(
+                "String",
+                "API_SECRET",
+                "\"${localProperties["API_SECRET"]}\""
+            )
+            isShrinkResources = true
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("debug")
+        }
     }
 
     packagingOptions {
@@ -96,7 +115,6 @@ dependencies {
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
     kaptTest("com.google.dagger:hilt-android-compiler:2.40.4")
 
-    debugImplementation("androidx.wear.tiles:tiles-renderer:1.0.0")
     implementation("androidx.activity:activity-ktx:1.4.0")
     implementation("androidx.wear:wear-phone-interactions:1.0.0")
     implementation("androidx.wear:wear-remote-interactions:1.0.0")
@@ -153,6 +171,8 @@ dependencies {
     implementation("com.tickaroo.tikxml:core:0.9.3-SNAPSHOT")
     kapt("com.tickaroo.tikxml:processor:0.9.3-SNAPSHOT")
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.15")
+
+    debugImplementation("androidx.wear.tiles:tiles-renderer:1.0.0")
 
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.40.4")
     testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.4")

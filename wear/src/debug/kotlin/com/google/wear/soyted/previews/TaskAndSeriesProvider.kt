@@ -26,7 +26,6 @@ import java.time.Instant
 import java.time.LocalDate
 
 class TaskAndSeriesProvider : PreviewParameterProvider<TaskAndTaskSeries> {
-
     override val values: Sequence<TaskAndTaskSeries> = taskAndTaskSeries.asSequence()
 
     companion object {

@@ -88,17 +88,3 @@ fun TaskChip(
         },
     )
 }
-
-@Preview(
-    widthDp = 300,
-    heightDp = 80,
-    apiLevel = 26,
-    uiMode = Configuration.UI_MODE_TYPE_WATCH,
-    backgroundColor = 0xFF000000L
-)
-@Composable
-fun TaskChipPreview(@PreviewParameter(provider = TaskAndSeriesProvider::class) task: TaskAndTaskSeries) {
-    RememberTheMilkThemePreview(round = false) {
-        TaskChip(task = task, onClick = {})
-    }
-}
