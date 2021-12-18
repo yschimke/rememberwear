@@ -16,7 +16,6 @@
 
 package com.google.wear.soyted.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.runtime.Composable
@@ -24,8 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
@@ -33,8 +30,6 @@ import androidx.wear.compose.material.ChipDefaults.chipColors
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.google.wear.soyted.db.TaskAndTaskSeries
-import com.google.wear.soyted.previews.RememberTheMilkThemePreview
-import com.google.wear.soyted.previews.TaskAndSeriesProvider
 import com.google.wear.soyted.util.relativeTime
 import java.time.LocalDate
 

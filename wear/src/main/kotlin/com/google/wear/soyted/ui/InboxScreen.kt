@@ -16,7 +16,6 @@
 
 package com.google.wear.soyted.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -30,15 +29,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListState
+import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.wear.soyted.RememberWearViewModel
 import com.google.wear.soyted.db.TaskAndTaskSeries
-import com.google.wear.soyted.previews.RememberTheMilkThemePreview
-import com.google.wear.soyted.previews.TaskAndSeriesProvider
 import com.google.wear.soyted.util.RotaryEventState
 
 @Composable
