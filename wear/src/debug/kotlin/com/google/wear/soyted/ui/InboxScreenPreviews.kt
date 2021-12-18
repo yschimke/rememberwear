@@ -48,6 +48,12 @@ fun CirclesListPreview() {
 }
 
 @Preview(
+    widthDp = 250,
+    heightDp = 250,
+    apiLevel = 26,
+    uiMode = Configuration.UI_MODE_TYPE_WATCH,
+)
+@Preview(
     widthDp = 228,
     heightDp = 228,
     apiLevel = 26,

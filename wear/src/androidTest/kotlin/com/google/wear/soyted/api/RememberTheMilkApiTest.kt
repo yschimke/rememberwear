@@ -17,7 +17,6 @@
 package com.google.wear.soyted.api
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.wear.soyted.api.RememberTheMilkService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

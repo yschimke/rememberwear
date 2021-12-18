@@ -40,7 +40,7 @@ import com.google.wear.soyted.previews.TaskAndSeriesProvider
 )
 @Composable
 fun TaskChipPreview(@PreviewParameter(provider = TaskAndSeriesProvider::class) task: TaskAndTaskSeries) {
-    RememberTheMilkThemePreview {
+    RememberTheMilkTheme {
         TaskChip(task = task, onClick = {})
     }
 }
