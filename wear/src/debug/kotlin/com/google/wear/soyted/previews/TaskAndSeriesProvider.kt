@@ -30,6 +30,7 @@ class TaskAndSeriesProvider : PreviewParameterProvider<TaskAndTaskSeries> {
 
     companion object {
         val taskSeries = TaskSeries("1", "all", "Take Meds", timestamp, timestamp, true)
+        val taskSeriesLong = TaskSeries("2", "all", "Long Title Here", timestamp, timestamp, true)
 
         val taskYesterdayNotCompleted = task("1a", localDateTime.toLocalDate().minusDays(1), null)
         val taskYesterdayCompleted = task("1a", localDateTime.toLocalDate().minusDays(1), timestamp)
@@ -45,7 +46,12 @@ class TaskAndSeriesProvider : PreviewParameterProvider<TaskAndTaskSeries> {
             taskTomorrowNotCompleted
         )
 
-        val taskAndTaskSeries = tasks.map { TaskAndTaskSeries(it, taskSeries) }
+        val tasksLong = listOf(
+            task("2a", localDateTime.toLocalDate(), null),
+            task("2b", localDateTime.toLocalDate().plusDays(3), null)
+        )
+
+        val taskAndTaskSeries = tasks.map { TaskAndTaskSeries(it, taskSeries) } + tasksLong.map { TaskAndTaskSeries(it, taskSeriesLong) }
 
         fun task(id: String, dueDate: LocalDate?, completed: Instant?): Task {
             return Task(

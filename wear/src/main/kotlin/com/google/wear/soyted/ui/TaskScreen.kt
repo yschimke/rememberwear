@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
@@ -40,7 +41,8 @@ import java.time.LocalDate
 fun TaskScreen(
     modifier: Modifier = Modifier,
     viewModel: RememberWearViewModel,
-    taskId: String
+    taskId: String,
+    navController: NavHostController? = null
 ) {
     val task = viewModel.taskAndTaskSeries(taskId).collectAsState(initial = null).value
     val notes = if (task?.taskSeries?.id != null) {
@@ -82,6 +84,7 @@ fun TaskScreen(
                     ToggleChip(checked = todayTask.completed != null, onCheckedChange = {
                         if (it) {
                             viewModel.complete(taskSeries, todayTask)
+                            navController?.popBackStack()
                         } else {
                             viewModel.uncomplete(taskSeries, todayTask)
                         }

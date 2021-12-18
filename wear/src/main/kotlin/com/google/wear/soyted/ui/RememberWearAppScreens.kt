@@ -99,7 +99,7 @@ fun RememberWearAppScreens(
                     ), deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" })
                 ) {
                     val taskId = it.arguments?.getString("taskId")
-                    TaskScreen(viewModel = viewModel, taskId = taskId!!)
+                    TaskScreen(viewModel = viewModel, taskId = taskId!!, navController = navController)
                 }
 
                 composable(
