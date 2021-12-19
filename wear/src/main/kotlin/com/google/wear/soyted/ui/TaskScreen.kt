@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -33,8 +34,8 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.wear.soyted.RememberWearViewModel
-import com.google.wear.soyted.util.RotaryEventState
 import com.google.wear.soyted.util.relativeTime
+import com.google.wear.soyted.util.scrollHandler
 import java.time.LocalDate
 
 @Composable
@@ -58,13 +59,14 @@ fun TaskScreen(
     val taskSeries = task?.taskSeries
     val todayTask = task?.task
 
+    // Activate scrolling
+    LocalView.current.requestFocus()
+
     val scrollState = rememberScalingLazyListState()
-    RotaryEventState(scrollState)
 
     ScalingLazyColumn(
+        modifier = modifier.fillMaxSize().scrollHandler(scrollState),
         state = scrollState,
-        modifier = modifier
-            .fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -16,14 +16,13 @@
 
 package com.google.wear.soyted.login
 
-import javax.inject.Inject
 import com.google.wear.soyted.db.Auth
 import com.google.wear.soyted.db.RememberWearDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton

@@ -18,7 +18,6 @@ package com.google.wear.soyted.work
 
 import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
-import java.lang.IllegalStateException
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,6 +1,7 @@
 import java.util.Properties
 import java.io.FileInputStream
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -33,7 +34,7 @@ android {
     }
 
     kotlinOptions {
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 
     signingConfigs {
@@ -110,16 +111,16 @@ android {
 
 dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
-    kapt("androidx.room:room-compiler:2.3.0")
+    kapt("androidx.room:room-compiler:2.4.0")
     kapt("com.google.dagger:hilt-compiler:2.40.4")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
     kaptTest("com.google.dagger:hilt-android-compiler:2.40.4")
 
     implementation("androidx.activity:activity-ktx:1.4.0")
-    implementation("androidx.wear:wear-phone-interactions:1.0.0")
+    implementation("androidx.wear:wear-phone-interactions:1.0.1")
     implementation("androidx.wear:wear-remote-interactions:1.0.0")
     implementation("androidx.wear:wear-input:1.2.0-alpha02")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2")
+    implementation(libs.coroutines.core)
     implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
     implementation("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.compose.material:material-icons-core:1.0.5")
@@ -127,17 +128,17 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.0.5")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
     implementation("androidx.hilt:hilt-work:1.0.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation("androidx.percentlayout:percentlayout:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.room:room-ktx:2.3.0")
-    implementation("androidx.room:room-runtime:2.3.0")
-    implementation("androidx.wear.compose:compose-foundation:1.0.0-alpha12")
-    implementation("androidx.wear.compose:compose-material:1.0.0-alpha12")
-    implementation("androidx.wear.compose:compose-navigation:1.0.0-alpha12")
+    implementation("androidx.room:room-ktx:2.4.0")
+    implementation("androidx.room:room-runtime:2.4.0")
+    implementation("androidx.wear.compose:compose-foundation:1.0.0-alpha13")
+    implementation("androidx.wear.compose:compose-material:1.0.0-alpha13")
+    implementation("androidx.wear.compose:compose-navigation:1.0.0-alpha13")
     implementation("androidx.wear.tiles:tiles-proto:1.0.0")
     implementation("androidx.wear.tiles:tiles:1.0.0")
     implementation("androidx.wear:wear-complications-data-source:1.0.0-alpha22")
@@ -161,7 +162,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("io.coil-kt:coil-compose:${libs.versions.coil.get()}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.5.2")
+    implementation(libs.coroutines.guava)
+    implementation(libs.coroutines.play)
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.stdlibJdk8)

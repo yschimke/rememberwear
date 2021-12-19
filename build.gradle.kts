@@ -6,14 +6,3 @@ tasks.create<Delete>("clean") {
         rootProject.buildDir
     )
 }
-
-allprojects {
-    configurations.all {
-        resolutionStrategy.eachDependency {
-            if (requested.group.startsWith("androidx.compose.") && requested.version == "1.1.0-beta04") {
-                useVersion("1.1.0-beta03")
-                because("fixes scrolling bug")
-            }
-        }
-    }
-}

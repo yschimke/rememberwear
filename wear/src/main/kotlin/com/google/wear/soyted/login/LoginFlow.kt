@@ -34,7 +34,7 @@ import okio.ByteString.Companion.encodeUtf8
 import javax.inject.Inject
 
 class LoginFlow @Inject constructor(
-    val toaster: Toaster,
+    private val toaster: Toaster,
     val authRepository: AuthRepository,
     val api: RememberTheMilkService,
     @ApplicationContext val application: Context

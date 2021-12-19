@@ -16,7 +16,13 @@
 
 package com.google.wear.soyted.kt
 
-import androidx.wear.tiles.*
+import androidx.wear.tiles.ActionBuilders
+import androidx.wear.tiles.ColorBuilders
+import androidx.wear.tiles.DimensionBuilders
+import androidx.wear.tiles.LayoutElementBuilders
+import androidx.wear.tiles.ModifiersBuilders
+import androidx.wear.tiles.TileBuilders
+import androidx.wear.tiles.TimelineBuilders
 
 fun text(fn: LayoutElementBuilders.Text.Builder.() -> Unit): LayoutElementBuilders.Text {
     val builder = LayoutElementBuilders.Text.Builder()
