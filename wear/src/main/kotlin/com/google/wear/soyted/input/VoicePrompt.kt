@@ -17,9 +17,7 @@
 package com.google.wear.soyted.input
 
 import android.app.Activity
-import android.app.RemoteInput
 import android.content.Intent
-import android.os.Bundle
 import android.speech.RecognizerIntent
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult

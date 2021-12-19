@@ -16,7 +16,6 @@
 
 package com.google.wear.soyted
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.db.Note

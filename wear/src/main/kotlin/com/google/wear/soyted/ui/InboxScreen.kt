@@ -22,12 +22,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Button
@@ -41,7 +42,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.wear.soyted.RememberWearViewModel
 import com.google.wear.soyted.db.TaskAndTaskSeries
-import com.google.wear.soyted.util.RotaryEventState
+import com.google.wear.soyted.util.scrollHandler
 
 @Composable
 fun InboxScreen(
@@ -52,17 +53,9 @@ fun InboxScreen(
     voicePromptQuery: () -> Unit,
     loginAction: () -> Unit,
 ) {
-    val config = LocalConfiguration.current
-
-    SideEffect {
-        println("" + config.screenHeightDp + " " + config.screenWidthDp)
-    }
-
     val tasks = viewModel.inbox.collectAsState(initial = listOf()).value
 
     val isRefreshing by viewModel.isRefreshing.collectAsState()
-
-    RotaryEventState(scrollState)
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
@@ -83,6 +76,7 @@ fun InboxScreen(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
@@ -95,8 +89,11 @@ fun InboxScreen(
 ) {
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
 
+    // Activate scrolling
+    LocalView.current.requestFocus()
+
     ScalingLazyColumn(
-        modifier = modifier,
+        modifier = modifier.scrollHandler(scrollState),
         contentPadding = PaddingValues(
             horizontal = 8.dp,
             vertical = paddingHeight,

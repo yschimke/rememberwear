@@ -19,14 +19,11 @@ package com.google.wear.soyted.input
 import android.app.RemoteInput
 import android.content.Intent
 import android.os.Bundle
-import android.speech.RecognizerIntent
 import android.view.inputmethod.EditorInfo
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.compose.runtime.Composable
 import androidx.wear.input.RemoteInputIntentHelper
 import androidx.wear.input.wearableExtender

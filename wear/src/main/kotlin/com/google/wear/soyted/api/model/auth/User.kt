@@ -17,7 +17,6 @@
 package com.google.wear.soyted.api.model.lists
 
 import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.Xml
 
 @Xml(name = "user")
