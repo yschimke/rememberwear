@@ -19,7 +19,8 @@ package com.google.wear.soyted.work
 import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.Task
-import com.google.wear.soyted.db.TaskSeries
+import logcat.LogPriority
+import logcat.logcat
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,14 +32,18 @@ class TaskEditor @Inject constructor(
     val scheduledWork: ScheduledWork,
     val dao: RememberWearDao
 ) {
-    suspend fun uncomplete(taskSeries: TaskSeries, task: Task) {
+    suspend fun uncomplete(task: Task) {
         dao.upsertTask(task.copy(completed = null, edited = true))
+
+        logcat(LogPriority.DEBUG) { "Set uncomplete $task" }
 
         scheduledWork.refetchAllDataWork()
     }
 
-    suspend fun complete(taskSeries: TaskSeries, task: Task) {
+    suspend fun complete(task: Task) {
         dao.upsertTask(task.copy(completed = Instant.now(), edited = true))
+
+        logcat(LogPriority.DEBUG) { "Set complete $task" }
 
         scheduledWork.refetchAllDataWork()
     }

@@ -169,6 +169,8 @@ dependencies {
     implementation(libs.kotlin.stdlibJdk8)
     implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
 
+    implementation("com.squareup.logcat:logcat:0.1")
+
     implementation("com.tickaroo.tikxml:annotation:0.9.3-SNAPSHOT")
     implementation("com.tickaroo.tikxml:core:0.9.3-SNAPSHOT")
     kapt("com.tickaroo.tikxml:processor:0.9.3-SNAPSHOT")

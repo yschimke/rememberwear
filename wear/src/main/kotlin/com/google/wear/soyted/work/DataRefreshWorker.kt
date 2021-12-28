@@ -17,7 +17,6 @@
 package com.google.wear.soyted.work
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.room.withTransaction
 import androidx.work.WorkerParameters
@@ -30,6 +29,8 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import logcat.LogPriority
+import logcat.logcat
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -61,39 +62,14 @@ class DataRefreshWorker
         rememberWearDao: RememberWearDao,
         rememberTheMilkService: RememberTheMilkService
     ) = withContext(Dispatchers.Default) {
-        val todosResponse = rememberTheMilkService.tasks("tag:wear")
-
-        val toUpdate = rememberWearDao.editedTasks()
-
-        val timeline = rememberTheMilkService.timeline().timeline.timeline
-        toUpdate.forEach { dbTask ->
-            val taskList = todosResponse.tasks?.list?.find { it.taskseries?.find { it.id == dbTask.taskSeriesId } != null }
-
-            if (taskList == null) {
-                Log.w("RTM", "Unable to update task $dbTask")
-            } else {
-                if (dbTask.completed != null) {
-                    rememberTheMilkService.complete(
-                        timeline,
-                        taskList.id,
-                        dbTask.taskSeriesId,
-                        dbTask.id
-                    )
-                } else {
-                    rememberTheMilkService.complete(
-                        timeline,
-                        taskList.id,
-                        dbTask.taskSeriesId,
-                        dbTask.id
-                    )
-                }
-            }
-        }
+        writeUpdates(rememberTheMilkService, rememberWearDao)
 
         val tags = rememberTheMilkService.tags()
 
         val now = Instant.now()
         val cutoff = now.minus(3, ChronoUnit.DAYS)
+
+        val todosResponse = rememberTheMilkService.tasks("tag:wear")
 
         rememberWearDatabase.withTransaction {
             rememberWearDao.deleteAllTaskSeries()
@@ -122,6 +98,43 @@ class DataRefreshWorker
 
                 tags.tags?.forEach {
                     rememberWearDao.upsertTag(it.toDBTag())
+                }
+            }
+        }
+    }
+
+    private suspend fun writeUpdates(
+        rememberTheMilkService: RememberTheMilkService,
+        rememberWearDao: RememberWearDao
+    ) {
+        val todosResponse = rememberTheMilkService.tasks("tag:wear")
+
+        val toUpdate = rememberWearDao.editedTasks()
+
+        logcat(LogPriority.DEBUG) { "toUpdate $toUpdate" }
+
+        val timeline = rememberTheMilkService.timeline().timeline.timeline
+        toUpdate.forEach { dbTask ->
+            val taskList =
+                todosResponse.tasks?.list?.find { it.taskseries?.find { it.id == dbTask.taskSeriesId } != null }
+
+            if (taskList == null) {
+                logcat(LogPriority.WARN) { "Unable to update task $dbTask" }
+            } else {
+                if (dbTask.completed != null) {
+                    rememberTheMilkService.complete(
+                        timeline,
+                        taskList.id,
+                        dbTask.taskSeriesId,
+                        dbTask.id
+                    )
+                } else {
+                    rememberTheMilkService.uncomplete(
+                        timeline,
+                        taskList.id,
+                        dbTask.taskSeriesId,
+                        dbTask.id
+                    )
                 }
             }
         }

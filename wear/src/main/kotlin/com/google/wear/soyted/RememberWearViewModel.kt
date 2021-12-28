@@ -109,22 +109,20 @@ class RememberWearViewModel @Inject constructor(
     fun taskSeriesTasks(taskSeriesId: String): Flow<List<Task>> =
         rememberWearDao.getTasks(taskSeriesId)
 
-    fun uncomplete(taskSeries: TaskSeries, task: Task) {
+    fun uncomplete(task: Task) {
         viewModelScope.launch {
             try {
-                taskEditor.uncomplete(taskSeries, task)
-                externalUpdates.forceUpdates()
+                taskEditor.uncomplete(task)
             } catch (ioe: IOException) {
                 toaster.makeToast("Unable to connect to server")
             }
         }
     }
 
-    fun complete(taskSeries: TaskSeries, task: Task) {
+    fun complete(task: Task) {
         viewModelScope.launch {
             try {
-                taskEditor.complete(taskSeries, task)
-                externalUpdates.forceUpdates()
+                taskEditor.complete(task)
             } catch (ioe: IOException) {
                 toaster.makeToast("Unable to connect to server")
             }

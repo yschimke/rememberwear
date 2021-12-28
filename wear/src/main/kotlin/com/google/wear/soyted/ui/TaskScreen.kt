@@ -85,10 +85,10 @@ fun TaskScreen(
                 item {
                     ToggleChip(checked = todayTask.completed != null, onCheckedChange = {
                         if (it) {
-                            viewModel.complete(taskSeries, todayTask)
+                            viewModel.complete(todayTask)
                             navController?.popBackStack()
                         } else {
-                            viewModel.uncomplete(taskSeries, todayTask)
+                            viewModel.uncomplete(todayTask)
                         }
                     }, label = {
                         Text(
