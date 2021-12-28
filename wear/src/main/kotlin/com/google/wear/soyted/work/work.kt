@@ -23,6 +23,7 @@ import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.await
@@ -42,6 +43,8 @@ class ScheduledWork @Inject constructor(
             ComponentName(application.packageName, RemoteWorkerService::class.java.name)
 
         val workRequest = OneTimeWorkRequestBuilder<DataRefreshWorker>()
+            .setExpedited(
+                OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setInputData(
                 Data.Builder()
                     .putString(
