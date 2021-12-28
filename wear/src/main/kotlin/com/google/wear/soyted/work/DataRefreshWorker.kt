@@ -17,6 +17,7 @@
 package com.google.wear.soyted.work
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.room.withTransaction
 import androidx.work.WorkerParameters
@@ -61,6 +62,34 @@ class DataRefreshWorker
         rememberTheMilkService: RememberTheMilkService
     ) = withContext(Dispatchers.Default) {
         val todosResponse = rememberTheMilkService.tasks("tag:wear")
+
+        val toUpdate = rememberWearDao.editedTasks()
+
+        val timeline = rememberTheMilkService.timeline().timeline.timeline
+        toUpdate.forEach { dbTask ->
+            val taskList = todosResponse.tasks?.list?.find { it.taskseries?.find { it.id == dbTask.taskSeriesId } != null }
+
+            if (taskList == null) {
+                Log.w("RTM", "Unable to update task $dbTask")
+            } else {
+                if (dbTask.completed != null) {
+                    rememberTheMilkService.complete(
+                        timeline,
+                        taskList.id,
+                        dbTask.taskSeriesId,
+                        dbTask.id
+                    )
+                } else {
+                    rememberTheMilkService.complete(
+                        timeline,
+                        taskList.id,
+                        dbTask.taskSeriesId,
+                        dbTask.id
+                    )
+                }
+            }
+        }
+
         val tags = rememberTheMilkService.tags()
 
         val now = Instant.now()

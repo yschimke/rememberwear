@@ -21,6 +21,7 @@ import android.content.res.Configuration
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import okhttp3.OkHttpClient
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,20 +36,6 @@ import org.junit.runner.RunWith
 class PreviewTest {
     @Test
     fun config() {
-        val config = ApplicationProvider.getApplicationContext<Context>().resources.configuration
-
-        val newConfig1 = Configuration(config).apply {
-            screenLayout =
-                (screenLayout and Configuration.SCREENLAYOUT_ROUND_YES.inv()) //xor Configuration.SCREENLAYOUT_ROUND_YES
-        }
-
-        assertThat(newConfig1.isScreenRound).isFalse()
-
-        val newConfig2 = Configuration(newConfig1).apply {
-            screenLayout =
-                (screenLayout or Configuration.SCREENLAYOUT_ROUND_YES) //xor Configuration.SCREENLAYOUT_ROUND_YES
-        }
-
-        assertThat(newConfig2.isScreenRound).isTrue()
+        val c = OkHttpClient()
     }
 }

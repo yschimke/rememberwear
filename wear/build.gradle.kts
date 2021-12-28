@@ -21,8 +21,8 @@ android {
         minSdk = 26
         targetSdk = 30
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
-        versionCode = 4
-        versionName = "1.4"
+        versionCode = 7
+        versionName = "1.7"
     }
 
     buildFeatures {
@@ -112,9 +112,9 @@ android {
 dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     kapt("androidx.room:room-compiler:2.4.0")
-    kapt("com.google.dagger:hilt-compiler:2.40.4")
+    kapt("com.google.dagger:hilt-compiler:2.40.5")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
-    kaptTest("com.google.dagger:hilt-android-compiler:2.40.4")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.40.5")
 
     implementation("androidx.activity:activity-ktx:1.4.0")
     implementation("androidx.wear:wear-phone-interactions:1.0.1")
@@ -151,7 +151,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.0.1")
     implementation("com.google.android.gms:play-services-wearable:17.1.0")
     implementation("com.google.android.libraries.maps:maps:3.1.0-beta")
-    implementation("com.google.dagger:hilt-android:2.40.4")
+    implementation("com.google.dagger:hilt-android:2.40.5")
     implementation("com.google.maps.android:android-maps-utils-v3:2.3.0")
     implementation("com.google.maps.android:maps-v3-ktx:2.3.0")
     implementation("com.squareup.moshi:moshi-adapters:1.13.0")
@@ -167,7 +167,7 @@ dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.stdlibJdk8)
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.2"))
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.2"))
 
     implementation("com.tickaroo.tikxml:annotation:0.9.3-SNAPSHOT")
     implementation("com.tickaroo.tikxml:core:0.9.3-SNAPSHOT")
@@ -176,18 +176,18 @@ dependencies {
 
     debugImplementation("androidx.wear.tiles:tiles-renderer:1.0.0")
 
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.40.4")
-    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.4")
-    testAnnotationProcessor("com.google.dagger:hilt-compiler:2.40.4")
-    testImplementation("com.google.dagger:hilt-android-testing:2.40.4")
-    testImplementation("com.google.dagger:hilt-android-testing:2.40.4")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.40.5")
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.5")
+    testAnnotationProcessor("com.google.dagger:hilt-compiler:2.40.5")
+    testImplementation("com.google.dagger:hilt-android-testing:2.40.5")
+    testImplementation("com.google.dagger:hilt-android-testing:2.40.5")
     testImplementation("junit:junit:4.13.2")
-    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.4")
+    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.40.4")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.40.4")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.40.5")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.40.5")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
     testImplementation("org.assertj:assertj-core:3.21.0")
     androidTestImplementation("org.assertj:assertj-core:3.21.0")
 }

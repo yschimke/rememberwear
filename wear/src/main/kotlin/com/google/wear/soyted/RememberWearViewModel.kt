@@ -142,10 +142,17 @@ class RememberWearViewModel @Inject constructor(
         }
     }
 
-    fun continueLogin() {
+    fun continueLogin(onLogin: suspend () -> Unit) {
         viewModelScope.launch {
-            loginFlow.enterToken()
-            scheduledWork.refetchAllDataWork()
+            try {
+                loginFlow.enterToken()
+
+                onLogin()
+
+                scheduledWork.refetchAllDataWork()
+            } catch (e: Exception) {
+                toaster.makeToast("Login failed: ${e.message}")
+            }
         }
     }
 

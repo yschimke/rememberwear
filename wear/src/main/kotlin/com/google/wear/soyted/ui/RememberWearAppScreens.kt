@@ -19,6 +19,7 @@ package com.google.wear.soyted.ui
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
@@ -33,6 +34,8 @@ import com.google.wear.soyted.input.VoicePrompt.voicePromptIntent
 import com.google.wear.soyted.input.VoicePrompt.voicePromptLauncher
 import com.google.wear.soyted.navigation.NavController
 import com.google.wear.soyted.navigation.Screens
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 val uri = "https://www.rememberthemilk.com/"
 
@@ -93,27 +96,34 @@ fun RememberWearAppScreens(
             composable(
                 Screens.LoginDialog.route
             ) {
-                AlertDialog(
-                    title = {
-                        Text("Login")
-                    },
-                    positiveButton = {
-                        Button(onClick = {
-                            viewModel.continueLogin()
-                            navController.popBackStack()
-                        }) {
-                            Text("Login")
-                        }
-                    },
-                    negativeButton = {
-                    },
-                ) {
-                    Text(
-                        text = "Continue after login on mobile",
-                        textAlign = TextAlign.Center
-                    )
+                LogingDialog(viewModel, navController)
+            }
+        }
+    }
+}
+
+@Composable
+private fun LogingDialog(
+    viewModel: RememberWearViewModel,
+    navController: NavHostController
+) {
+    AlertDialog(
+        title = {
+            Text("Login")
+        },
+    ) {
+        Text(
+            text = "Continue after login on mobile",
+            textAlign = TextAlign.Center
+        )
+        Button(onClick = {
+            viewModel.continueLogin {
+                withContext(Dispatchers.Main) {
+                    navController.popBackStack()
                 }
             }
+        }) {
+            Text("Login")
         }
     }
 }

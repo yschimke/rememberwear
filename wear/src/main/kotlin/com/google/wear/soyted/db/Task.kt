@@ -42,6 +42,7 @@ data class Task(
     val added: Instant,
     val completed: Instant?,
     val deleted: Instant?,
+    val edited: Boolean,
     val priority: String,
     val postponed: String,
     val estimate: String,

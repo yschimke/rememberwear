@@ -52,14 +52,15 @@ data class Task(
     val estimate: String,
 ) {
     fun toDBTask(taskSeriesId: String): Task = Task(
-        this.id,
-        taskSeriesId,
-        this.due?.atZone(ZoneId.systemDefault())?.toLocalDate(),
-        this.added,
-        this.completed,
-        this.deleted,
-        this.priority,
-        this.postponed,
-        this.estimate
+        id = this.id,
+        taskSeriesId = taskSeriesId,
+        dueDate = this.due?.atZone(ZoneId.systemDefault())?.toLocalDate(),
+        added = this.added,
+        completed = this.completed,
+        deleted = this.deleted,
+        edited = false,
+        priority = this.priority,
+        postponed = this.postponed,
+        estimate = this.estimate
     )
 }

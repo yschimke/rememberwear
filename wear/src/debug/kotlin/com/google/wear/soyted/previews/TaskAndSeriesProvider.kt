@@ -61,6 +61,7 @@ class TaskAndSeriesProvider : PreviewParameterProvider<TaskAndTaskSeries> {
                 added = timestamp,
                 completed = completed,
                 deleted = null,
+                edited = false,
                 priority = "N",
                 postponed = "",
                 estimate = ""

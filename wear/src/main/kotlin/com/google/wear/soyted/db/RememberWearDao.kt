@@ -67,6 +67,9 @@ interface RememberWearDao {
     @Query("SELECT * FROM task where taskSeriesId = :taskSeriesId")
     fun getTasks(taskSeriesId: String): Flow<List<Task>>
 
+    @Query("SELECT * FROM task where edited = 1")
+    suspend fun editedTasks(): List<Task>
+
     @Transaction
     @Query("SELECT * FROM task where id = :taskId")
     fun getTaskAndTaskSeries(taskId: String): Flow<TaskAndTaskSeries?>

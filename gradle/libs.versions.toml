@@ -4,10 +4,10 @@ kotlin = "1.5.31"
 okhttp = "5.0.0-alpha.2"
 junit = "5.7.1"
 okio = "3.0.0"
-hilt = "2.40.4"
+hilt = "2.40.5"
 compose = "1.1.0-rc02"
-coil = "2.0.0-alpha02"
-coroutines = "1.6.0-RC3"
+coil = "2.0.0-alpha06"
+coroutines = "1.6.0"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }

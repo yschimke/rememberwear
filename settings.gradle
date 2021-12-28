@@ -6,7 +6,7 @@ pluginManagement {
     }
     resolutionStrategy.eachPlugin {
         if (it.requested.id.id == "dagger.hilt.android.plugin") {
-            useModule("com.google.dagger:hilt-android-gradle-plugin:2.40.4")
+            useModule("com.google.dagger:hilt-android-gradle-plugin:2.40.5")
         }
     }
     plugins {

@@ -28,19 +28,18 @@ import javax.inject.Singleton
 @Singleton
 class TaskEditor @Inject constructor(
     val service: RememberTheMilkService,
+    val scheduledWork: ScheduledWork,
     val dao: RememberWearDao
 ) {
     suspend fun uncomplete(taskSeries: TaskSeries, task: Task) {
-        val timeline = service.timeline().timeline.timeline
+        dao.upsertTask(task.copy(completed = null, edited = true))
 
-        service.uncomplete(timeline, taskSeries.listId, taskSeries.id, task.id)
-        dao.upsertTask(task.copy(completed = null))
+        scheduledWork.refetchAllDataWork()
     }
 
     suspend fun complete(taskSeries: TaskSeries, task: Task) {
-        val timeline = service.timeline().timeline.timeline
-        service.complete(timeline, taskSeries.listId, taskSeries.id, task.id)
+        dao.upsertTask(task.copy(completed = Instant.now(), edited = true))
 
-        dao.upsertTask(task.copy(completed = Instant.now()))
+        scheduledWork.refetchAllDataWork()
     }
 }
