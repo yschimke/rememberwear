@@ -16,23 +16,10 @@
 
 package com.google.wear.soyted.previews
 
-import androidx.compose.runtime.Composable
-import com.google.wear.soyted.ui.RememberTheMilkTheme
 import java.time.LocalDate
 import java.time.ZoneOffset
 
 object Previews {
     val localDateTime = LocalDate.now().atTime(12, 35)
     val timestamp = localDateTime.toInstant(ZoneOffset.UTC)
-}
-
-@Composable
-fun RememberTheMilkThemePreview(
-    content: @Composable () -> Unit,
-) {
-    RememberTheMilkTheme {
-        RoundWatchPreviewScaffold() {
-            content()
-        }
-    }
 }

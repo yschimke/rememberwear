@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.google.wear.soyted.db.TaskAndTaskSeries
-import com.google.wear.soyted.previews.RememberTheMilkThemePreview
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
 
 @Preview(

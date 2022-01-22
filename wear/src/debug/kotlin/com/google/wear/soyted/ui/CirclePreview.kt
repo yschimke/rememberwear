@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google Inc. All rights reserved.
+ * Copyright 2022 Google Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,49 +16,38 @@
 
 package com.google.wear.soyted.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.wear.soyted.previews.TaskAndSeriesProvider
+import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.Text
 
 @Preview(
     device = Devices.WEAR_OS_LARGE_ROUND,
     showSystemUi = true
 )
-@Preview(
-    device = Devices.WEAR_OS_SMALL_ROUND,
-    showSystemUi = true
-)
 @Composable
-fun CirclesListPreview() {
-    RememberTheMilkTheme {
-        InboxScreen(
-            tasks = TaskAndSeriesProvider.taskAndTaskSeries,
-            onClick = {},
-            voicePromptQuery = {},
-            loginAction = {},
-            isLoggedIn = true
-        )
+fun ListPreview() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        (1..10).forEach {
+            Text("$it")
+        }
     }
 }
 
 @Preview(
+    widthDp = 228,
+    heightDp = 228,
     device = Devices.WEAR_OS_LARGE_ROUND,
     showSystemUi = true
 )
-@Preview(
-    device = Devices.WEAR_OS_SMALL_ROUND,
-    showSystemUi = true
-)
 @Composable
-fun CirclesListNotLoggedInPreview() {
-    RememberTheMilkTheme {
-        InboxScreen(
-            tasks = listOf(),
-            onClick = {},
-            voicePromptQuery = {},
-            loginAction = {},
-            isLoggedIn = false
-        )
+fun ScalingListPreview() {
+    ScalingLazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+        items(10) {
+            Text("$it")
+        }
     }
 }

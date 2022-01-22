@@ -20,9 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -42,9 +40,6 @@ class RememberTheMilkApiTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
-
     @Inject
     lateinit var service: RememberTheMilkService
 
@@ -55,7 +50,7 @@ class RememberTheMilkApiTest {
 
     @Test
     fun tasks() {
-        runBlocking(testScope.coroutineContext) {
+        runTest {
             val tasks = service.tasks()
             assertThat(tasks.tasks?.taskSeries).isNotEmpty
         }
@@ -63,7 +58,7 @@ class RememberTheMilkApiTest {
 
     @Test
     fun tasksInWearTag() {
-        runBlocking(testScope.coroutineContext) {
+        runTest {
             val tasks = service.tasks("tag:wear")
             assertThat(tasks.tasks?.taskSeries).isNotEmpty
         }
@@ -71,7 +66,7 @@ class RememberTheMilkApiTest {
 
     @Test
     fun lists() {
-        runBlocking(testScope.coroutineContext) {
+        runTest {
             val lists = service.lists()
             assertThat(lists).isNotNull
         }
@@ -79,7 +74,7 @@ class RememberTheMilkApiTest {
 
     @Test
     fun tags() {
-        runBlocking(testScope.coroutineContext) {
+        runTest {
             val tags = service.tags()
             assertThat(tags.tags).isNotEmpty
         }
