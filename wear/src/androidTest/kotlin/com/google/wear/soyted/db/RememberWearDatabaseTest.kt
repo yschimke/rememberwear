@@ -21,11 +21,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -44,9 +41,6 @@ class RememberWearDatabaseTest {
     private lateinit var mediaDao: RememberWearDao
     private lateinit var db: RememberWearDatabase
 
-    private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
-
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -59,13 +53,11 @@ class RememberWearDatabaseTest {
     @After
     fun tearDown() {
         db.close()
-        testDispatcher.cancel()
     }
 
     @Test
     fun useInsertAndRead() {
-        // TODO debug and use runTestBlocking
-        runBlocking(testScope.coroutineContext) {
+        runTest {
             val now = Instant.now()
             val todo = TaskSeries("1", "all", "Tablets", now, now, false)
 

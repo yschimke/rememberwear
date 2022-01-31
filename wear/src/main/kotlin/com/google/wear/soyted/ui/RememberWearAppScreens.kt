@@ -23,9 +23,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import androidx.wear.compose.material.AlertDialog
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
@@ -107,7 +107,7 @@ private fun LogingDialog(
     viewModel: RememberWearViewModel,
     navController: NavHostController
 ) {
-    AlertDialog(
+    Alert(
         title = {
             Text("Login")
         },

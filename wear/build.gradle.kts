@@ -21,8 +21,8 @@ android {
         minSdk = 26
         targetSdk = 30
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
-        versionCode = 8
-        versionName = "1.8"
+        versionCode = 9
+        versionName = "1.9"
     }
 
     buildFeatures {
@@ -128,7 +128,7 @@ dependencies {
     implementation("androidx.compose.ui:ui:${libs.versions.compose.get()}")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("androidx.hilt:hilt-work:1.0.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
@@ -136,11 +136,11 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.room:room-ktx:2.4.1")
     implementation("androidx.room:room-runtime:2.4.1")
-    implementation("androidx.wear.compose:compose-foundation:1.0.0-alpha14")
-    implementation("androidx.wear.compose:compose-material:1.0.0-alpha14")
-    implementation("androidx.wear.compose:compose-navigation:1.0.0-alpha14")
-    implementation("androidx.wear.tiles:tiles-proto:1.0.0")
-    implementation("androidx.wear.tiles:tiles:1.0.0")
+    implementation("androidx.wear.compose:compose-foundation:1.0.0-alpha15")
+    implementation("androidx.wear.compose:compose-material:1.0.0-alpha15")
+    implementation("androidx.wear.compose:compose-navigation:1.0.0-alpha15")
+    implementation("androidx.wear.tiles:tiles-proto:1.0.1")
+    implementation("androidx.wear.tiles:tiles:1.0.1")
     implementation("androidx.wear:wear-complications-data-source:1.0.0-alpha22")
     implementation("androidx.wear:wear-complications-data:1.0.0-alpha22")
     implementation("androidx.wear:wear:1.2.0")
@@ -176,7 +176,10 @@ dependencies {
     kapt("com.tickaroo.tikxml:processor:0.9.3-SNAPSHOT")
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.15")
 
-    debugImplementation("androidx.wear.tiles:tiles-renderer:1.0.0")
+    debugImplementation("androidx.wear.tiles:tiles-renderer:1.0.1")
+
+    implementation("androidx.glance:glance-wear-tiles:1.0.0-alpha02")
+    implementation("androidx.lifecycle:lifecycle-service:2.4.0")
 
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.40.5")
     testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.40.5")

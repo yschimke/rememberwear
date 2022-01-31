@@ -35,7 +35,6 @@ private val RememberTheMilkColorPalette = Colors(
     secondaryVariant = Color(0xff240047L),
     onSecondary = Color(0xFF0060bfL),
     onSurfaceVariant = Color(0xff0060bfL),
-    onSurfaceVariant2 = Color(0xffe4eef8L),
 )
 
 @Composable
