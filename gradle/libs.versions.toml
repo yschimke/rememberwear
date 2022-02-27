@@ -84,7 +84,7 @@ wear-tilesproto = { module = "androidx.wear.tiles:tiles-proto", version.ref = "w
 wear-tilesrenderer = { module = "androidx.wear.tiles:tiles-renderer", version.ref = "weartiles" }
 work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxwork" }
 test-uiautomator = "androidx.test.uiautomator:uiautomator:2.2.0"
-androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-alpha12"
+androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta04"
 
 [plugins]
 androidapplication = "com.android.application:7.1.2"
