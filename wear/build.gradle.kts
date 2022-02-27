@@ -3,10 +3,10 @@ import java.io.FileInputStream
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.androidapplication)
-    alias(libs.plugins.kotlinandroid)
-    alias(libs.plugins.kotlinkapt)
-    alias(libs.plugins.hiltandroidplugin)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 val localProperties = Properties().apply {

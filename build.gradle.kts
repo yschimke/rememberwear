@@ -5,6 +5,10 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 plugins {
     alias(libs.plugins.benmanesversions)
     alias(libs.plugins.versioncatalogupdate)
+    alias(libs.plugins.androidapplication) apply false
+    alias(libs.plugins.kotlinandroid) apply false
+    alias(libs.plugins.kotlinkapt) apply false
+    alias(libs.plugins.hiltandroidplugin) apply false
 }
 
 tasks.create<Delete>("clean") {
