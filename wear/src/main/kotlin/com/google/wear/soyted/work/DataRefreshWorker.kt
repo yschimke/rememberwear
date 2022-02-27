@@ -19,12 +19,16 @@ package com.google.wear.soyted.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.room.withTransaction
+import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.multiprocess.RemoteCoroutineWorker
+import com.google.common.util.concurrent.Futures
+import com.google.common.util.concurrent.ListenableFuture
 import com.google.wear.soyted.api.RememberTheMilkService
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.RememberWearDatabase
 import com.google.wear.soyted.login.AuthRepository
+import com.google.wear.soyted.util.createNotification
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -55,6 +59,17 @@ class DataRefreshWorker
         externalUpdates.forceUpdates()
 
         return Result.success()
+    }
+
+    override fun getForegroundInfoAsync(): ListenableFuture<ForegroundInfo> {
+        return Futures.immediateFuture(
+            ForegroundInfo(
+                NOTIFICATION_ID, createNotification(
+                    applicationContext, id,
+                    "Refreshing Tasks"
+                )
+            )
+        )
     }
 
     suspend fun refreshDatabase(
@@ -138,5 +153,9 @@ class DataRefreshWorker
                 }
             }
         }
+    }
+
+    companion object {
+        private const val NOTIFICATION_ID = 101
     }
 }
