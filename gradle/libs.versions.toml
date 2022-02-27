@@ -16,7 +16,7 @@ weartiles = "1.0.1"
 
 [libraries]
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.23.1"
-android-volley = "com.android.volley:volley:1.2.0"
+android-volley = "com.android.volley:volley:1.2.1"
 androidx-activityktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxactivity" }
 androidx-corektx = "androidx.core:core-ktx:1.7.0"
 androidx-glanceweartiles = "androidx.glance:glance-wear-tiles:1.0.0-alpha03"
