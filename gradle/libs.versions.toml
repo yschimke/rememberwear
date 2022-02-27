@@ -2,7 +2,7 @@
 androidx-compose-ui = "1.2.0-alpha04"
 androidxactivity = "1.5.0-alpha03"
 androidxroom = "2.4.2"
-androidxwork = "2.7.1"
+androidxwork = "2.8.0-alpha01"
 compose = "1.2.0-alpha02"
 googledagger = "2.41"
 googlemapsandroid = "2.3.0"
@@ -73,6 +73,7 @@ tikxml-processor = "com.tickaroo.tikxml:processor:0.9.3-SNAPSHOT"
 tikxml-retrofitconverter = "com.tickaroo.tikxml:retrofit-converter:0.8.15"
 wear-complicationsdata = "androidx.wear:wear-complications-data:1.0.0-alpha22"
 wear-complicationsdatasource = "androidx.wear:wear-complications-data-source:1.0.0-alpha22"
+wear-complicationsdatasourcektx = "androidx.wear:wear-complications-data-source-ktx:1.0.0-alpha22"
 wear-composefoundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearcompose" }
 wear-composematerial = { module = "androidx.wear.compose:compose-material", version.ref = "wearcompose" }
 wear-composenavigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wearcompose" }

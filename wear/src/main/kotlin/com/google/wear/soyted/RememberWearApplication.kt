@@ -36,7 +36,6 @@ class RememberWearApplication : Application(), Configuration.Provider {
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
             .setWorkerFactory(workerFactory)
-            .setDefaultProcessName("${applicationContext.packageName}:data")
             .build()
 
     override fun onCreate() {
