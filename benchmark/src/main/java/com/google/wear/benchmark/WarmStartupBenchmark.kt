@@ -26,7 +26,6 @@ import org.junit.Ignore
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-//@Ignore
 class WarmStartupBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
