@@ -16,19 +16,8 @@
 
 package com.google.wear.soyted.work
 
-import android.content.ComponentName
 import android.content.Context
-import androidx.work.Constraints
-import androidx.work.Data
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.await
-import androidx.work.multiprocess.RemoteListenableWorker
-import androidx.work.multiprocess.RemoteWorkerService
+import androidx.work.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -39,21 +28,9 @@ class ScheduledWork @Inject constructor(
 ) {
     // TODO move into class with DI injection of WorkManager
     suspend fun refetchAllDataWork() {
-        val componentName =
-            ComponentName(application.packageName, RemoteWorkerService::class.java.name)
-
         val workRequest = OneTimeWorkRequestBuilder<DataRefreshWorker>()
             .setExpedited(
                 OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .setInputData(
-                Data.Builder()
-                    .putString(
-                        RemoteListenableWorker.ARGUMENT_PACKAGE_NAME,
-                        componentName.packageName
-                    )
-                    .putString(RemoteListenableWorker.ARGUMENT_CLASS_NAME, componentName.className)
-                    .build()
-            )
             .build()
 
         val result = workManager.enqueue(workRequest)
@@ -62,9 +39,6 @@ class ScheduledWork @Inject constructor(
     }
 
     fun createPeriodicWorkRequest() {
-        val componentName =
-            ComponentName(application.packageName, RemoteWorkerService::class.java.name)
-
         val refreshWorker = PeriodicWorkRequestBuilder<DataRefreshWorker>(
             30, TimeUnit.MINUTES, 10, TimeUnit.MINUTES
         )
@@ -76,15 +50,6 @@ class ScheduledWork @Inject constructor(
             )
             .setInitialDelay(15, TimeUnit.MINUTES)
             .addTag("taskRefresh")
-            .setInputData(
-                Data.Builder()
-                    .putString(
-                        RemoteListenableWorker.ARGUMENT_PACKAGE_NAME,
-                        componentName.packageName
-                    )
-                    .putString(RemoteListenableWorker.ARGUMENT_CLASS_NAME, componentName.className)
-                    .build()
-            )
             .build()
 
         workManager.enqueueUniquePeriodicWork(

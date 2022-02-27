@@ -1,38 +1,36 @@
 [versions]
-androidxactivity = "1.5.0-alpha01"
-androidxroom = "2.4.1"
-wearcompose = "1.0.0-alpha15"
-weartiles = "1.0.1"
+androidx-compose-ui = "1.2.0-alpha04"
+androidxactivity = "1.5.0-alpha03"
+androidxroom = "2.4.2"
 androidxwork = "2.7.1"
-googledagger = "2.40.5"
+compose = "1.2.0-alpha02"
+googledagger = "2.41"
 googlemapsandroid = "2.3.0"
-squareupmoshi = "1.13.0"
-squareupokhttp3 = "5.0.0-alpha.2"
-squareupretrofit2 = "2.9.0"
 kotlin = "1.6.10"
 kotlinx = "1.6.0"
-compose = "1.2.0-alpha02"
+squareupmoshi = "1.13.0"
+squareupokhttp3 = "5.0.0-alpha.5"
+squareupretrofit2 = "2.9.0"
+wearcompose = "1.0.0-alpha17"
+weartiles = "1.0.1"
 
 [libraries]
-accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.20.0"
-androidx-activitycompose = { module = "androidx.activity:activity-compose", version.ref = "androidxactivity" }
+accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.23.1"
+android-volley = "com.android.volley:volley:1.2.0"
 androidx-activityktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxactivity" }
 androidx-corektx = "androidx.core:core-ktx:1.7.0"
-androidx-glanceweartiles = "androidx.glance:glance-wear-tiles:1.0.0-alpha02"
+androidx-glanceweartiles = "androidx.glance:glance-wear-tiles:1.0.0-alpha03"
 androidx-legacysupportv4 = "androidx.legacy:legacy-support-v4:1.0.0"
-androidx-lifecycleruntimektx = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01"
-androidx-lifecycleservice = "androidx.lifecycle:lifecycle-service:2.4.0"
-androidx-percentlayout = "androidx.percentlayout:percentlayout:1.0.0"
-androidx-recyclerview = "androidx.recyclerview:recyclerview:1.2.1"
+androidx-lifecycleruntimektx = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha03"
+androidx-lifecycleservice = "androidx.lifecycle:lifecycle-service:2.4.1"
 androidx-securitycryptoktx = "androidx.security:security-crypto-ktx:1.1.0-alpha03"
 androidx-wear = "androidx.wear:wear:1.2.0"
 assertj-core = "org.assertj:assertj-core:3.22.0"
-coil-compose = "io.coil-kt:coil-compose:2.0.0-alpha06"
-android-volley = "com.android.volley:volley:1.2.1"
-compose-compiler = "androidx.compose.compiler:compiler:1.2.0-alpha01"
-compose-materialiconscore = "androidx.compose.material:material-icons-core:1.2.0-alpha02"
-compose-ui = "androidx.compose.ui:ui:1.2.0-alpha02"
-compose-uitooling = "androidx.compose.ui:ui-tooling:1.2.0-alpha01"
+coil-compose = "io.coil-kt:coil-compose:2.0.0-alpha09"
+compose-compiler = "androidx.compose.compiler:compiler:1.2.0-alpha04"
+compose-materialiconscore = "androidx.compose.material:material-icons-core:1.2.0-alpha04"
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-ui" }
+compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose-ui" }
 dagger-hiltandroid = { module = "com.google.dagger:hilt-android", version.ref = "googledagger" }
 dagger-hiltandroidcompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "googledagger" }
 dagger-hiltandroidgradleplugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "googledagger" }
@@ -40,12 +38,11 @@ dagger-hiltandroidtesting = { module = "com.google.dagger:hilt-android-testing",
 dagger-hiltcompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "googledagger" }
 gms-playservicesmaps = "com.google.android.gms:play-services-maps:18.0.2"
 gms-playserviceswearable = "com.google.android.gms:play-services-wearable:17.1.0"
-google-maps = "com.google.android.libraries.maps:maps:3.1.0-beta"
 hilt-compiler = "androidx.hilt:hilt-compiler:1.0.0"
 hilt-lifecycleviewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
 hilt-navigationcompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
 hilt-work = "androidx.hilt:hilt-work:1.0.0"
-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.3"
+jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
 junit = "junit:junit:4.13.2"
 kotlin-annotationprocessinggradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
@@ -55,8 +52,6 @@ kotlinx-coroutinescore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 kotlinx-coroutinesguava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "kotlinx" }
 kotlinx-coroutinesplayservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx" }
 kotlinx-coroutinestest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
-maps-androidmapsutilsv3 = { module = "com.google.maps.android:android-maps-utils-v3", version.ref = "googlemapsandroid" }
-maps-mapsv3ktx = { module = "com.google.maps.android:maps-v3-ktx", version.ref = "googlemapsandroid" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxroom" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxroom" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxroom" }
@@ -87,13 +82,12 @@ wear-remoteinteractions = "androidx.wear:wear-remote-interactions:1.0.0"
 wear-tiles = { module = "androidx.wear.tiles:tiles", version.ref = "weartiles" }
 wear-tilesproto = { module = "androidx.wear.tiles:tiles-proto", version.ref = "weartiles" }
 wear-tilesrenderer = { module = "androidx.wear.tiles:tiles-renderer", version.ref = "weartiles" }
-work-multiprocess = { module = "androidx.work:work-multiprocess", version.ref = "androidxwork" }
 work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxwork" }
 
 [plugins]
-androidapplication = "com.android.application:7.1.0-rc01"
-benmanesversions = "com.github.ben-manes.versions:0.41.0"
-hiltandroidplugin = "dagger.hilt.android.plugin:2.40.5"
-versioncatalogupdate = "nl.littlerobots.version-catalog-update:0.3.0"
+androidapplication = "com.android.application:7.1.2"
+benmanesversions = "com.github.ben-manes.versions:0.42.0"
+hiltandroidplugin = "dagger.hilt.android.plugin:2.41"
 kotlinandroid = "org.jetbrains.kotlin.android:1.6.10"
 kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.10"
+versioncatalogupdate = "nl.littlerobots.version-catalog-update:0.3.0"
