@@ -5,7 +5,7 @@ pluginManagement {
         mavenCentral()
     }
     resolutionStrategy.eachPlugin {
-        if (it.requested.id.id == "dagger.hilt.android.plugin") {
+        if (it.requested.id.id == "com.google.dagger.hilt.android") {
             useModule("com.google.dagger:hilt-android-gradle-plugin:2.41")
         }
     }

@@ -39,7 +39,6 @@ dagger-hiltcompiler = { module = "com.google.dagger:hilt-compiler", version.ref 
 gms-playservicesmaps = "com.google.android.gms:play-services-maps:18.0.2"
 gms-playserviceswearable = "com.google.android.gms:play-services-wearable:17.1.0"
 hilt-compiler = "androidx.hilt:hilt-compiler:1.0.0"
-hilt-lifecycleviewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
 hilt-navigationcompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
 hilt-work = "androidx.hilt:hilt-work:1.0.0"
 jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
@@ -90,7 +89,7 @@ androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta0
 [plugins]
 androidapplication = "com.android.application:7.1.2"
 benmanesversions = "com.github.ben-manes.versions:0.42.0"
-hiltandroidplugin = "dagger.hilt.android.plugin:2.41"
+hilt = "com.google.dagger.hilt.android:2.41"
 kotlinandroid = "org.jetbrains.kotlin.android:1.6.10"
 kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.10"
 versioncatalogupdate = "nl.littlerobots.version-catalog-update:0.3.1"
