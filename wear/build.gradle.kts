@@ -6,7 +6,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
 }
 
 val localProperties = Properties().apply {
@@ -134,7 +134,6 @@ dependencies {
     implementation(libs.compose.uitooling)
     implementation(libs.dagger.hiltandroid)
     implementation(libs.gms.playserviceswearable)
-    implementation(libs.hilt.lifecycleviewmodel)
     implementation(libs.hilt.navigationcompose)
     implementation(libs.hilt.work)
     implementation(libs.kotlin.reflect)
