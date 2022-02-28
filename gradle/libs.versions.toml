@@ -89,7 +89,7 @@ androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta0
 [plugins]
 androidapplication = "com.android.application:7.1.2"
 benmanesversions = "com.github.ben-manes.versions:0.42.0"
-hiltandroidplugin = "com.google.dagger.hilt.android:2.41"
+hilt = "com.google.dagger.hilt.android:2.41"
 kotlinandroid = "org.jetbrains.kotlin.android:1.6.10"
 kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.10"
 versioncatalogupdate = "nl.littlerobots.version-catalog-update:0.3.0"
