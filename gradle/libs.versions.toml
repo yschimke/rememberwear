@@ -26,7 +26,7 @@ androidx-lifecycleservice = "androidx.lifecycle:lifecycle-service:2.4.1"
 androidx-securitycryptoktx = "androidx.security:security-crypto-ktx:1.1.0-alpha03"
 androidx-wear = "androidx.wear:wear:1.2.0"
 assertj-core = "org.assertj:assertj-core:3.22.0"
-coil-compose = "io.coil-kt:coil-compose:2.0.0-alpha09"
+coil-compose = "io.coil-kt:coil-compose:2.0.0-SNAPSHOT"
 compose-compiler = "androidx.compose.compiler:compiler:1.2.0-alpha04"
 compose-materialiconscore = "androidx.compose.material:material-icons-core:1.2.0-alpha04"
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-ui" }
