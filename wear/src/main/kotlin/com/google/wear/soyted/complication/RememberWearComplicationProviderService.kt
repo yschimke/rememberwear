@@ -23,11 +23,10 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.TaskStackBuilder
 import androidx.core.net.toUri
-import androidx.wear.complications.data.*
-import androidx.wear.complications.datasource.ComplicationDataSourceUpdateRequester
-import androidx.wear.complications.datasource.ComplicationRequest
-import androidx.wear.complications.datasource.SuspendingComplicationDataSourceService
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceService
+import androidx.wear.watchface.complications.data.*
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
+import androidx.wear.watchface.complications.datasource.ComplicationRequest
+import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.google.wear.soyted.RememberWearActivity
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.TaskAndTaskSeries
@@ -39,7 +38,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RememberWearComplicationProviderService : SuspendingComplicationDataSourceService(), ComplicationDataSourceService {
+class RememberWearComplicationProviderService : SuspendingComplicationDataSourceService() {
     @Inject
     lateinit var rememberWearDao: RememberWearDao
 

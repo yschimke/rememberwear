@@ -118,8 +118,6 @@ dependencies {
     kapt(libs.tikxml.processor)
 
     implementation(libs.accompanist.swiperefresh)
-    implementation(libs.android.volley)
-    implementation(libs.androidx.activityktx)
     implementation(libs.androidx.activityktx)
     implementation(libs.androidx.corektx)
     implementation(libs.androidx.glanceweartiles)

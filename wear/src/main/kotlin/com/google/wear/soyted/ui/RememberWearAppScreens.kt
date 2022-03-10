@@ -96,14 +96,14 @@ fun RememberWearAppScreens(
             composable(
                 Screens.LoginDialog.route
             ) {
-                LogingDialog(viewModel, navController)
+                LoginDialog(viewModel, navController)
             }
         }
     }
 }
 
 @Composable
-private fun LogingDialog(
+private fun LoginDialog(
     viewModel: RememberWearViewModel,
     navController: NavHostController
 ) {
@@ -112,18 +112,22 @@ private fun LogingDialog(
             Text("Login")
         },
     ) {
-        Text(
-            text = "Continue after login on mobile",
-            textAlign = TextAlign.Center
-        )
-        Button(onClick = {
-            viewModel.continueLogin {
-                withContext(Dispatchers.Main) {
-                    navController.popBackStack()
+        item {
+            Text(
+                text = "Continue after login on mobile",
+                textAlign = TextAlign.Center
+            )
+        }
+        item {
+            Button(onClick = {
+                viewModel.continueLogin {
+                    withContext(Dispatchers.Main) {
+                        navController.popBackStack()
+                    }
                 }
+            }) {
+                Text("Login")
             }
-        }) {
-            Text("Login")
         }
     }
 }
