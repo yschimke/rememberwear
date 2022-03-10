@@ -10,7 +10,10 @@ plugins {
 }
 
 val localProperties = Properties().apply {
-    load(FileInputStream(rootProject.file("local.properties")))
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) {
+        load(FileInputStream(rootProject.file("local.properties")))
+    }
 }
 
 android {
