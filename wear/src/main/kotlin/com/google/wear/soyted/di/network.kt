@@ -26,6 +26,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
 import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.brotli.BrotliInterceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.ByteString.Companion.encodeUtf8
@@ -90,6 +91,7 @@ fun authInterceptor(authRepository: AuthRepository) = Interceptor { chain ->
                 .code(401)
                 .protocol(Protocol.HTTP_2)
                 .message("No token")
+                .body("".toResponseBody())
                 .build()
         }
 
