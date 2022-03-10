@@ -13,7 +13,7 @@ squareupmoshi = "1.13.0"
 squareupokhttp3 = "5.0.0-alpha.5"
 squareupretrofit2 = "2.9.0"
 wearcompose = "1.0.0-alpha18"
-weartiles = "1.0.1"
+weartiles = "1.1.0-alpha03"
 
 [libraries]
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.23.1"
