@@ -21,7 +21,7 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Upload APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: App
           path: wear/build/outputs/apk/debug/rememberwear-debug.apk
