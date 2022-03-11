@@ -58,6 +58,7 @@ android {
 
     buildTypes {
         debug {
+            isDebuggable = true
             buildConfigField(
                 "String",
                 "API_KEY",

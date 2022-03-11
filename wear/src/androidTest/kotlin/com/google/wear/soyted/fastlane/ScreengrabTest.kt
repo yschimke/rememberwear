@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted
+package com.google.wear.soyted.fastlane
 
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.compose.ui.test.onRoot
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
 import com.google.wear.soyted.ui.InboxScreen
+import org.junit.BeforeClass
 import org.junit.ClassRule
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import tools.fastlane.screengrab.Screengrab
+import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy
 import tools.fastlane.screengrab.locale.LocaleTestRule
 
-@RunWith(AndroidJUnit4::class)
 class ScreengrabTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -38,17 +41,33 @@ class ScreengrabTest {
             InboxScreen(
                 tasks = TaskAndSeriesProvider.taskAndTaskSeries,
                 onClick = { },
-                voicePromptQuery = {  },
-                loginAction = {  },
+                voicePromptQuery = { },
+                loginAction = { },
                 isLoggedIn = true
             )
         }
 
-        Screengrab.screenshot("home")
+        composeTestRule.onRoot().assertIsDisplayed()
+
+        composeTestRule.onRoot().captureToImage()
+
+        val context = InstrumentationRegistry.getInstrumentation().context
+        val isScreenRound = context.resources.configuration.isScreenRound
+        Screengrab.screenshot("home_wear", WearScreenshotStrategy(isRoundDevice = isScreenRound))
     }
 
     companion object {
-        @ClassRule @JvmField
+        @BeforeClass
+        @JvmStatic
+        fun configure() {
+            val context = InstrumentationRegistry.getInstrumentation().context
+            val isScreenRound = context.resources.configuration.isScreenRound
+
+            Screengrab.setDefaultScreenshotStrategy(WearScreenshotStrategy(isScreenRound))
+        }
+
+        @ClassRule
+        @JvmField
         val localeTestRule = LocaleTestRule()
     }
 }
