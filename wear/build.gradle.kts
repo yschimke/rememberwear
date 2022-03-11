@@ -54,24 +54,24 @@ android {
             buildConfigField(
                 "String",
                 "API_KEY",
-                "\"${localProperties["API_KEY"]}\""
+                localProperties["API_KEY"].writeBuildConfigString()
             )
             buildConfigField(
                 "String",
                 "API_SECRET",
-                "\"${localProperties["API_SECRET"]}\""
+                localProperties["API_SECRET"].writeBuildConfigString()
             )
         }
         release {
             buildConfigField(
                 "String",
                 "API_KEY",
-                "\"${localProperties["API_KEY"]}\""
+                localProperties["API_KEY"].writeBuildConfigString()
             )
             buildConfigField(
                 "String",
                 "API_SECRET",
-                "\"${localProperties["API_SECRET"]}\""
+                localProperties["API_SECRET"].writeBuildConfigString()
             )
             isShrinkResources = true
             isMinifyEnabled = true
@@ -85,12 +85,12 @@ android {
             buildConfigField(
                 "String",
                 "API_KEY",
-                "\"${localProperties["API_KEY"]}\""
+                localProperties["API_KEY"].writeBuildConfigString()
             )
             buildConfigField(
                 "String",
                 "API_SECRET",
-                "\"${localProperties["API_SECRET"]}\""
+                localProperties["API_SECRET"].writeBuildConfigString()
             )
             isShrinkResources = true
             isMinifyEnabled = true
@@ -182,3 +182,6 @@ dependencies {
     testImplementation(libs.assertj.core)
     androidTestImplementation(libs.assertj.core)
 }
+
+fun Any?.writeBuildConfigString(): String =
+    if (this != null && this != "") "\"${this}\"" else "null"
