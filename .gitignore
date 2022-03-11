@@ -5,3 +5,5 @@
 /build
 /benchmark/build/
 /.java-version
+fastlane/pc-*.json
+/fastlane/report.xml

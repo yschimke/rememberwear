@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.konan.properties.hasProperty
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -42,12 +43,16 @@ android {
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 
-    signingConfigs {
-        create("release") {
-            storeFile = file("/Users/yschimke/keystores/upload-keystores.jks")
-            keyAlias = localProperties["keyAlias"] as String?
-            keyPassword = localProperties["keyPassword"] as String?
-            storePassword = localProperties["storePassword"] as String?
+    val releaseSigned = localProperties.hasProperty("keyStore")
+
+    if (releaseSigned) {
+        signingConfigs {
+            create("release") {
+                storeFile = file(localProperties["keyStore"] as String)
+                keyAlias = localProperties["keyAlias"] as String?
+                keyPassword = localProperties["keyPassword"] as String?
+                storePassword = localProperties["storePassword"] as String?
+            }
         }
     }
 
@@ -81,7 +86,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName(if (releaseSigned) "release" else "debug")
         }
         create("benchmark") {
             buildConfigField(
