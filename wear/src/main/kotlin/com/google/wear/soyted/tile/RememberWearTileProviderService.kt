@@ -21,8 +21,7 @@ import androidx.wear.tiles.LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER
 import androidx.wear.tiles.RequestBuilders
 import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders.Tile
-import com.google.common.util.concurrent.Futures
-import com.google.common.util.concurrent.ListenableFuture
+import com.google.android.horologist.tiles.CoroutinesTileService
 import com.google.wear.soyted.RememberWearActivity
 import com.google.wear.soyted.db.RememberWearDao
 import com.google.wear.soyted.db.TaskAndTaskSeries
@@ -39,56 +38,30 @@ import com.google.wear.soyted.kt.toContentDescription
 import com.google.wear.soyted.kt.toSpProp
 import com.google.wear.soyted.util.relativeTime
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.guava.asListenableFuture
 import java.time.LocalDate
 import javax.inject.Inject
 
 const val STABLE_RESOURCES_VERSION = "1"
 
 @AndroidEntryPoint
-class RememberWearTileProviderService : androidx.wear.tiles.TileService() {
-    // For coroutines, use a custom scope we can cancel when the service is destroyed
-    private val serviceJob = Job()
-    private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
-
+class RememberWearTileProviderService : CoroutinesTileService() {
     @Inject
     lateinit var rememberWearDao: RememberWearDao
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Cleans up the coroutine
-        serviceJob.cancel()
-    }
+    override suspend fun resourcesRequest(requestParams: RequestBuilders.ResourcesRequest): ResourceBuilders.Resources =
+        ResourceBuilders.Resources.Builder().setVersion(STABLE_RESOURCES_VERSION).build()
 
-    override fun onResourcesRequest(requestParams: RequestBuilders.ResourcesRequest): ListenableFuture<ResourceBuilders.Resources> {
-        return Futures.immediateFuture(
-            ResourceBuilders.Resources.Builder().setVersion(STABLE_RESOURCES_VERSION).build()
-        )
-    }
-
-    override fun onTileRequest(requestParams: RequestBuilders.TileRequest): ListenableFuture<Tile> {
-        return serviceScope.async {
-            suspendTileRequest(requestParams)
-        }.asListenableFuture()
-    }
-
-    private suspend fun suspendTileRequest(requestParams: RequestBuilders.TileRequest): Tile {
+    override suspend fun tileRequest(requestParams: RequestBuilders.TileRequest): Tile {
         val today = LocalDate.now()
-
-        val tasks = rememberWearDao.getAllTaskAndTaskSeries().map {
-            it.filter {
-                it.isUrgentUncompleted(today) ||
-                        it.isRecentCompleted(today) ||
-                        it.isCompletedOn(today)
-            }.sortedBy { it.task.dueDate ?: LocalDate.MAX }
-        }.first()
-
+        val tasks = rememberWearDao.getAllTaskAndTaskSeries().map { tasks ->
+            tasks.filter {
+                    it.isUrgentUncompleted(today) ||
+                            it.isRecentCompleted(today) ||
+                            it.isCompletedOn(today)
+                }.sortedBy { it.task.dueDate ?: LocalDate.MAX }
+            }.first()
         return renderTile(tasks, today)
     }
 

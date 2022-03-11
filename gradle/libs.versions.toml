@@ -16,6 +16,7 @@ wearcompose = "1.0.0-alpha18"
 weartiles = "1.1.0-alpha03"
 
 [libraries]
+horologist-tiles = "com.google.android.horologist:horologist-tiles:0.0.2"
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.23.1"
 androidx-activityktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxactivity" }
 androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta04"
