@@ -170,6 +170,7 @@ dependencies {
     implementation(libs.wear.tilesproto)
     implementation(libs.work.runtimektx)
     implementation(platform(libs.squareup.okhttp3bom))
+    implementation(libs.horologist.tiles)
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)
