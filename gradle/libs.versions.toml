@@ -32,6 +32,8 @@ coil-compose = "io.coil-kt:coil-compose:2.0.0-rc01"
 compose-compiler = "androidx.compose.compiler:compiler:1.2.0-alpha05"
 compose-materialiconscore = "androidx.compose.material:material-icons-core:1.2.0-alpha05"
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-ui" }
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-compose-ui" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-compose-ui" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose-ui" }
 dagger-hiltandroid = { module = "com.google.dagger:hilt-android", version.ref = "googledagger" }
 dagger-hiltandroidcompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "googledagger" }
@@ -84,6 +86,7 @@ wear-remoteinteractions = "androidx.wear:wear-remote-interactions:1.0.0"
 wear-tiles = { module = "androidx.wear.tiles:tiles", version.ref = "weartiles" }
 wear-tilesproto = { module = "androidx.wear.tiles:tiles-proto", version.ref = "weartiles" }
 work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxwork" }
+fastlane-screengrab = "tools.fastlane:screengrab:2.1.1"
 
 [plugins]
 androidapplication = "com.android.application:7.1.2"

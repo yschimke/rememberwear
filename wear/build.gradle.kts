@@ -187,8 +187,11 @@ dependencies {
     androidTestImplementation(libs.test.extjunit)
     androidTestImplementation(libs.dagger.hiltandroidtesting)
     androidTestImplementation(libs.kotlinx.coroutinestest)
+    androidTestImplementation(libs.fastlane.screengrab)
     testImplementation(libs.assertj.core)
     androidTestImplementation(libs.assertj.core)
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    debugImplementation(libs.compose.ui.test.manifest)
 }
 
 fun Any?.writeBuildConfigString(): String =
