@@ -17,12 +17,14 @@
 package com.google.wear.soyted.work
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.wear.soyted.BuildConfig
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
+import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -49,6 +51,8 @@ class TaskCreatorTest {
 
     @Before
     fun init() {
+        Assume.assumeNotNull(BuildConfig.API_KEY)
+
         hiltRule.inject()
     }
 
