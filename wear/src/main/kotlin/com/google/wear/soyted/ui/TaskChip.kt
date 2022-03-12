@@ -60,7 +60,7 @@ fun TaskChip(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = task.taskSeries.name, maxLines = 2,
-                    color = MaterialTheme.colors.onSurfaceVariant,
+                    color = MaterialTheme.colors.onPrimary,
                     style = MaterialTheme.typography.title3,
                 )
 

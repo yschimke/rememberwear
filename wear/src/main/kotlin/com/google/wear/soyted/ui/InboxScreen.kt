@@ -47,7 +47,7 @@ import com.google.wear.soyted.util.scrollHandler
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
-    scrollState: ScalingLazyListState = rememberScalingLazyListState(),
+    scrollState: ScalingLazyListState = rememberScalingLazyListState(initialCenterItemIndex = 2),
     onClick: (TaskAndTaskSeries) -> Unit = {},
     viewModel: RememberWearViewModel,
     voicePromptQuery: () -> Unit,
