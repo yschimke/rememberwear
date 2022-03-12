@@ -25,8 +25,8 @@ android {
         minSdk = 26
         targetSdk = 30
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
-        versionCode = 9
-        versionName = "1.9"
+        versionCode = 10
+        versionName = "1.10"
 
         setProperty("archivesBaseName", "rememberwear")
     }
