@@ -23,22 +23,30 @@ import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.Wearable
 import com.google.wear.soyted.BuildConfig
 import com.google.wear.soyted.app.api.RememberTheMilkService
+import com.google.wear.soyted.app.api.model.auth.AuthRsp
+import com.google.wear.soyted.app.work.ScheduledWork
 import com.google.wear.soyted.horologist.snackbar.SnackbarManager
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.guava.await
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import okio.ByteString.Companion.encodeUtf8
+import okio.IOException
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 class LoginFlow @Inject constructor(
-    private val snackbarManager: SnackbarManager,
     private val authRepository: AuthRepository,
     private val api: RememberTheMilkService,
-    @ApplicationContext private val application: Context
+    @ApplicationContext private val application: Context,
+    private val scheduledWork: ScheduledWork,
+    private val coroutineScope: CoroutineScope
 ) {
-    suspend fun startLogin() {
+    suspend fun startLogin(): LoginScreenState.ErrorDetails? {
         val frob = api.frob().frob?.frob
 
         authRepository.setFrob(frob)
@@ -50,7 +58,7 @@ class LoginFlow @Inject constructor(
         val nodeId = nodes.firstOrNull()?.id
 
         if (nodeId == null) {
-            snackbarManager.showMessage("No connected mobile")
+            return LoginScreenState.ErrorDetails("No connected mobile")
         } else {
             try {
                 val sig =
@@ -69,33 +77,43 @@ class LoginFlow @Inject constructor(
                     nodeId
                 ).await()
             } catch (e: Exception) {
-                snackbarManager.showMessage("Unable to open mobile app: ${e.message}")
+                return LoginScreenState.ErrorDetails("Unable to open mobile app: $e")
             }
         }
+
+        return null
     }
 
-    suspend fun enterToken() {
+    suspend fun waitForToken(): LoginScreenState.ErrorDetails? {
         val frob = authRepository.getFrob()
+            ?: return LoginScreenState.ErrorDetails("Login did not start correctly")
 
-        if (frob == null) {
-            snackbarManager.showMessage("Missing frob")
-            return
-        }
-
-        val auth = api.token(frob)
-
-        if (auth.err != null) {
-            snackbarManager.showMessage("Invalid token: ${auth.err.msg}")
-        } else {
-            snackbarManager.showMessage("Logged in as ${auth.auth?.user?.fullname}")
-        }
+        val auth = waitForAuth(frob)
+            ?: return LoginScreenState.ErrorDetails("Invalid token: Did you succesfully authenticate?")
 
         val token = auth.auth?.token
-
-        if (token == null) {
-            snackbarManager.showMessage("No token")
-        }
+            ?: return LoginScreenState.ErrorDetails("No token returned by server")
 
         authRepository.setToken(token)
+
+        coroutineScope.launch {
+            scheduledWork.refetchAllDataWork()
+        }
+
+        return null
+    }
+
+    private suspend fun waitForAuth(
+        frob: String
+    ): AuthRsp? {
+        (1..11).forEach {
+            delay(5.seconds)
+            try {
+                return api.token(frob)
+            } catch (ioe: IOException) {
+                println(ioe)
+            }
+        }
+        return null
     }
 }

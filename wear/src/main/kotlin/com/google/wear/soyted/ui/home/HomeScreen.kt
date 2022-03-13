@@ -35,6 +35,7 @@ import com.google.wear.soyted.horologist.navscaffold.wearNavComposable
 import com.google.wear.soyted.horologist.snackbar.DefaultSnackbarHost
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.input.VoicePrompt
+import com.google.wear.soyted.ui.login.LoginDialog
 import com.google.wear.soyted.ui.login.LoginViewModel
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.navigation.Screens
@@ -97,36 +98,8 @@ fun RememberWearAppScreens(
                 )
             }
 
-            wearNavComposable(Screens.LoginDialog.route) { _, viewModel ->
+            wearNavComposable(Screens.LoginDialog.route) { _, _ ->
                 LoginDialog(navController = rtmNavController)
-            }
-        }
-    }
-}
-
-@Composable
-private fun LoginDialog(
-    viewModel: LoginViewModel = hiltViewModel(), navController: NavController
-) {
-    Alert(
-        title = {
-            Text("Login")
-        },
-    ) {
-        item {
-            Text(
-                text = "Continue after login on mobile", textAlign = TextAlign.Center
-            )
-        }
-        item {
-            Button(onClick = {
-                viewModel.continueLogin {
-                    withContext(Dispatchers.Main) {
-                        navController.popBackStack()
-                    }
-                }
-            }) {
-                Text("Login")
             }
         }
     }

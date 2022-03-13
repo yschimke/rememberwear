@@ -19,35 +19,46 @@ package com.google.wear.soyted.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.app.work.ScheduledWork
-import com.google.wear.soyted.horologist.snackbar.SnackbarManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val scheduledWork: ScheduledWork,
     val authRepository: AuthRepository,
-    private val snackbarManager: SnackbarManager,
-    val loginFlow: LoginFlow
+    val loginFlow: LoginFlow,
 ) : ViewModel() {
-    fun continueLogin(onLogin: suspend () -> Unit) {
+    val state = MutableStateFlow(LoginScreenState())
+
+    fun initiateLogin() {
         viewModelScope.launch {
-            try {
-                loginFlow.enterToken()
+            val error = loginFlow.startLogin()
 
-                onLogin()
+            if (error != null) {
+                state.value = LoginScreenState(
+                    LoginScreenState.State.Failed,
+                    error = error
+                )
+            } else {
+                state.value = LoginScreenState(LoginScreenState.State.LoggingIn)
+            }
 
-                scheduledWork.refetchAllDataWork()
-            } catch (e: Exception) {
-                snackbarManager.showMessage("Login failed: ${e.message}")
+            val error2 = loginFlow.waitForToken()
+
+            if (error2 != null) {
+                state.value = LoginScreenState(
+                    LoginScreenState.State.Failed,
+                    error = error2
+                )
+            } else {
+                state.value = LoginScreenState(LoginScreenState.State.LoggedIn)
             }
         }
     }
 
-    fun startLoginFlow() {
-        viewModelScope.launch {
-            loginFlow.startLogin()
-        }
+    fun abortLogin() {
+        // nothing for now
     }
 }

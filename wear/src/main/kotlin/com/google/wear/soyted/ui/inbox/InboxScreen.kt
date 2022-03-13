@@ -80,7 +80,6 @@ fun InboxScreen(
                 addTaskVoicePrompt.launch(VoicePrompt.voicePromptIntent)
             },
             loginAction = {
-                viewModel.startLoginFlow()
                 navController.navigateToLoginDialog()
             },
             isLoggedIn = isLoggedIn

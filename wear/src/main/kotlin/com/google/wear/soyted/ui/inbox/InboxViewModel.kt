@@ -41,8 +41,6 @@ class InboxViewModel @Inject constructor(
     private val rememberWearDao: RememberWearDao,
     private val scheduledWork: ScheduledWork,
     val authRepository: AuthRepository,
-    private val snackbarManager: SnackbarManager,
-    val loginFlow: LoginFlow
 ) : ViewModel() {
     private val isRefreshingState = MutableStateFlow(false)
 
@@ -90,12 +88,6 @@ class InboxViewModel @Inject constructor(
             if (stale) {
                 refetchAllData()
             }
-        }
-    }
-
-    fun startLoginFlow() {
-        viewModelScope.launch {
-            loginFlow.startLogin()
         }
     }
 }
