@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google Inc. All rights reserved.
+ * Copyright 2021-2022 Google Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 package com.google.wear.soyted.ui.util
 
 import android.view.MotionEvent
@@ -22,7 +23,6 @@ import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.input.pointer.RequestDisallowInterceptTouchEvent
@@ -32,7 +32,6 @@ import androidx.core.view.InputDeviceCompat
 import androidx.core.view.MotionEventCompat
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeUiApi::class)
 fun Modifier.scrollHandler(scrollState: ScrollableState): Modifier = composed {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()

@@ -1,11 +1,11 @@
 /*
- * Copyright 2022 Google Inc. All rights reserved.
+ * Copyright 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,11 +18,20 @@ package com.google.wear.soyted.horologist.snackbar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
+import com.google.wear.soyted.horologist.snackbar.material.SnackbarDuration
 import com.google.wear.soyted.horologist.snackbar.material.SnackbarHostState
 import kotlinx.coroutines.launch
 
-open class ScaffoldViewModel(
-    val snackbarManager: SnackbarManager
+/**
+ * A ViewModel that backs the WearNavScaffold to allow each composable to interact and effect
+ * the [Scaffold] positionIndicator, vignette and timeText.
+ *
+ * A ViewModel is used to allow the same current instance to be shared between the WearNavScaffold
+ * and the composable screen via [NavHostController.currentBackStackEntry].
+ */
+open class SnackbarViewModel(
+    private val snackbarManager: SnackbarManager
 ) : ViewModel() {
     val snackbarHostState = SnackbarHostState()
 
@@ -30,7 +39,10 @@ open class ScaffoldViewModel(
         viewModelScope.launch {
             snackbarManager.messages.collect { currentMessages ->
                 currentMessages.firstOrNull()?.let {
-                    snackbarHostState.showSnackbar(it.message)
+                    snackbarHostState.showSnackbar(
+                        message = it.message,
+                        duration = SnackbarDuration.Short
+                    )
                     snackbarManager.setMessageShown(it.id)
                 }
             }

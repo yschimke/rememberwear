@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.rememberScalingLazyListState
@@ -42,7 +42,8 @@ import com.google.wear.soyted.ui.util.scrollHandler
 fun TaskScreen(
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    scrollState: ScalingLazyListState = rememberScalingLazyListState(initialCenterItemIndex = 1)
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
     val task = state.todayTask
@@ -51,8 +52,6 @@ fun TaskScreen(
 
     // Activate scrolling
     LocalView.current.requestFocus()
-
-    val scrollState = rememberScalingLazyListState()
 
     if (taskSeries != null) {
         ScalingLazyColumn(
@@ -63,7 +62,7 @@ fun TaskScreen(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
+            items(10) {
                 Text(
                     modifier = Modifier.fillMaxWidth(0.7f),
                     text = taskSeries.name,

@@ -19,8 +19,8 @@ package com.google.wear.soyted.ui.home
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.app.work.ExternalUpdates
 import com.google.wear.soyted.app.work.TaskCreator
-import com.google.wear.soyted.horologist.snackbar.ScaffoldViewModel
 import com.google.wear.soyted.horologist.snackbar.SnackbarManager
+import com.google.wear.soyted.horologist.snackbar.SnackbarViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -31,14 +31,14 @@ class HomeViewModel @Inject constructor(
     private val taskCreator: TaskCreator,
     private val externalUpdates: ExternalUpdates,
     snackbarManager: SnackbarManager
-) : ScaffoldViewModel(snackbarManager) {
+) : SnackbarViewModel(snackbarManager) {
     fun createTask(spokenText: String) {
         viewModelScope.launch {
             try {
                 taskCreator.create(spokenText)
                 externalUpdates.forceUpdates()
             } catch (ioe: IOException) {
-                snackbarManager.showMessage("Unable to connect to server")
+                showMessage("Unable to connect to server")
             }
         }
     }

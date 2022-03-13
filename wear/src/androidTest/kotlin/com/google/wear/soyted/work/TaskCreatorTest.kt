@@ -21,7 +21,6 @@ import com.google.wear.soyted.BuildConfig
 import com.google.wear.soyted.app.work.TaskCreator
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -37,7 +36,7 @@ import javax.inject.Inject
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@OptIn(ExperimentalCoroutinesApi::class)
+
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class TaskCreatorTest {

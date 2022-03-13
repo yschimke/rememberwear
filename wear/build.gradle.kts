@@ -40,7 +40,13 @@ android {
     }
 
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+        freeCompilerArgs += "-opt-in=androidx.wear.compose.material.ExperimentalWearMaterialApi"
+        freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs += "-opt-in=androidx.wear.compose.navigation.rememberSwipeDismissableNavController"
+        freeCompilerArgs += "-opt-in=kotlin.contracts.ExperimentalContracts"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
     }
 
     val releaseSigned = localProperties.hasProperty("keyStore")

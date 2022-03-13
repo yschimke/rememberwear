@@ -36,12 +36,10 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.ContentAlpha
 import androidx.wear.compose.material.LocalContentAlpha
 import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.ProvideTextStyle
 import androidx.wear.compose.material.Text
 import kotlin.math.max
 
@@ -103,13 +101,10 @@ fun Snackbar(
         onClick = { }
     ) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-            val textStyle = MaterialTheme.typography.body2
-            ProvideTextStyle(value = textStyle) {
-                when {
-                    action == null -> TextOnlySnackbar(content)
-                    actionOnNewLine -> NewLineButtonSnackbar(content, action)
-                    else -> OneRowSnackbar(content, action)
-                }
+            when {
+                action == null -> TextOnlySnackbar(content)
+                actionOnNewLine -> NewLineButtonSnackbar(content, action)
+                else -> OneRowSnackbar(content, action)
             }
         }
     }
@@ -170,7 +165,6 @@ fun Snackbar(
     val actionComposable: (@Composable () -> Unit)? = if (actionLabel != null) {
         @Composable {
             Button(
-                colors = ButtonDefaults.buttonColors(contentColor = actionColor),
                 onClick = { snackbarData.performAction() },
                 content = { Text(actionLabel) }
             )

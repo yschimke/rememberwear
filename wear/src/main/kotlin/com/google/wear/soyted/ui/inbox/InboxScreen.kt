@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
@@ -89,7 +88,6 @@ fun InboxScreen(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
@@ -100,8 +98,6 @@ fun InboxScreen(
     loginAction: () -> Unit,
     isLoggedIn: Boolean
 ) {
-
-
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
 
     // Activate scrolling

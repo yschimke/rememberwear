@@ -18,20 +18,30 @@ package com.google.wear.soyted.horologist.snackbar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.google.wear.soyted.horologist.snackbar.material.Snackbar
+import androidx.compose.ui.draw.alpha
+import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.dialog.Confirmation
+import com.google.wear.soyted.horologist.snackbar.material.SnackbarDuration
 import com.google.wear.soyted.horologist.snackbar.material.SnackbarHost
 import com.google.wear.soyted.horologist.snackbar.material.SnackbarHostState
 
 @Composable
-fun ToastSnackbarHost(
+fun DialogSnackbarHost(
     modifier: Modifier = Modifier,
-    hostState: SnackbarHostState
+    hostState: SnackbarHostState,
 ) {
     SnackbarHost(
-        modifier = modifier,
+        modifier = modifier.alpha(0.8f),
         snackbar = {
-            Snackbar(snackbarData = it)
+            val duration = when (it.duration) {
+                SnackbarDuration.Indefinite -> Long.MAX_VALUE
+                SnackbarDuration.Long -> 5000L
+                SnackbarDuration.Short -> 2000L
+            }
+            Confirmation(onTimeout = { it.dismiss() }, durationMillis = duration) {
+                Text(text = it.message)
+            }
         },
-        hostState = hostState
+        hostState = hostState,
     )
 }

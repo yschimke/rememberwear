@@ -20,7 +20,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.wear.soyted.BuildConfig
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Assume
@@ -35,7 +34,7 @@ import javax.inject.Inject
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@OptIn(ExperimentalCoroutinesApi::class)
+
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class RememberTheMilkApiTest {

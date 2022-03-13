@@ -17,7 +17,6 @@
 package com.google.wear.soyted
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,7 +26,6 @@ import org.junit.runner.RunWith
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class PreviewTest {
     @Test

@@ -19,7 +19,6 @@ package com.google.wear.soyted.ui.login
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.Wearable
 import com.google.wear.soyted.BuildConfig
@@ -51,7 +50,7 @@ class LoginFlow @Inject constructor(
         val nodeId = nodes.firstOrNull()?.id
 
         if (nodeId == null) {
-            Toast.makeText(application, "No connected mobile", Toast.LENGTH_SHORT).show()
+            snackbarManager.showMessage("No connected mobile")
         } else {
             try {
                 val sig =

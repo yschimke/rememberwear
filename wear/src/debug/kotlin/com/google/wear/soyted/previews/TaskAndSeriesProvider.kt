@@ -51,7 +51,12 @@ class TaskAndSeriesProvider : PreviewParameterProvider<TaskAndTaskSeries> {
             task("2b", localDateTime.toLocalDate().plusDays(3), null)
         )
 
-        val taskAndTaskSeries = tasks.map { TaskAndTaskSeries(it, taskSeries) } + tasksLong.map { TaskAndTaskSeries(it, taskSeriesLong) }
+        val taskAndTaskSeries = tasks.map { TaskAndTaskSeries(it, taskSeries) } + tasksLong.map {
+            TaskAndTaskSeries(
+                it,
+                taskSeriesLong
+            )
+        }
 
         fun task(id: String, dueDate: LocalDate?, completed: Instant?): Task {
             return Task(

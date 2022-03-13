@@ -16,23 +16,23 @@
 
 package com.google.wear.soyted.ui.home
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.dialog.Alert
-import androidx.wear.compose.navigation.SwipeDismissableNavHost
-import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.google.wear.soyted.horologist.snackbar.material.SnackbarHost
+import com.google.wear.soyted.horologist.navscaffold.WearNavScaffold
+import com.google.wear.soyted.horologist.navscaffold.scalingLazyColumnComposable
+import com.google.wear.soyted.horologist.navscaffold.wearNavComposable
+import com.google.wear.soyted.horologist.snackbar.DefaultSnackbarHost
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.login.LoginViewModel
@@ -45,13 +45,9 @@ import kotlinx.coroutines.withContext
 
 val uri = "https://www.rememberthemilk.com/"
 
-@OptIn(
-    ExperimentalAnimationApi::class,
-    androidx.wear.compose.material.ExperimentalWearMaterialApi::class
-)
 @Composable
 fun RememberWearAppScreens(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val addTaskVoicePrompt = VoicePrompt.voicePromptLauncher(onCreateTask = {
         viewModel.createTask(it)
@@ -63,39 +59,46 @@ fun RememberWearAppScreens(
         val navController = rememberSwipeDismissableNavController()
         val rtmNavController = NavController(navController)
 
-        Scaffold(timeText = { TimeText() }) {
-            Box {
-                SwipeDismissableNavHost(
-                    navController = navController, startDestination = Screens.Inbox.route
-                ) {
-                    composable(
-                        Screens.Inbox.route,
-                        deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" })
-                    ) {
-                        InboxScreen(
-                            navController = rtmNavController,
-                            addTaskVoicePrompt = addTaskVoicePrompt
-                        )
-                    }
+        WearNavScaffold(
+            startDestination = Screens.Inbox.route,
+            navController = navController,
+            snackbar = {
+                DefaultSnackbarHost(
+                    modifier = Modifier.fillMaxSize(),
+                    hostState = viewModel.snackbarHostState
+                )
+            }
+        ) {
+            scalingLazyColumnComposable(
+                route = Screens.Inbox.route,
+                deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" }),
+                scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 2) }
+            ) {
+                InboxScreen(
+                    navController = rtmNavController,
+                    addTaskVoicePrompt = addTaskVoicePrompt,
+                    scrollState = it.scrollableState
+                )
+            }
 
-                    composable(
-                        Screens.Task.route + "/{taskId}", arguments = listOf(
-                            navArgument("taskId", builder = {
-                                this.type = NavType.StringType
-                            })
-                        ), deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" })
-                    ) {
-                        TaskScreen(navController = rtmNavController)
-                    }
+            scalingLazyColumnComposable(
+                route = Screens.Task.route + "/{taskId}",
+                arguments = listOf(
+                    navArgument("taskId", builder = {
+                        this.type = NavType.StringType
+                    })
+                ),
+                deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" }),
+                scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 1) }
+            ) {
+                TaskScreen(
+                    navController = rtmNavController,
+                    scrollState = it.scrollableState
+                )
+            }
 
-                    composable(
-                        Screens.LoginDialog.route
-                    ) {
-                        LoginDialog(navController = rtmNavController)
-                    }
-                }
-
-                SnackbarHost(hostState = viewModel.snackbarHostState)
+            wearNavComposable(Screens.LoginDialog.route) { _, viewModel ->
+                LoginDialog(navController = rtmNavController)
             }
         }
     }
