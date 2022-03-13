@@ -17,9 +17,9 @@
 package com.google.wear.soyted.previews
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.google.wear.soyted.db.Task
-import com.google.wear.soyted.db.TaskAndTaskSeries
-import com.google.wear.soyted.db.TaskSeries
+import com.google.wear.soyted.app.db.Task
+import com.google.wear.soyted.app.db.TaskAndTaskSeries
+import com.google.wear.soyted.app.db.TaskSeries
 import com.google.wear.soyted.previews.Previews.localDateTime
 import com.google.wear.soyted.previews.Previews.timestamp
 import java.time.Instant

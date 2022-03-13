@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.api
+package com.google.wear.soyted.app.api
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.wear.soyted.BuildConfig

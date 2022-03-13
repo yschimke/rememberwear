@@ -19,7 +19,7 @@ package com.google.wear.soyted
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.google.wear.soyted.work.ScheduledWork
+import com.google.wear.soyted.app.work.ScheduledWork
 import dagger.hilt.android.HiltAndroidApp
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority

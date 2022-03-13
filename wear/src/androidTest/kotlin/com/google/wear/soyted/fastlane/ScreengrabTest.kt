@@ -22,13 +22,12 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
-import com.google.wear.soyted.ui.InboxScreen
+import com.google.wear.soyted.ui.inbox.InboxScreen
 import org.junit.BeforeClass
 import org.junit.ClassRule
 import org.junit.Rule
 import org.junit.Test
 import tools.fastlane.screengrab.Screengrab
-import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy
 import tools.fastlane.screengrab.locale.LocaleTestRule
 
 class ScreengrabTest {

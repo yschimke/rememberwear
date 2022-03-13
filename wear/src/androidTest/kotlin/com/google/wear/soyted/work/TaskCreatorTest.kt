@@ -18,6 +18,7 @@ package com.google.wear.soyted.work
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.wear.soyted.BuildConfig
+import com.google.wear.soyted.app.work.TaskCreator
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

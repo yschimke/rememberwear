@@ -19,34 +19,16 @@ package com.google.wear.soyted
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import com.google.wear.soyted.login.AuthRepository
-import com.google.wear.soyted.login.LoginFlow
-import com.google.wear.soyted.ui.RememberWearAppScreens
-import com.google.wear.soyted.util.Toaster
+import com.google.wear.soyted.ui.home.RememberWearAppScreens
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RememberWearActivity : ComponentActivity() {
-    private val viewModel by viewModels<RememberWearViewModel>()
-
-    @Inject
-    lateinit var toaster: Toaster
-
-    @Inject
-    lateinit var loginFlow: LoginFlow
-
-    @Inject
-    lateinit var authRepository: AuthRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.refetchIfStale()
-
         setContent {
-            RememberWearAppScreens(viewModel)
+            RememberWearAppScreens()
         }
     }
 }

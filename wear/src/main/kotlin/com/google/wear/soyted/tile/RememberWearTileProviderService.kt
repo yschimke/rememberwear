@@ -23,20 +23,20 @@ import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders.Tile
 import com.google.android.horologist.tiles.CoroutinesTileService
 import com.google.wear.soyted.RememberWearActivity
-import com.google.wear.soyted.db.RememberWearDao
-import com.google.wear.soyted.db.TaskAndTaskSeries
-import com.google.wear.soyted.kt.activityClickable
-import com.google.wear.soyted.kt.column
-import com.google.wear.soyted.kt.fontStyle
-import com.google.wear.soyted.kt.layout
-import com.google.wear.soyted.kt.modifiers
-import com.google.wear.soyted.kt.text
-import com.google.wear.soyted.kt.tile
-import com.google.wear.soyted.kt.timeline
-import com.google.wear.soyted.kt.timelineEntry
-import com.google.wear.soyted.kt.toContentDescription
-import com.google.wear.soyted.kt.toSpProp
-import com.google.wear.soyted.util.relativeTime
+import com.google.wear.soyted.app.db.RememberWearDao
+import com.google.wear.soyted.app.db.TaskAndTaskSeries
+import com.google.wear.soyted.tile.kt.activityClickable
+import com.google.wear.soyted.tile.kt.column
+import com.google.wear.soyted.tile.kt.fontStyle
+import com.google.wear.soyted.tile.kt.layout
+import com.google.wear.soyted.tile.kt.modifiers
+import com.google.wear.soyted.tile.kt.text
+import com.google.wear.soyted.tile.kt.tile
+import com.google.wear.soyted.tile.kt.timeline
+import com.google.wear.soyted.tile.kt.timelineEntry
+import com.google.wear.soyted.tile.kt.toContentDescription
+import com.google.wear.soyted.tile.kt.toSpProp
+import com.google.wear.soyted.ui.util.relativeTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -57,11 +57,11 @@ class RememberWearTileProviderService : CoroutinesTileService() {
         val today = LocalDate.now()
         val tasks = rememberWearDao.getAllTaskAndTaskSeries().map { tasks ->
             tasks.filter {
-                    it.isUrgentUncompleted(today) ||
-                            it.isRecentCompleted(today) ||
-                            it.isCompletedOn(today)
-                }.sortedBy { it.task.dueDate ?: LocalDate.MAX }
-            }.first()
+                it.isUrgentUncompleted(today) ||
+                        it.isRecentCompleted(today) ||
+                        it.isCompletedOn(today)
+            }.sortedBy { it.task.dueDate ?: LocalDate.MAX }
+        }.first()
         return renderTile(tasks, today)
     }
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.db
+package com.google.wear.soyted.app.db
 
 import android.content.Context
 import androidx.room.Room
