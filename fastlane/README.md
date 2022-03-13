@@ -23,6 +23,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Runs all the tests
 
+### android internal_link
+
+```sh
+[bundle exec] fastlane android internal_link
+```
+
+Submit a new Internal Build and get link
+
+### android internal
+
+```sh
+[bundle exec] fastlane android internal
+```
+
+Submit a new Internal Testing Build to Google Play
+
 ### android beta
 
 ```sh
@@ -43,6 +59,14 @@ Deploy a new version to the Google Play
 
 ```sh
 [bundle exec] fastlane android screenshots
+```
+
+
+
+### android increment
+
+```sh
+[bundle exec] fastlane android increment
 ```
 
 

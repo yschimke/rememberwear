@@ -21,6 +21,18 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "Submit a new Internal Build and get link"
+  lane :internal_link do
+    gradle(task: "clean bundleRelease")
+    upload_to_play_store_internal_app_sharing
+  end
+
+  desc "Submit a new Internal Testing Build to Google Play"
+  lane :internal do
+    gradle(task: "bundleRelease")
+    upload_to_play_store(track: 'internal')
+  end
+
   desc "Submit a new Beta Build to Google Play"
   lane :beta do
     gradle(task: "clean bundleRelease")
@@ -52,5 +64,13 @@ platform :android do
         skip_open_summary: false
     )
     upload_to_play_store
+  end
+
+  lane :increment do
+    increment_version_code(
+          gradle_file_path: "wear/build.gradle.kts",
+          #ext_constant_name: "test"
+          #app_folder_name:"app"
+    )
   end
 end

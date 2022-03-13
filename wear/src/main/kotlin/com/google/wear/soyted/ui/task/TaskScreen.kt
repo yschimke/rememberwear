@@ -62,7 +62,7 @@ fun TaskScreen(
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(10) {
+            item {
                 Text(
                     modifier = Modifier.fillMaxWidth(0.7f),
                     text = taskSeries.name,
