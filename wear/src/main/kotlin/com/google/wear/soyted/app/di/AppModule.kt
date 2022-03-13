@@ -18,6 +18,8 @@ package com.google.wear.soyted.app.di
 
 import android.content.Context
 import androidx.work.WorkManager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.wear.soyted.app.api.AuthedService
 import com.google.wear.soyted.app.api.RememberTheMilkService
 import com.google.wear.soyted.app.db.RememberWearDao
@@ -97,6 +99,16 @@ object AppModule {
     fun providesWorkManager(@ApplicationContext application: Context): WorkManager {
         return WorkManager.getInstance(application)
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseCrashlytics(): FirebaseCrashlytics = FirebaseCrashlytics.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAnalytics(
+        @ApplicationContext context: Context
+    ): FirebaseAnalytics = FirebaseAnalytics.getInstance(context)
 
     const val BaseUrl = "baseurl"
 }

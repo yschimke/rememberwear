@@ -148,6 +148,8 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.uitooling)
     implementation(libs.dagger.hiltandroid)
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.crashlytics)
     implementation(libs.gms.playserviceswearable)
     implementation(libs.hilt.navigationcompose)
     implementation(libs.hilt.work)
@@ -203,3 +205,8 @@ dependencies {
 
 fun Any?.writeBuildConfigString(): String =
     if (this != null && this != "") "\"${this}\"" else "null"
+
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = "com.google.firebase.crashlytics")
+}

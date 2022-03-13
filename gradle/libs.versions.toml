@@ -44,6 +44,9 @@ gms-playserviceswearable = "com.google.android.gms:play-services-wearable:17.1.0
 hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 hilt-navigationcompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
+firebase-bom = "com.google.firebase:firebase-bom:29.2.0"
+firebase-analytics-ktx = "com.google.firebase:firebase-analytics-ktx:20.1.0"
+firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.2.8"
 jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
 junit = "junit:junit:4.13.2"
 kotlin-annotationprocessinggradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "kotlin" }
@@ -93,3 +96,5 @@ androidapplication = "com.android.application:7.1.2"
 hilt = "com.google.dagger.hilt.android:2.41"
 kotlinandroid = "org.jetbrains.kotlin.android:1.6.10"
 kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.10"
+firebase = "com.google.gms.google-services:4.3.10"
+firebasecrashlytics = "com.google.firebase.crashlytics:2.8.1"
