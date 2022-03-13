@@ -46,7 +46,7 @@ hilt-navigationcompose = { module = "androidx.hilt:hilt-navigation-compose", ver
 hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
 firebase-bom = "com.google.firebase:firebase-bom:29.2.0"
 firebase-analytics-ktx = "com.google.firebase:firebase-analytics-ktx:20.1.0"
-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.2.8"
+firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.2.9"
 jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
 junit = "junit:junit:4.13.2"
 kotlin-annotationprocessinggradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "kotlin" }
