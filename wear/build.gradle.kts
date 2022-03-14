@@ -189,6 +189,7 @@ dependencies {
     implementation(platform(libs.squareup.okhttp3bom))
     implementation(libs.horologist.tiles)
     implementation(libs.androidx.metrics.performance)
+    implementation(libs.profileinstaller)
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)

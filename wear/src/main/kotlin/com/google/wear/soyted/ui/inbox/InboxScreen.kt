@@ -31,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -103,7 +105,8 @@ fun InboxScreen(
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
 
     ScalingLazyColumn(
-        modifier = modifier.scrollableColumn(focusRequester, scrollState),
+        modifier = modifier.scrollableColumn(focusRequester, scrollState)
+            .semantics { contentDescription = "Inbox List" },
         contentPadding = PaddingValues(
             horizontal = 8.dp,
             vertical = paddingHeight,

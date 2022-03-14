@@ -29,7 +29,7 @@ class ColdStartupBenchmark {
 
     @Test
     fun startup() = benchmarkRule.measureRepeated(
-        packageName = "com.google.wear.soyted",
+        packageName = "ee.schimke.wear.soyted",
         metrics = listOf(StartupTimingMetric()),
         compilationMode = CompilationMode.Full(),
         iterations = 10,

@@ -34,7 +34,7 @@
             android:required="false" />
 
         <activity
-            android:name="com.google.wear.soyted.RememberWearActivity"
+            android:name=".RememberWearActivity"
             android:exported="true"
             android:label="@string/app_name">
 
