@@ -16,6 +16,8 @@
 
 package com.google.wear.soyted.fastlane
 
+import androidx.compose.runtime.remember
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -42,7 +44,8 @@ class ScreengrabTest {
                 onClick = { },
                 voicePromptQuery = { },
                 loginAction = { },
-                isLoggedIn = true
+                isLoggedIn = true,
+                focusRequester = remember { FocusRequester() }
             )
         }
 

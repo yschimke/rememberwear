@@ -17,6 +17,8 @@
 package com.google.wear.soyted.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
@@ -39,7 +41,8 @@ fun CirclesListPreview() {
             onClick = {},
             voicePromptQuery = {},
             loginAction = {},
-            isLoggedIn = true
+            isLoggedIn = true,
+            focusRequester = remember { FocusRequester() }
         )
     }
 }
@@ -60,7 +63,8 @@ fun CirclesListNotLoggedInPreview() {
             onClick = {},
             voicePromptQuery = {},
             loginAction = {},
-            isLoggedIn = false
+            isLoggedIn = false,
+            focusRequester = remember { FocusRequester() }
         )
     }
 }

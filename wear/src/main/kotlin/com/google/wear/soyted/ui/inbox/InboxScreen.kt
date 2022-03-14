@@ -29,8 +29,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,10 +45,10 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
 import com.google.wear.soyted.home.TaskChip
+import com.google.wear.soyted.horologist.scrollableColumn
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
-import com.google.wear.soyted.ui.util.scrollHandler
 
 @Composable
 fun InboxScreen(
@@ -56,7 +56,8 @@ fun InboxScreen(
     scrollState: ScalingLazyListState = rememberScalingLazyListState(initialCenterItemIndex = 2),
     viewModel: InboxViewModel = hiltViewModel(),
     navController: NavController,
-    addTaskVoicePrompt: ManagedActivityResultLauncher<Intent, ActivityResult>
+    addTaskVoicePrompt: ManagedActivityResultLauncher<Intent, ActivityResult>,
+    focusRequester: FocusRequester
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
     val tasks = state.tasks ?: listOf()
@@ -82,7 +83,8 @@ fun InboxScreen(
             loginAction = {
                 navController.navigateToLoginDialog()
             },
-            isLoggedIn = isLoggedIn
+            isLoggedIn = isLoggedIn,
+            focusRequester = focusRequester
         )
     }
 }
@@ -95,15 +97,13 @@ fun InboxScreen(
     onClick: (TaskAndTaskSeries) -> Unit,
     voicePromptQuery: () -> Unit,
     loginAction: () -> Unit,
-    isLoggedIn: Boolean
+    isLoggedIn: Boolean,
+    focusRequester: FocusRequester
 ) {
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
 
-    // Activate scrolling
-    LocalView.current.requestFocus()
-
     ScalingLazyColumn(
-        modifier = modifier.scrollHandler(scrollState),
+        modifier = modifier.scrollableColumn(focusRequester, scrollState),
         contentPadding = PaddingValues(
             horizontal = 8.dp,
             vertical = paddingHeight,

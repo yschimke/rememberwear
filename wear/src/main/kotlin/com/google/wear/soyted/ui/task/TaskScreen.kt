@@ -23,7 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,64 +33,60 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.google.wear.soyted.horologist.scrollableColumn
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.util.relativeTime
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
-import com.google.wear.soyted.ui.util.scrollHandler
 
 @Composable
 fun TaskScreen(
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = hiltViewModel(),
     navController: NavController,
-    scrollState: ScalingLazyListState = rememberScalingLazyListState(initialCenterItemIndex = 1)
+    scrollState: ScalingLazyListState = rememberScalingLazyListState(initialCenterItemIndex = 1),
+    focusRequester: FocusRequester
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
     val task = state.todayTask
     val taskSeries = state.taskSeries
     val notes = state.notes ?: listOf()
 
-    // Activate scrolling
-    LocalView.current.requestFocus()
+    ScalingLazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .scrollableColumn(focusRequester, scrollState),
+        state = scrollState,
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        item {
+            Text(
+                modifier = Modifier.fillMaxWidth(0.7f),
+                text = taskSeries?.name.orEmpty(),
+                style = MaterialTheme.typography.title1,
+                maxLines = 2,
+                textAlign = TextAlign.Center
+            )
+        }
 
-    if (taskSeries != null) {
-        ScalingLazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .scrollHandler(scrollState),
-            state = scrollState,
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        if (task != null) {
             item {
-                Text(
-                    modifier = Modifier.fillMaxWidth(0.7f),
-                    text = taskSeries.name,
-                    style = MaterialTheme.typography.title1,
-                    maxLines = 2,
-                    textAlign = TextAlign.Center
-                )
+                ToggleChip(checked = task.completed != null, onCheckedChange = {
+                    if (it) {
+                        viewModel.complete(task)
+                        navController.popBackStack()
+                    } else {
+                        viewModel.uncomplete(task)
+                    }
+                }, label = {
+                    Text(
+                        text = task.dueDate?.relativeTime(state.today) ?: "Completed",
+                    )
+                })
             }
-
-            if (task != null) {
-                item {
-                    ToggleChip(checked = task.completed != null, onCheckedChange = {
-                        if (it) {
-                            viewModel.complete(task)
-                            navController.popBackStack()
-                        } else {
-                            viewModel.uncomplete(task)
-                        }
-                    }, label = {
-                        Text(
-                            text = task.dueDate?.relativeTime(state.today) ?: "Completed",
-                        )
-                    })
-                }
-            }
-            items(notes.size) {
-                Text(notes[it].body)
-            }
+        }
+        items(notes.size) {
+            Text(notes[it].body)
         }
     }
 }

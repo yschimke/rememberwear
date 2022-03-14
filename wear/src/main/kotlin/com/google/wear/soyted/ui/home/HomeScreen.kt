@@ -19,15 +19,11 @@ package com.google.wear.soyted.ui.home
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ScalingLazyListState
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.soyted.horologist.navscaffold.WearNavScaffold
 import com.google.wear.soyted.horologist.navscaffold.scalingLazyColumnComposable
@@ -36,13 +32,10 @@ import com.google.wear.soyted.horologist.snackbar.DefaultSnackbarHost
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.login.LoginDialog
-import com.google.wear.soyted.ui.login.LoginViewModel
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.navigation.Screens
 import com.google.wear.soyted.ui.task.TaskScreen
 import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 val uri = "https://www.rememberthemilk.com/"
 
@@ -78,7 +71,8 @@ fun RememberWearAppScreens(
                 InboxScreen(
                     navController = rtmNavController,
                     addTaskVoicePrompt = addTaskVoicePrompt,
-                    scrollState = it.scrollableState
+                    scrollState = it.scrollableState,
+                    focusRequester = it.viewModel.focusRequester
                 )
             }
 
@@ -94,7 +88,8 @@ fun RememberWearAppScreens(
             ) {
                 TaskScreen(
                     navController = rtmNavController,
-                    scrollState = it.scrollableState
+                    scrollState = it.scrollableState,
+                    focusRequester = it.viewModel.focusRequester
                 )
             }
 
