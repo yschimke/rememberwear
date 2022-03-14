@@ -150,7 +150,9 @@ dependencies {
     implementation(libs.dagger.hiltandroid)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.firebase.performance)
+    if (file("google-services.json").exists()) {
+        implementation(libs.firebase.performance)
+    }
     implementation(libs.gms.playserviceswearable)
     implementation(libs.hilt.navigationcompose)
     implementation(libs.hilt.work)
