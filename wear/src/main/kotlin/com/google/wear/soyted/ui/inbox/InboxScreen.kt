@@ -131,7 +131,6 @@ fun InboxScreen(
         }
         items(tasks.size) {
             TaskChip(task = tasks[it], onClick = {
-                throw RuntimeException("Test Crash")
                 onClick(tasks[it])
             })
         }
