@@ -150,9 +150,9 @@ dependencies {
     implementation(libs.dagger.hiltandroid)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-    if (file("google-services.json").exists()) {
-        implementation(libs.firebase.performance)
-    }
+//    if (file("google-services.json").exists()) {
+//        implementation(libs.firebase.performance)
+//    }
     implementation(libs.gms.playserviceswearable)
     implementation(libs.hilt.navigationcompose)
     implementation(libs.hilt.work)
@@ -188,6 +188,7 @@ dependencies {
     implementation(libs.work.runtimektx)
     implementation(platform(libs.squareup.okhttp3bom))
     implementation(libs.horologist.tiles)
+    implementation(libs.androidx.metrics.performance)
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)
@@ -212,5 +213,5 @@ fun Any?.writeBuildConfigString(): String =
 if (file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
     apply(plugin = "com.google.firebase.crashlytics")
-    apply(plugin = "com.google.firebase.firebase-perf")
+//    apply(plugin = "com.google.firebase.firebase-perf")
 }

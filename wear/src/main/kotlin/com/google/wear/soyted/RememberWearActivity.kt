@@ -17,19 +17,50 @@
 package com.google.wear.soyted
 
 import android.os.Bundle
+import android.util.Log
+import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.ui.platform.ComposeView
+import androidx.metrics.performance.JankStats
+import androidx.metrics.performance.PerformanceMetricsState
 import com.google.wear.soyted.ui.home.RememberWearAppScreens
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class RememberWearActivity : ComponentActivity() {
+    private lateinit var jankStats: JankStats
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             RememberWearAppScreens()
         }
+
+        installJankStats()
+    }
+
+    private fun installJankStats() {
+        val composeView = window.decorView
+            .findViewById<ViewGroup>(android.R.id.content)
+            .getChildAt(0) as ComposeView
+
+        val metricsStateHolder = PerformanceMetricsState.getForHierarchy(composeView.rootView)
+
+        jankStats = JankStats.createAndTrack(
+            window,
+            Dispatchers.Default.asExecutor(),
+        ) {
+            Log.w(
+                "Jank",
+                "" + TimeUnit.NANOSECONDS.toMillis(it.frameDurationUiNanos) + "ms " + it.states
+            )
+        }
+
+        metricsStateHolder.state?.addState("Activity", javaClass.simpleName)
     }
 }
-

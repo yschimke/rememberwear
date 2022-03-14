@@ -46,4 +46,3 @@ class RememberWearApplication : Application(), Configuration.Provider {
         scheduledWork.createPeriodicWorkRequest()
     }
 }
-
