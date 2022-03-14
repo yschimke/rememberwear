@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.firebase) apply false
     alias(libs.plugins.firebasecrashlytics) apply false
+    alias(libs.plugins.firebaseperformance) apply false
 }
 
 tasks.create<Delete>("clean") {
