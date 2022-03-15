@@ -31,3 +31,5 @@
 -keepclasseswithmembernames class * {
     @com.tickaroo.tikxml.* <methods>;
 }
+
+-dontobfuscate

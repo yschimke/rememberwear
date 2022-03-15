@@ -40,27 +40,29 @@ class BaselineProfile {
                     it.action = "com.google.wear.soyted.ACTIVITY"
                 }
 
-
                 repeat(5) {
+                    println("Iteration $it")
                     try {
                         val column = device.findObject(By.desc("Inbox List"))
 
-                        column.setGestureMargin(device.displayWidth / 5)
-                        column.drag(Point(column.visibleCenter.x, column.visibleCenter.y / 3))
-                        device.waitForIdle()
+                        if (column != null) {
+                            column.setGestureMargin(device.displayWidth / 5)
+                            column.drag(Point(column.visibleCenter.x, column.visibleCenter.y / 3))
+                            device.waitForIdle()
 
-                        column.drag(
-                            Point(
-                                column.visibleCenter.x,
-                                column.visibleCenter.y + column.visibleCenter.y / 3
+                            column.drag(
+                                Point(
+                                    column.visibleCenter.x,
+                                    column.visibleCenter.y + column.visibleCenter.y / 3
+                                )
                             )
-                        )
-                        device.waitForIdle()
+                            device.waitForIdle()
+                        }
                     } catch (soe: StaleObjectException) {
                         //ignore for now
                         println(soe)
-                        device.pressBack()
                     }
+                    device.pressBack()
                 }
             }
         )
