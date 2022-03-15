@@ -25,6 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -50,6 +51,7 @@ import com.google.wear.soyted.home.TaskChip
 import com.google.wear.soyted.horologist.scrollableColumn
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.navigation.NavController
+import com.google.wear.soyted.ui.util.ReportFullyDrawn
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
 
 @Composable
@@ -62,7 +64,7 @@ fun InboxScreen(
     focusRequester: FocusRequester
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
-    val tasks = state.tasks ?: listOf()
+    val tasks = state.tasks
     val isRefreshing = state.isRefreshing
 
     SwipeRefresh(
@@ -95,7 +97,7 @@ fun InboxScreen(
 fun InboxScreen(
     modifier: Modifier = Modifier,
     scrollState: ScalingLazyListState = rememberScalingLazyListState(),
-    tasks: List<TaskAndTaskSeries>,
+    tasks: List<TaskAndTaskSeries>?,
     onClick: (TaskAndTaskSeries) -> Unit,
     voicePromptQuery: () -> Unit,
     loginAction: () -> Unit,
@@ -105,7 +107,8 @@ fun InboxScreen(
     val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
 
     ScalingLazyColumn(
-        modifier = modifier.scrollableColumn(focusRequester, scrollState)
+        modifier = modifier
+            .scrollableColumn(focusRequester, scrollState)
             .semantics { contentDescription = "Inbox List" },
         contentPadding = PaddingValues(
             horizontal = 8.dp,
@@ -132,10 +135,12 @@ fun InboxScreen(
                 }
             }
         }
-        items(tasks.size) {
-            TaskChip(task = tasks[it], onClick = {
-                onClick(tasks[it])
-            })
+        if (tasks != null) {
+            items(tasks.size) {
+                TaskChip(task = tasks[it], onClick = {
+                    onClick(tasks[it])
+                })
+            }
         }
         if (isLoggedIn) {
             item {
@@ -144,5 +149,9 @@ fun InboxScreen(
                 }
             }
         }
+    }
+
+    if (tasks != null) {
+        ReportFullyDrawn()
     }
 }
