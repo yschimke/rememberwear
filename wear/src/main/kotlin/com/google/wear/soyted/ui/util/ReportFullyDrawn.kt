@@ -19,7 +19,7 @@ package com.google.wear.soyted.ui.util
 import android.app.Activity
 import android.view.View
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.doOnPreDraw
 
@@ -27,8 +27,7 @@ import androidx.core.view.doOnPreDraw
 @Composable
 fun ReportFullyDrawn() {
     val localView: View = LocalView.current
-    LaunchedEffect(Unit) {
-        println("ReportFullyDrawn")
+    SideEffect {
         val activity = localView.context as? Activity
         if (activity != null) {
             localView.doOnPreDraw {

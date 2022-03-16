@@ -32,9 +32,10 @@ class WarmStartupBenchmark {
         packageName = "ee.schimke.wear.soyted",
         metrics = listOf(StartupTimingMetric()),
         compilationMode = CompilationMode.Full(),
-        iterations = 10,
+        iterations = 5,
         startupMode = StartupMode.WARM
     ) {
         startActivityAndWait()
+        Thread.sleep(2000)
     }
 }
