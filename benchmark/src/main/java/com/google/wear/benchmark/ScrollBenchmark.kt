@@ -24,8 +24,6 @@ import androidx.test.uiautomator.By
 import org.junit.Rule
 import org.junit.Test
 
-private const val ITERATIONS = 10
-
 class ScrollBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
@@ -37,7 +35,7 @@ class ScrollBenchmark {
             metrics = listOf(FrameTimingMetric()),
             compilationMode = CompilationMode.Full(),
             startupMode = StartupMode.WARM,
-            iterations = ITERATIONS,
+            iterations = 10,
             setupBlock = {
                 startActivityAndWait {
                     it.action = "com.google.wear.soyted.ACTIVITY"

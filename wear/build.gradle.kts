@@ -77,6 +77,7 @@ android {
             )
         }
         release {
+            isDefault = true
             buildConfigField(
                 "String",
                 "API_KEY",
