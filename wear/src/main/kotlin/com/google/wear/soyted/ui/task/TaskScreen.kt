@@ -33,10 +33,14 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.google.wear.soyted.app.db.Note
+import com.google.wear.soyted.app.db.Task
+import com.google.wear.soyted.app.db.TaskSeries
 import com.google.wear.soyted.horologist.scrollableColumn
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.util.relativeTime
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
+import java.time.LocalDate
 
 @Composable
 fun TaskScreen(
@@ -47,9 +51,37 @@ fun TaskScreen(
     focusRequester: FocusRequester
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
-    val task = state.todayTask
-    val taskSeries = state.taskSeries
-    val notes = state.notes ?: listOf()
+
+    TaskScreen(
+        modifier = modifier,
+        focusRequester = focusRequester,
+        scrollState = scrollState,
+        taskSeries = state.taskSeries,
+        task = state.todayTask,
+        today = state.today,
+        notes = state.notes,
+        onComplete = {
+            viewModel.complete(it)
+            navController.popBackStack()
+        },
+        onUncomplete = {
+            viewModel.uncomplete(it)
+        }
+    )
+}
+
+@Composable
+public fun TaskScreen(
+    modifier: Modifier = Modifier,
+    focusRequester: FocusRequester,
+    scrollState: ScalingLazyListState,
+    taskSeries: TaskSeries?,
+    task: Task?,
+    today: LocalDate,
+    notes: List<Note>?,
+    onComplete: (Task) -> Unit,
+    onUncomplete: (Task) -> Unit,
+) {
 
     ScalingLazyColumn(
         modifier = modifier
@@ -73,20 +105,21 @@ fun TaskScreen(
             item {
                 ToggleChip(checked = task.completed != null, onCheckedChange = {
                     if (it) {
-                        viewModel.complete(task)
-                        navController.popBackStack()
+                        onComplete(task)
                     } else {
-                        viewModel.uncomplete(task)
+                        onUncomplete(task)
                     }
                 }, label = {
                     Text(
-                        text = task.dueDate?.relativeTime(state.today) ?: "Completed",
+                        text = task.dueDate?.relativeTime(today) ?: "Completed",
                     )
                 })
             }
         }
-        items(notes.size) {
-            Text(notes[it].body)
+        if (notes != null) {
+            items(notes.size) {
+                Text(notes[it].body)
+            }
         }
     }
 }

@@ -56,14 +56,15 @@ platform :android do
     )
     capture_android_screenshots(
         locales: ["en-US"],
-        app_apk_path: "./wear/build/intermediates/apk/debug/rememberwear-debug.apk",
-        tests_apk_path: "./wear/build/intermediates/apk/androidTest/debug/rememberwear-debug-androidTest.apk",
+        clear_previous_screenshots: true,
+        app_apk_path: "./wear/build/outputs/apk/debug/rememberwear-debug.apk",
+        tests_apk_path: "./wear/build/outputs/apk/androidTest/debug/rememberwear-debug-androidTest.apk",
         device_type: "wear",
         test_instrumentation_runner: "com.google.wear.soyted.junit.CustomTestRunner",
         use_tests_in_packages: "com.google.wear.soyted.fastlane",
         skip_open_summary: false
     )
-    upload_to_play_store
+    git_add(path: "./fastlane/metadata")
   end
 
   lane :increment do
