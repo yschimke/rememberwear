@@ -17,6 +17,13 @@ val localProperties = Properties().apply {
     }
 }
 
+val versionProperties = Properties().apply {
+    val localFile = rootProject.file("wear/versions.properties")
+    load(FileInputStream(localFile))
+}
+
+val versionCodeProperty = versionProperties.getProperty("VERSION_CODE").toInt()
+
 android {
     compileSdk = 31
 
@@ -25,8 +32,8 @@ android {
         minSdk = 26
         targetSdk = 30
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
-        versionCode = 15
-        versionName = "15"
+        versionCode = versionCodeProperty
+        versionName = "release-$versionCodeProperty"
 
         setProperty("archivesBaseName", "rememberwear")
     }
