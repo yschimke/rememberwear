@@ -29,19 +29,19 @@ platform :android do
 
   desc "Submit a new Internal Testing Build to Google Play"
   lane :internal do
-    gradle(task: "bundleRelease")
-    upload_to_play_store(track: 'internal')
-  end
-
-  desc "Submit a new Beta Build to Google Play"
-  lane :beta do
     increment_version_code_in_properties_file(
          key: "VERSION_CODE",
          path: "./wear/versions.properties"
        )
 
     gradle(task: "clean bundleRelease")
-    upload_to_play_store(track: 'beta')
+
+#     version_code = get_properties_value(
+#       key: "VERSION_CODE",
+#       path: "./wear/versions.properties"
+#     )
+
+    upload_to_play_store(track: 'internal')
   end
 
   desc "Deploy a new version to the Google Play"

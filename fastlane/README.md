@@ -39,14 +39,6 @@ Submit a new Internal Build and get link
 
 Submit a new Internal Testing Build to Google Play
 
-### android beta
-
-```sh
-[bundle exec] fastlane android beta
-```
-
-Submit a new Beta Build to Google Play
-
 ### android deploy
 
 ```sh
