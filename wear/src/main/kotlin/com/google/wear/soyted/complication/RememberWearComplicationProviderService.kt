@@ -128,7 +128,10 @@ class RememberWearComplicationProviderService : SuspendingComplicationDataSource
 
             return TaskStackBuilder.create(this).run {
                 addNextIntentWithParentStack(deepLinkIntent)
-                getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+                getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
             }
         }
     }
