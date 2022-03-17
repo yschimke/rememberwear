@@ -45,22 +45,36 @@ class RememberWearActivity : ComponentActivity() {
     }
 
     private fun installJankStats() {
-        val composeView = window.decorView
-            .findViewById<ViewGroup>(android.R.id.content)
+        val contentView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
             .getChildAt(0) as ComposeView
 
-        val metricsStateHolder = PerformanceMetricsState.getForHierarchy(composeView.rootView)
+        if (!BuildConfig.DEBUG) {
+            PerformanceMetricsState.getForHierarchy(contentView).apply {
+                state?.addState("Activity", javaClass.simpleName)
+            }
 
-        jankStats = JankStats.createAndTrack(
-            window,
-            Dispatchers.Default.asExecutor(),
-        ) {
-            Log.w(
-                "Jank",
-                "" + TimeUnit.NANOSECONDS.toMillis(it.frameDurationUiNanos) + "ms " + it.states
-            )
+            var jank = 0f
+            var notJank = 0f
+
+            jankStats = JankStats.createAndTrack(
+                window,
+                Dispatchers.Default.asExecutor(),
+            ) {
+                if (it.isJank) {
+                    jank++
+                    Log.w(
+                        "Jank",
+                        "Jank frame ${it.frameDurationUiNanos.nanosToMillis()}ms ${(jank / (jank + notJank))}"
+                    )
+                } else {
+                    notJank++
+                }
+            }.apply {
+                // Until baseline profiles are in place, go easy on ourselves.
+                jankHeuristicMultiplier = 3f
+            }
         }
-
-        metricsStateHolder.state?.addState("Activity", javaClass.simpleName)
     }
+
+    private fun Long.nanosToMillis() = TimeUnit.NANOSECONDS.toMillis(this)
 }
