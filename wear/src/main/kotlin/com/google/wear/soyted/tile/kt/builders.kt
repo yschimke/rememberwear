@@ -16,18 +16,69 @@
 
 package com.google.wear.soyted.tile.kt
 
+import android.content.Context
+import android.graphics.Color
 import androidx.wear.tiles.ActionBuilders
-import androidx.wear.tiles.ColorBuilders
-import androidx.wear.tiles.DimensionBuilders
+import androidx.wear.tiles.ColorBuilders.ColorProp
 import androidx.wear.tiles.LayoutElementBuilders
 import androidx.wear.tiles.ModifiersBuilders
 import androidx.wear.tiles.TileBuilders
 import androidx.wear.tiles.TimelineBuilders
+import androidx.wear.tiles.material.Button
+import androidx.wear.tiles.material.ButtonColors
+import androidx.wear.tiles.material.Text
 
-fun text(fn: LayoutElementBuilders.Text.Builder.() -> Unit): LayoutElementBuilders.Text {
-    val builder = LayoutElementBuilders.Text.Builder()
-    fn(builder)
-    return builder.build()
+fun text(
+    context: Context,
+    maxLines: Int? = null,
+    typography: Int? = null,
+    text: String? = null,
+    color: Int? = null,
+    fn: Text.Builder.() -> Unit = {}
+): Text {
+    return Text.Builder(context).apply {
+        if (maxLines != null) {
+            setMaxLines(maxLines)
+        }
+        if (typography != null) {
+            setTypography(typography)
+        }
+        if (color != null) {
+            setColor(
+                ColorProp.Builder()
+                    .setArgb(color)
+                    .build()
+            )
+        }
+        if (text != null) {
+            setModifiers(
+                modifiers {
+                    setSemantics(text.toContentDescription())
+                }
+            )
+
+            setText(text)
+        }
+        fn(this)
+    }.build()
+}
+
+fun button(
+    applicationContext: Context,
+    clickable: ModifiersBuilders.Clickable,
+    text: String? = null,
+    fn: Button.Builder.() -> Unit = {}
+): Button {
+    return Button.Builder(
+        applicationContext,
+        clickable
+    ).apply {
+        if (text != null) {
+            setTextContent(text)
+        }
+        setButtonColors(ButtonColors(Color.TRANSPARENT, Color.RED))
+        fn()
+    }.build()
 }
 
 fun modifiers(fn: ModifiersBuilders.Modifiers.Builder.() -> Unit): ModifiersBuilders.Modifiers {
@@ -51,6 +102,14 @@ fun activityClickable(
             .build()
     ).build()
 
+fun actionClickable(clickId: String) = ModifiersBuilders.Clickable.Builder()
+    .setOnClick(
+        ActionBuilders.LoadAction.Builder()
+            .build()
+    )
+    .setId(clickId)
+    .build()
+
 fun fontStyle(fn: LayoutElementBuilders.FontStyle.Builder.() -> Unit): LayoutElementBuilders.FontStyle {
     val builder = LayoutElementBuilders.FontStyle.Builder()
     fn(builder)
@@ -68,15 +127,33 @@ fun tile(fn: TileBuilders.Tile.Builder.() -> Unit): TileBuilders.Tile {
 }
 
 fun TileBuilders.Tile.Builder.timeline(fn: TimelineBuilders.Timeline.Builder.() -> Unit) {
-    val builder = TimelineBuilders.Timeline.Builder()
-    builder.fn()
-    setTimeline(builder.build())
+    setTimeline(TimelineBuilders.Timeline.Builder().apply {
+        fn()
+    }.build())
 }
 
-fun column(fn: LayoutElementBuilders.Column.Builder.() -> Unit): LayoutElementBuilders.Column {
-    val builder = LayoutElementBuilders.Column.Builder()
-    builder.fn()
-    return builder.build()
+fun row(
+    verticalAlign: Int? = null,
+    fn: LayoutElementBuilders.Row.Builder.() -> Unit
+): LayoutElementBuilders.Row {
+    return LayoutElementBuilders.Row.Builder().apply {
+        if (verticalAlign != null) {
+            setVerticalAlignment(verticalAlign)
+        }
+        fn()
+    }.build()
+}
+
+fun column(
+    horizontalAlign: Int? = null,
+    fn: LayoutElementBuilders.Column.Builder.() -> Unit
+): LayoutElementBuilders.Column {
+    return LayoutElementBuilders.Column.Builder().apply {
+        if (horizontalAlign != null) {
+            setHorizontalAlignment(horizontalAlign)
+        }
+        fn()
+    }.build()
 }
 
 fun TimelineBuilders.Timeline.Builder.timelineEntry(fn: TimelineBuilders.TimelineEntry.Builder.() -> Unit) {
@@ -85,12 +162,22 @@ fun TimelineBuilders.Timeline.Builder.timelineEntry(fn: TimelineBuilders.Timelin
     addTimelineEntry(builder.build())
 }
 
-fun Float.toSpProp() = DimensionBuilders.SpProp.Builder().setValue(this).build()
+fun tile(
+    resourcesVersion: String,
+    freshnessInterval: Long,
+    tileLayout: () -> LayoutElementBuilders.LayoutElement
+) = tile {
+    setResourcesVersion(resourcesVersion)
+    setFreshnessIntervalMillis(freshnessInterval)
 
-fun Float.toDpProp() = DimensionBuilders.DpProp.Builder().setValue(this).build()
-
-fun Int.toColorProp(): ColorBuilders.ColorProp =
-    ColorBuilders.ColorProp.Builder().setArgb(this).build()
+    timeline {
+        timelineEntry {
+            layout {
+                tileLayout()
+            }
+        }
+    }
+}
 
 fun String.toContentDescription() =
     ModifiersBuilders.Semantics.Builder().setContentDescription(
