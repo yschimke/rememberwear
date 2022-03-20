@@ -20,13 +20,13 @@ import android.content.Context
 import android.graphics.Color
 import androidx.wear.tiles.LayoutElementBuilders
 import androidx.wear.tiles.RequestBuilders
-import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders
 import androidx.wear.tiles.material.CompactChip
 import androidx.wear.tiles.material.Typography
 import androidx.wear.tiles.material.layouts.PrimaryLayout
 import com.google.wear.soyted.RememberWearActivity
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
+import com.google.wear.soyted.tile.kt.STABLE_RESOURCES_VERSION
 import com.google.wear.soyted.tile.kt.actionClickable
 import com.google.wear.soyted.tile.kt.activityClickable
 import com.google.wear.soyted.tile.kt.button
@@ -44,7 +44,7 @@ fun Context.renderTile(
     today: LocalDate
 ): TileBuilders.Tile {
     return tile(
-        resourcesVersion = RememberWearTileProviderService.STABLE_RESOURCES_VERSION,
+        resourcesVersion = STABLE_RESOURCES_VERSION,
         freshnessInterval = 15.minutes
     ) {
         tileLayout(requestParams, tasks, today)
@@ -135,7 +135,3 @@ fun Context.emptyNotice() = text(
     maxLines = 3,
     typography = Typography.TYPOGRAPHY_DISPLAY1
 )
-
-fun buildResources() = ResourceBuilders.Resources.Builder()
-    .setVersion(RememberWearTileProviderService.STABLE_RESOURCES_VERSION)
-    .build()

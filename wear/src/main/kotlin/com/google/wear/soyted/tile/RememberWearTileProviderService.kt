@@ -22,6 +22,7 @@ import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders.Tile
 import com.google.android.horologist.tiles.CoroutinesTileService
 import com.google.wear.soyted.app.db.RememberWearDao
+import com.google.wear.soyted.tile.kt.buildResources
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -36,8 +37,7 @@ class RememberWearTileProviderService : CoroutinesTileService() {
 
     override suspend fun resourcesRequest(
         requestParams: RequestBuilders.ResourcesRequest
-    ): ResourceBuilders.Resources =
-        buildResources()
+    ): ResourceBuilders.Resources = buildResources()
 
     override suspend fun tileRequest(requestParams: RequestBuilders.TileRequest): Tile {
         val lastClickableId = requestParams.state?.lastClickableId
@@ -77,7 +77,5 @@ class RememberWearTileProviderService : CoroutinesTileService() {
         fun forceTileUpdate(applicationContext: Context) {
             getUpdater(applicationContext).requestUpdate(RememberWearTileProviderService::class.java)
         }
-
-        const val STABLE_RESOURCES_VERSION = "1"
     }
 }

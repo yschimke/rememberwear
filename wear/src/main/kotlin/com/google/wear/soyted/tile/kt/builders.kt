@@ -22,6 +22,7 @@ import androidx.wear.tiles.ActionBuilders
 import androidx.wear.tiles.ColorBuilders.ColorProp
 import androidx.wear.tiles.LayoutElementBuilders
 import androidx.wear.tiles.ModifiersBuilders
+import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders
 import androidx.wear.tiles.TimelineBuilders
 import androidx.wear.tiles.material.Button
@@ -121,12 +122,6 @@ fun TimelineBuilders.TimelineEntry.Builder.layout(fn: () -> LayoutElementBuilder
     setLayout(LayoutElementBuilders.Layout.Builder().setRoot(fn()).build())
 }
 
-fun tile(fn: TileBuilders.Tile.Builder.() -> Unit): TileBuilders.Tile {
-    val builder = TileBuilders.Tile.Builder()
-    fn(builder)
-    return builder.build()
-}
-
 fun TileBuilders.Tile.Builder.timeline(fn: TimelineBuilders.Timeline.Builder.() -> Unit) {
     setTimeline(TimelineBuilders.Timeline.Builder().apply {
         fn()
@@ -164,23 +159,30 @@ fun TimelineBuilders.Timeline.Builder.timelineEntry(fn: TimelineBuilders.Timelin
 }
 
 fun tile(
-    resourcesVersion: String,
-    freshnessInterval: Duration,
+    resourcesVersion: String = STABLE_RESOURCES_VERSION,
+    freshnessInterval: Duration = Duration.ZERO,
     tileLayout: () -> LayoutElementBuilders.LayoutElement
-) = tile {
-    setResourcesVersion(resourcesVersion)
-    setFreshnessIntervalMillis(freshnessInterval.inWholeMilliseconds)
-
-    timeline {
+): TileBuilders.Tile {
+    val builder = TileBuilders.Tile.Builder()
+    builder.setResourcesVersion(resourcesVersion)
+    builder.setFreshnessIntervalMillis(freshnessInterval.inWholeMilliseconds)
+    builder.timeline {
         timelineEntry {
             layout {
                 tileLayout()
             }
         }
     }
+    return builder.build()
 }
 
 fun String.toContentDescription() =
     ModifiersBuilders.Semantics.Builder().setContentDescription(
         this
     ).build()
+
+fun buildResources() = ResourceBuilders.Resources.Builder()
+    .setVersion(STABLE_RESOURCES_VERSION)
+    .build()
+
+const val STABLE_RESOURCES_VERSION = "1"
