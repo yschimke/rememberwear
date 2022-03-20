@@ -84,7 +84,7 @@ wear-complicationsdatasourcektx = "androidx.wear.watchface:watchface-complicatio
 wear-composefoundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearcompose" }
 wear-composematerial = { module = "androidx.wear.compose:compose-material", version.ref = "wearcompose" }
 wear-composenavigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wearcompose" }
-wear-input = "androidx.wear:wear-input:1.2.0-alpha02"
+wear-input = "androidx.wear:wear-input:1.2.0-SNAPSHOT"
 wear-phoneinteractions = "androidx.wear:wear-phone-interactions:1.0.1"
 wear-remoteinteractions = "androidx.wear:wear-remote-interactions:1.0.0"
 wear-tiles = { module = "androidx.wear.tiles:tiles", version.ref = "weartiles" }
