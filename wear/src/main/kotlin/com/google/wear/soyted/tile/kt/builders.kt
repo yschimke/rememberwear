@@ -27,6 +27,7 @@ import androidx.wear.tiles.TimelineBuilders
 import androidx.wear.tiles.material.Button
 import androidx.wear.tiles.material.ButtonColors
 import androidx.wear.tiles.material.Text
+import kotlin.time.Duration
 
 fun text(
     context: Context,
@@ -164,11 +165,11 @@ fun TimelineBuilders.Timeline.Builder.timelineEntry(fn: TimelineBuilders.Timelin
 
 fun tile(
     resourcesVersion: String,
-    freshnessInterval: Long,
+    freshnessInterval: Duration,
     tileLayout: () -> LayoutElementBuilders.LayoutElement
 ) = tile {
     setResourcesVersion(resourcesVersion)
-    setFreshnessIntervalMillis(freshnessInterval)
+    setFreshnessIntervalMillis(freshnessInterval.inWholeMilliseconds)
 
     timeline {
         timelineEntry {

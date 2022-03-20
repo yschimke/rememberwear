@@ -50,7 +50,7 @@ class WearScreenshotStrategy(val isRoundDevice: Boolean) : ScreenshotStrategy {
             drawCircle(radius, radius, radius, paint)
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
             drawBitmap(image, radius - image.width / 2f, radius - image.height / 2f, paint)
-            drawColor(Color.WHITE, PorterDuff.Mode.DST_OVER)
+            drawColor(Color.BLACK, PorterDuff.Mode.DST_OVER)
         }
 
         return output
