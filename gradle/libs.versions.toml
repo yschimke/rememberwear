@@ -93,7 +93,7 @@ wear-tiles-renderer = { module = "androidx.wear.tiles:tiles-renderer", version.r
 wear-tilesproto = { module = "androidx.wear.tiles:tiles-proto", version.ref = "weartiles" }
 work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxwork" }
 fastlane-screengrab = "tools.fastlane:screengrab:2.1.1"
-profileinstaller = "androidx.profileinstaller:profileinstaller:1.2.0-alpha02"
+profileinstaller = "androidx.profileinstaller:profileinstaller:1.2.0-SNAPSHOT"
 
 [plugins]
 androidapplication = "com.android.application:7.1.2"
