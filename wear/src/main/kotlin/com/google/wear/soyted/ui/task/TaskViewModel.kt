@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.app.db.RememberWearDao
 import com.google.wear.soyted.app.db.Task
+import com.google.wear.soyted.app.work.ExternalUpdates
 import com.google.wear.soyted.app.work.TaskEditor
 import com.google.wear.soyted.horologist.snackbar.SnackbarManager
 import com.google.wear.soyted.ui.login.AuthRepository
@@ -39,6 +40,7 @@ import javax.inject.Inject
 class TaskViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val rememberWearDao: RememberWearDao,
+    private val externalUpdates: ExternalUpdates,
     private val taskEditor: TaskEditor,
     val authRepository: AuthRepository,
     val snackbarManager: SnackbarManager,
@@ -65,6 +67,7 @@ class TaskViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 taskEditor.uncomplete(task)
+                externalUpdates.forceUpdates()
             } catch (ioe: IOException) {
                 snackbarManager.showMessage("Unable to connect to server")
             }
@@ -75,6 +78,7 @@ class TaskViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 taskEditor.complete(task)
+                externalUpdates.forceUpdates()
             } catch (ioe: IOException) {
                 snackbarManager.showMessage("Unable to connect to server")
             }

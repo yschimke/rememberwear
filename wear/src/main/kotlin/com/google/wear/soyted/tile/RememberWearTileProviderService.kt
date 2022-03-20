@@ -34,7 +34,9 @@ class RememberWearTileProviderService : CoroutinesTileService() {
     @Inject
     lateinit var rememberWearDao: RememberWearDao
 
-    override suspend fun resourcesRequest(requestParams: RequestBuilders.ResourcesRequest): ResourceBuilders.Resources =
+    override suspend fun resourcesRequest(
+        requestParams: RequestBuilders.ResourcesRequest
+    ): ResourceBuilders.Resources =
         buildResources()
 
     override suspend fun tileRequest(requestParams: RequestBuilders.TileRequest): Tile {
@@ -69,7 +71,6 @@ class RememberWearTileProviderService : CoroutinesTileService() {
             }
         }
     }
-
 
 
     companion object {

@@ -36,16 +36,17 @@ import com.google.wear.soyted.tile.kt.text
 import com.google.wear.soyted.tile.kt.tile
 import com.google.wear.soyted.ui.util.relativeTime
 import java.time.LocalDate
+import kotlin.time.Duration.Companion.minutes
 
 fun Context.renderTile(
     requestParams: RequestBuilders.TileRequest,
     tasks: List<TaskAndTaskSeries>,
     today: LocalDate
 ): TileBuilders.Tile {
-    val resourcesVersion = RememberWearTileProviderService.STABLE_RESOURCES_VERSION
-    val freshnessInterval = 0L
-
-    return tile(resourcesVersion, freshnessInterval) {
+    return tile(
+        resourcesVersion = RememberWearTileProviderService.STABLE_RESOURCES_VERSION,
+        freshnessInterval = 15.minutes
+    ) {
         tileLayout(requestParams, tasks, today)
     }
 }
@@ -112,6 +113,7 @@ fun Context.taskRow(
                         applicationContext,
                         text = relativeTime,
                         maxLines = 1,
+                        color = Color.LTGRAY,
                         typography = Typography.TYPOGRAPHY_CAPTION2
                     )
                 )
