@@ -13,7 +13,7 @@ squareupmoshi = "1.13.0"
 squareupokhttp3 = "5.0.0-alpha.5"
 squareupretrofit2 = "2.9.0"
 wearcompose = "1.0.0-alpha18"
-weartiles = "1.1.0-alpha03"
+weartiles = "1.1.0-SNAPSHOT"
 
 [libraries]
 horologist-tiles = "com.google.android.horologist:horologist-tiles:0.0.2"
@@ -88,6 +88,8 @@ wear-input = "androidx.wear:wear-input:1.2.0-alpha02"
 wear-phoneinteractions = "androidx.wear:wear-phone-interactions:1.0.1"
 wear-remoteinteractions = "androidx.wear:wear-remote-interactions:1.0.0"
 wear-tiles = { module = "androidx.wear.tiles:tiles", version.ref = "weartiles" }
+wear-tiles-material = { module = "androidx.wear.tiles:tiles-material", version.ref = "weartiles" }
+wear-tiles-renderer = { module = "androidx.wear.tiles:tiles-renderer", version.ref = "weartiles" }
 wear-tilesproto = { module = "androidx.wear.tiles:tiles-proto", version.ref = "weartiles" }
 work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxwork" }
 fastlane-screengrab = "tools.fastlane:screengrab:2.1.1"

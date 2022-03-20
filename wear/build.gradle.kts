@@ -192,6 +192,7 @@ dependencies {
     implementation(libs.wear.phoneinteractions)
     implementation(libs.wear.remoteinteractions)
     implementation(libs.wear.tiles)
+    implementation(libs.wear.tiles.material)
     implementation(libs.wear.tilesproto)
     implementation(libs.work.runtimektx)
     implementation(platform(libs.squareup.okhttp3bom))
@@ -214,6 +215,7 @@ dependencies {
     androidTestImplementation(libs.assertj.core)
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
+    debugImplementation(libs.wear.tiles.renderer)
 }
 
 fun Any?.writeBuildConfigString(): String =
