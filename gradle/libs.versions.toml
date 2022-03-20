@@ -78,9 +78,9 @@ tikxml-annotation = "com.tickaroo.tikxml:annotation:0.9.3-SNAPSHOT"
 tikxml-core = "com.tickaroo.tikxml:core:0.9.3-SNAPSHOT"
 tikxml-processor = "com.tickaroo.tikxml:processor:0.9.3-SNAPSHOT"
 tikxml-retrofitconverter = "com.tickaroo.tikxml:retrofit-converter:0.8.15"
-wear-complicationsdata = "androidx.wear.watchface:watchface-complications-data:1.1.0-alpha04"
-wear-complicationsdatasource = "androidx.wear.watchface:watchface-complications-data-source:1.1.0-alpha04"
-wear-complicationsdatasourcektx = "androidx.wear.watchface:watchface-complications-data-source-ktx:1.1.0-alpha04"
+wear-complicationsdata = "androidx.wear.watchface:watchface-complications-data:1.1.0-SNAPSHOT"
+wear-complicationsdatasource = "androidx.wear.watchface:watchface-complications-data-source:1.1.0-SNAPSHOT"
+wear-complicationsdatasourcektx = "androidx.wear.watchface:watchface-complications-data-source-ktx:1.1.0-SNAPSHOT"
 wear-composefoundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearcompose" }
 wear-composematerial = { module = "androidx.wear.compose:compose-material", version.ref = "wearcompose" }
 wear-composenavigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wearcompose" }
