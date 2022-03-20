@@ -1,7 +1,7 @@
 [versions]
 androidx-compose-ui = "1.2.0-alpha05"
 androidx-hilt = "1.0.0"
-androidxactivity = "1.5.0-alpha03"
+androidxactivity = "1.5.0-SNAPSHOT"
 androidxroom = "2.4.2"
 androidxwork = "2.8.0-alpha01"
 compose = "1.2.0-alpha02"
