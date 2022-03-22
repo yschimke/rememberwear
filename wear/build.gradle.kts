@@ -1,3 +1,5 @@
+@file:Suppress("SuspiciousCollectionReassignment")
+
 import org.jetbrains.kotlin.konan.properties.hasProperty
 import java.util.Properties
 import java.io.FileInputStream
@@ -121,6 +123,7 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks.addAll(listOf("release", "debug"))
         }
     }
 
