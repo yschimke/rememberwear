@@ -25,7 +25,7 @@ import androidx.wear.tiles.RequestBuilders.TileRequest
 import androidx.wear.tiles.StateBuilders.State
 import androidx.wear.tiles.renderer.TileRenderer
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
-import com.google.wear.soyted.tile.buildResources
+import com.google.wear.soyted.tile.kt.buildResources
 import com.google.wear.soyted.tile.renderTile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
