@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
@@ -42,7 +43,8 @@ fun CirclesListPreview() {
             voicePromptQuery = {},
             loginAction = {},
             isLoggedIn = true,
-            focusRequester = remember { FocusRequester() }
+            focusRequester = remember { FocusRequester() },
+            scrollState = rememberScalingLazyListState()
         )
     }
 }
@@ -64,7 +66,8 @@ fun CirclesListNotLoggedInPreview() {
             voicePromptQuery = {},
             loginAction = {},
             isLoggedIn = false,
-            focusRequester = remember { FocusRequester() }
+            focusRequester = remember { FocusRequester() },
+            scrollState = rememberScalingLazyListState()
         )
     }
 }

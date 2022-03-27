@@ -19,6 +19,7 @@ package com.google.wear.soyted.ui.login
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,6 +31,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun LoginDialog(
+    modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel(),
     navController: NavController
 ) {
@@ -47,6 +49,7 @@ fun LoginDialog(
     }
 
     Alert(
+        modifier = modifier,
         title = {
             Text("Remember The Milk Login")
         },

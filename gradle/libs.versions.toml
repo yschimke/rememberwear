@@ -12,11 +12,12 @@ kotlinx = "1.6.0"
 squareupmoshi = "1.13.0"
 squareupokhttp3 = "5.0.0-alpha.5"
 squareupretrofit2 = "2.9.0"
-wearcompose = "1.0.0-alpha18"
+wearcompose = "1.0.0-alpha19"
 weartiles = "1.1.0-SNAPSHOT"
 
 [libraries]
 horologist-tiles = "com.google.android.horologist:horologist-tiles:0.0.8"
+horologist-compose-layout = "com.google.android.horologist:horologist-compose-layout:0.0.8"
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.23.1"
 androidx-activityktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxactivity" }
 androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta05"
@@ -92,6 +93,7 @@ wear-tiles-material = { module = "androidx.wear.tiles:tiles-material", version.r
 wear-tiles-renderer = { module = "androidx.wear.tiles:tiles-renderer", version.ref = "weartiles" }
 wear-tilesproto = { module = "androidx.wear.tiles:tiles-proto", version.ref = "weartiles" }
 work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxwork" }
+work-testing = { module = "androidx.work:work-testing", version.ref = "androidxwork" }
 fastlane-screengrab = "tools.fastlane:screengrab:2.1.1"
 profileinstaller = "androidx.profileinstaller:profileinstaller:1.2.0-alpha02"
 

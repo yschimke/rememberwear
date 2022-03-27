@@ -16,8 +16,6 @@
 
 package com.google.wear.soyted.ui.task
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,14 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
-import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.wear.soyted.app.db.Note
 import com.google.wear.soyted.app.db.Task
 import com.google.wear.soyted.app.db.TaskSeries
@@ -47,7 +43,7 @@ fun TaskScreen(
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = hiltViewModel(),
     navController: NavController,
-    scrollState: ScalingLazyListState = rememberScalingLazyListState(initialCenterItemIndex = 1),
+    scrollState: ScalingLazyListState,
     focusRequester: FocusRequester
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
@@ -82,13 +78,10 @@ public fun TaskScreen(
     onComplete: (Task) -> Unit,
     onUncomplete: (Task) -> Unit,
 ) {
-
     ScalingLazyColumn(
         modifier = modifier
-            .fillMaxSize()
             .scrollableColumn(focusRequester, scrollState),
         state = scrollState,
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {

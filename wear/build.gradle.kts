@@ -200,6 +200,7 @@ dependencies {
     implementation(libs.work.runtimektx)
     implementation(platform(libs.squareup.okhttp3bom))
     implementation(libs.horologist.tiles)
+    implementation(libs.horologist.compose.layout)
     implementation(libs.androidx.metrics.performance)
     implementation(libs.profileinstaller)
 
@@ -219,6 +220,7 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
     debugImplementation(libs.wear.tiles.renderer)
+    androidTestImplementation(libs.work.testing)
 }
 
 fun Any?.writeBuildConfigString(): String =

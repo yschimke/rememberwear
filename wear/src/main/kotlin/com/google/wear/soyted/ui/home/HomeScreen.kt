@@ -20,14 +20,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.wear.compose.material.ScalingLazyListState
+import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.google.wear.soyted.horologist.navscaffold.WearNavScaffold
-import com.google.wear.soyted.horologist.navscaffold.scalingLazyColumnComposable
-import com.google.wear.soyted.horologist.navscaffold.wearNavComposable
+import com.google.android.horologist.compose.navscaffold.NavScaffoldViewModel
+import com.google.android.horologist.compose.navscaffold.WearNavScaffold
+import com.google.android.horologist.compose.navscaffold.scalingLazyColumnComposable
+import com.google.android.horologist.compose.navscaffold.wearNavComposable
 import com.google.wear.soyted.horologist.snackbar.DefaultSnackbarHost
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.input.VoicePrompt
@@ -42,6 +45,7 @@ val uri = "https://www.rememberthemilk.com/"
 @Composable
 fun RememberWearAppScreens(
     viewModel: HomeViewModel = hiltViewModel(),
+    navController: NavHostController = rememberSwipeDismissableNavController(),
 ) {
     val addTaskVoicePrompt = VoicePrompt.voicePromptLauncher(onCreateTask = {
         viewModel.createTask(it)
@@ -50,10 +54,10 @@ fun RememberWearAppScreens(
     })
 
     RememberTheMilkTheme {
-        val navController = rememberSwipeDismissableNavController()
         val rtmNavController = NavController(navController)
 
         WearNavScaffold(
+            modifier = Modifier.fillMaxSize(),
             startDestination = Screens.Inbox.route,
             navController = navController,
             snackbar = {
@@ -68,7 +72,11 @@ fun RememberWearAppScreens(
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" }),
                 scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 2) }
             ) {
+                it.viewModel.vignettePosition = NavScaffoldViewModel.VignetteMode.On(
+                    VignettePosition.TopAndBottom)
+
                 InboxScreen(
+                    modifier = Modifier.fillMaxSize(),
                     navController = rtmNavController,
                     addTaskVoicePrompt = addTaskVoicePrompt,
                     scrollState = it.scrollableState,
@@ -86,7 +94,11 @@ fun RememberWearAppScreens(
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" }),
                 scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 1) }
             ) {
+                it.viewModel.vignettePosition = NavScaffoldViewModel.VignetteMode.On(
+                    VignettePosition.TopAndBottom)
+
                 TaskScreen(
+                    modifier = Modifier.fillMaxSize(),
                     navController = rtmNavController,
                     scrollState = it.scrollableState,
                     focusRequester = it.viewModel.focusRequester
@@ -94,7 +106,10 @@ fun RememberWearAppScreens(
             }
 
             wearNavComposable(Screens.LoginDialog.route) { _, _ ->
-                LoginDialog(navController = rtmNavController)
+                LoginDialog(
+                    modifier = Modifier.fillMaxSize(),
+                    navController = rtmNavController
+                )
             }
         }
     }

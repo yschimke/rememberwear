@@ -24,25 +24,39 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.platform.ComposeView
 import androidx.metrics.performance.JankStats
 import androidx.metrics.performance.PerformanceMetricsState
+import androidx.navigation.NavHostController
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.soyted.ui.home.RememberWearAppScreens
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
+import java.text.DecimalFormat
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class RememberWearActivity : ComponentActivity() {
+    lateinit var navController: NavHostController
     private lateinit var jankStats: JankStats
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            RememberWearAppScreens()
+            navController = rememberSwipeDismissableNavController()
+
+            RememberWearAppScreens(navController = navController)
         }
 
         installJankStats()
     }
+
+    private val format = DecimalFormat.getPercentInstance().apply {
+        this.maximumFractionDigits = 1
+    }
+
+    private fun jankPercent(jank: Float, notJank: Float): String = format.format(jank / (jank + notJank))
+
+    private fun Long.nanosToMillis() = "${TimeUnit.NANOSECONDS.toMillis(this)}ms"
 
     private fun installJankStats() {
         val contentView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
@@ -56,6 +70,7 @@ class RememberWearActivity : ComponentActivity() {
             var jank = 0f
             var notJank = 0f
 
+
             jankStats = JankStats.createAndTrack(
                 window,
                 Dispatchers.Default.asExecutor(),
@@ -64,17 +79,20 @@ class RememberWearActivity : ComponentActivity() {
                     jank++
                     Log.w(
                         "Jank",
-                        "Jank frame ${it.frameDurationUiNanos.nanosToMillis()}ms ${(jank / (jank + notJank))}"
+                        "Jank frame ${it.frameDurationUiNanos.nanosToMillis()}ms ${
+                            jankPercent(
+                                jank,
+                                notJank
+                            )
+                        }"
                     )
                 } else {
                     notJank++
                 }
             }.apply {
                 // Until baseline profiles are in place, go easy on ourselves.
-                jankHeuristicMultiplier = 3f
+                jankHeuristicMultiplier = 0f
             }
         }
     }
-
-    private fun Long.nanosToMillis() = TimeUnit.NANOSECONDS.toMillis(this)
 }

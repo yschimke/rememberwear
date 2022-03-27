@@ -19,19 +19,16 @@ package com.google.wear.soyted.ui.inbox
 import android.content.Intent
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.result.ActivityResult
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -43,7 +40,6 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
@@ -57,7 +53,7 @@ import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
-    scrollState: ScalingLazyListState = rememberScalingLazyListState(initialCenterItemIndex = 2),
+    scrollState: ScalingLazyListState,
     viewModel: InboxViewModel = hiltViewModel(),
     navController: NavController,
     addTaskVoicePrompt: ManagedActivityResultLauncher<Intent, ActivityResult>,
@@ -96,7 +92,7 @@ fun InboxScreen(
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
-    scrollState: ScalingLazyListState = rememberScalingLazyListState(),
+    scrollState: ScalingLazyListState,
     tasks: List<TaskAndTaskSeries>?,
     onClick: (TaskAndTaskSeries) -> Unit,
     voicePromptQuery: () -> Unit,
@@ -104,16 +100,10 @@ fun InboxScreen(
     isLoggedIn: Boolean,
     focusRequester: FocusRequester
 ) {
-    val paddingHeight = if (LocalConfiguration.current.isScreenRound) 24.dp else 8.dp
-
     ScalingLazyColumn(
         modifier = modifier
             .scrollableColumn(focusRequester, scrollState)
             .semantics { contentDescription = "Inbox List" },
-        contentPadding = PaddingValues(
-            horizontal = 8.dp,
-            vertical = paddingHeight,
-        ),
         state = scrollState,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

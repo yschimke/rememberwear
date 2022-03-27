@@ -18,7 +18,6 @@ package com.google.wear.soyted.ui.navigation
 
 sealed class Screens(val route: String) {
     object Inbox : Screens("inbox")
-    object List : Screens("list")
     object Task : Screens("taskSeries")
     object LoginDialog : Screens("login")
 }
