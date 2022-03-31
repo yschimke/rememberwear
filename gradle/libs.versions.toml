@@ -16,8 +16,8 @@ wearcompose = "1.0.0-alpha19"
 weartiles = "1.1.0-SNAPSHOT"
 
 [libraries]
-horologist-tiles = "com.google.android.horologist:horologist-tiles:0.0.9"
-horologist-compose-layout = "com.google.android.horologist:horologist-compose-layout:0.0.9"
+horologist-tiles = "com.google.android.horologist:horologist-tiles:0.0.10"
+horologist-compose-layout = "com.google.android.horologist:horologist-compose-layout:0.0.10"
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.23.1"
 androidx-activityktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxactivity" }
 androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta05"
