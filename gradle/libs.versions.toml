@@ -27,6 +27,7 @@ androidx-lifecycleruntimektx = { module = "androidx.lifecycle:lifecycle-runtime-
 androidx-lifecycleservice = { module = "androidx.lifecycle:lifecycle-service", version.ref = "androidx-lifecycle" }
 androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha01"
 androidx-securitycryptoktx = "androidx.security:security-crypto-ktx:1.1.0-alpha03"
+androidx-tracing-ktx = "androidx.tracing:tracing-ktx:1.1.0-beta01"
 androidx-wear = "androidx.wear:wear:1.3.0-alpha02"
 assertj-core = "org.assertj:assertj-core:3.22.0"
 coil-compose = "io.coil-kt:coil-compose:2.0.0-rc02"

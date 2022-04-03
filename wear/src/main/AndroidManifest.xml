@@ -102,6 +102,9 @@
                 android:name="androidx.work.WorkManagerInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
+            <meta-data
+                android:name="com.google.wear.soyted.ui.util.TracingInitializer"
+                android:value="androidx.startup" />
         </provider>
 
         <receiver android:name=".app.WorkaroundBroadcastReceiver">

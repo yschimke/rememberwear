@@ -205,6 +205,7 @@ dependencies {
     implementation(libs.horologist.compose.layout)
     implementation(libs.androidx.metrics.performance)
     implementation(libs.profileinstaller)
+    implementation(libs.androidx.tracing.ktx)
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)
