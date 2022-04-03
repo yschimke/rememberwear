@@ -45,7 +45,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
+        // Not upgradeable
+        kotlinCompilerExtensionVersion = "1.2.0-alpha06"
     }
 
     kotlinOptions {
@@ -53,6 +54,7 @@ android {
         freeCompilerArgs += "-opt-in=androidx.wear.compose.material.ExperimentalWearMaterialApi"
         freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
         freeCompilerArgs += "-opt-in=androidx.wear.compose.navigation.rememberSwipeDismissableNavController"
+        freeCompilerArgs += "-opt-in=com.google.android.horologist.compose.navscaffold.ExperimentalComposeLayoutApi"
         freeCompilerArgs += "-opt-in=kotlin.contracts.ExperimentalContracts"
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         freeCompilerArgs += "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
@@ -226,8 +228,8 @@ dependencies {
 fun Any?.writeBuildConfigString(): String =
     if (this != null && this != "") "\"${this}\"" else "null"
 
-if (file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
-    apply(plugin = "com.google.firebase.crashlytics")
-//    apply(plugin = "com.google.firebase.firebase-perf")
-}
+//if (file("google-services.json").exists()) {
+//    apply(plugin = "com.google.gms.google-services")
+//    apply(plugin = "com.google.firebase.crashlytics")
+////    apply(plugin = "com.google.firebase.firebase-perf")
+//}
