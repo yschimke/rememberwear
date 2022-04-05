@@ -50,7 +50,7 @@ hilt-navigationcompose = { module = "androidx.hilt:hilt-navigation-compose", ver
 hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
 horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "com-google-android-horologist" }
 horologist-tiles = { module = "com.google.android.horologist:horologist-tiles", version.ref = "com-google-android-horologist" }
-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
+jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.8"
 junit = "junit:junit:4.13.2"
 kotlin-annotationprocessinggradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
