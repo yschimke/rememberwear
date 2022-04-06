@@ -1,5 +1,5 @@
 [versions]
-androidx-compose-ui = "1.2.0-alpha06"
+androidx-compose-ui = "1.2.0-alpha07"
 androidx-hilt = "1.0.0"
 androidx-lifecycle = "2.5.0-alpha05"
 androidx-wear-watchface = "1.1.0-alpha04"
