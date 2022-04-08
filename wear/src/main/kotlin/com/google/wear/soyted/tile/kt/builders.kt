@@ -32,13 +32,13 @@ import kotlin.time.Duration
 
 fun text(
     context: Context,
+    text: String,
     maxLines: Int? = null,
     typography: Int? = null,
-    text: String? = null,
     color: Int? = null,
     fn: Text.Builder.() -> Unit = {}
 ): Text {
-    return Text.Builder(context).apply {
+    return Text.Builder(context, text).apply {
         if (maxLines != null) {
             setMaxLines(maxLines)
         }
@@ -52,15 +52,11 @@ fun text(
                     .build()
             )
         }
-        if (text != null) {
-            setModifiers(
-                modifiers {
-                    setSemantics(text.toContentDescription())
-                }
-            )
-
-            setText(text)
-        }
+        setModifiers(
+            modifiers {
+                setSemantics(text.toContentDescription())
+            }
+        )
         fn(this)
     }.build()
 }

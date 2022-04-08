@@ -28,7 +28,7 @@ import tools.fastlane.screengrab.locale.LocaleTestRule
 
 class TileScreengrabTest {
     @get:Rule
-    var activityRule = ActivityScenarioRule(TilesTestActivity::class.java)
+    var activityRule = activityScenarioRule(TilesTestActivity::class.java)
 
     @Test
     fun homeScreenshot() {

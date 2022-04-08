@@ -46,7 +46,7 @@ android {
 
     composeOptions {
         // Not upgradeable
-        kotlinCompilerExtensionVersion = "1.2.0-alpha06"
+        kotlinCompilerExtensionVersion = "1.2.0-alpha07"
     }
 
     kotlinOptions {
@@ -215,6 +215,7 @@ dependencies {
     androidTestAnnotationProcessor(libs.dagger.hiltandroidcompiler)
     androidTestImplementation(libs.test.espressocore)
     androidTestImplementation(libs.test.extjunit)
+    androidTestImplementation(libs.test.extjunitktx)
     androidTestImplementation(libs.dagger.hiltandroidtesting)
     androidTestImplementation(libs.kotlinx.coroutinestest)
     androidTestImplementation(libs.fastlane.screengrab)
