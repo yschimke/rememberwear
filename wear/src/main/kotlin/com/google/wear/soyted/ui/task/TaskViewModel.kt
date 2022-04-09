@@ -22,17 +22,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.app.db.RememberWearDao
 import com.google.wear.soyted.app.db.Task
 import com.google.wear.soyted.app.work.TaskEditor
-import com.google.wear.soyted.snackbar.SnackbarManager
-import com.google.wear.soyted.ui.login.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel

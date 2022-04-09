@@ -24,11 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.ScalingLazyListState
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.ToggleChip
+import androidx.wear.compose.material.*
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.google.wear.soyted.app.db.Note
 import com.google.wear.soyted.app.db.Task
@@ -100,12 +96,26 @@ public fun TaskScreen(
                         Text(
                             text = task.dueDate?.relativeTime(today) ?: "Completed",
                         )
-                    })
+                    }
+                )
+            }
+        } else {
+            item {
+                ToggleChip(
+                    checked = false,
+                    onCheckedChange = {
+                    },
+                    label = {}
+                )
             }
         }
         if (notes != null) {
             items(notes.size) {
                 Text(notes[it].body)
+            }
+        } else {
+            item {
+                Text("")
             }
         }
     }
