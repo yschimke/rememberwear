@@ -21,12 +21,14 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.ComposeView
 import androidx.metrics.performance.JankStats
 import androidx.metrics.performance.PerformanceMetricsState
 import androidx.navigation.NavHostController
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.soyted.ui.home.RememberWearAppScreens
+import com.google.wear.soyted.ui.util.JankPrinter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
@@ -36,63 +38,25 @@ import java.util.concurrent.TimeUnit
 @AndroidEntryPoint
 class RememberWearActivity : ComponentActivity() {
     lateinit var navController: NavHostController
-    private lateinit var jankStats: JankStats
+    private lateinit var jankPrinter: JankPrinter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        jankPrinter = JankPrinter()
 
         setContent {
             navController = rememberSwipeDismissableNavController()
 
             RememberWearAppScreens(navController = navController)
-        }
 
-        installJankStats()
-    }
-
-    private val format = DecimalFormat.getPercentInstance().apply {
-        this.maximumFractionDigits = 1
-    }
-
-    private fun jankPercent(jank: Float, notJank: Float): String = format.format(jank / (jank + notJank))
-
-    private fun Long.nanosToMillis() = "${TimeUnit.NANOSECONDS.toMillis(this)}ms"
-
-    private fun installJankStats() {
-        val contentView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
-            .getChildAt(0) as ComposeView
-
-        if (!BuildConfig.DEBUG) {
-            PerformanceMetricsState.getForHierarchy(contentView).apply {
-                state?.addState("Activity", javaClass.simpleName)
-            }
-
-            var jank = 0f
-            var notJank = 0f
-
-
-            jankStats = JankStats.createAndTrack(
-                window,
-                Dispatchers.Default.asExecutor(),
-            ) {
-                if (it.isJank) {
-                    jank++
-                    Log.w(
-                        "Jank",
-                        "Jank frame ${it.frameDurationUiNanos.nanosToMillis()}ms ${
-                            jankPercent(
-                                jank,
-                                notJank
-                            )
-                        }"
-                    )
-                } else {
-                    notJank++
+            LaunchedEffect(Unit) {
+                navController.currentBackStackEntryFlow.collect {
+                    jankPrinter.setRouteState(route = it.destination.route)
                 }
-            }.apply {
-                // Until baseline profiles are in place, go easy on ourselves.
-                jankHeuristicMultiplier = 0f
             }
         }
+
+        jankPrinter.installJankStats(activity = this)
     }
 }
