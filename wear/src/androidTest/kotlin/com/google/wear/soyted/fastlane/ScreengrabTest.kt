@@ -52,7 +52,9 @@ class ScreengrabTest {
             voicePromptQuery = { },
             loginAction = { },
             isLoggedIn = true,
-            focusRequester = remember { FocusRequester() }
+            focusRequester = remember { FocusRequester() },
+            scrollState = rememberScalingLazyListState(),
+            onToggle = { _, _ -> }
         )
     }
 
@@ -67,10 +69,7 @@ class ScreengrabTest {
             task = task.task,
             today = LocalDate.of(2021, 2, 18),
             notes = listOf(),
-            onComplete = {
-            },
-            onUncomplete = {
-            }
+            onToggle = { _, _ -> }
         )
     }
 

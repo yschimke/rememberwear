@@ -16,7 +16,7 @@
 
 package com.google.wear.soyted.fastlane
 
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.wear.soyted.TilesTestActivity
 import org.junit.BeforeClass
@@ -28,7 +28,7 @@ import tools.fastlane.screengrab.locale.LocaleTestRule
 
 class TileScreengrabTest {
     @get:Rule
-    var activityRule = activityScenarioRule(TilesTestActivity::class.java)
+    var activityRule = activityScenarioRule<TilesTestActivity>()
 
     @Test
     fun homeScreenshot() {
