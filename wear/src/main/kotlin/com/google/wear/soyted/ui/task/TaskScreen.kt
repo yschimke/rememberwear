@@ -56,13 +56,10 @@ fun TaskScreen(
         task = state.todayTask,
         today = state.today,
         notes = state.notes,
-        onComplete = {
-            viewModel.complete(it)
+        onToggle = { task, completed ->
+            viewModel.complete(task, completed)
             navController.popBackStack()
         },
-        onUncomplete = {
-            viewModel.uncomplete(it)
-        }
     )
 }
 
@@ -75,8 +72,7 @@ public fun TaskScreen(
     task: Task?,
     today: LocalDate,
     notes: List<Note>?,
-    onComplete: (Task) -> Unit,
-    onUncomplete: (Task) -> Unit,
+    onToggle: (Task, Boolean) -> Unit,
 ) {
     ScalingLazyColumn(
         modifier = modifier.scrollableColumn(focusRequester, scrollState),
@@ -95,17 +91,16 @@ public fun TaskScreen(
 
         if (task != null) {
             item {
-                ToggleChip(checked = task.completed != null, onCheckedChange = {
-                    if (it) {
-                        onComplete(task)
-                    } else {
-                        onUncomplete(task)
-                    }
-                }, label = {
-                    Text(
-                        text = task.dueDate?.relativeTime(today) ?: "Completed",
-                    )
-                })
+                ToggleChip(
+                    checked = task.completed != null,
+                    onCheckedChange = {
+                        onToggle(task, it)
+                    },
+                    label = {
+                        Text(
+                            text = task.dueDate?.relativeTime(today) ?: "Completed",
+                        )
+                    })
             }
         }
         if (notes != null) {

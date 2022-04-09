@@ -59,15 +59,13 @@ class TaskViewModel @Inject constructor(
             initialValue = TaskScreenState.Empty,
         )
 
-    fun uncomplete(task: Task) {
+    fun complete(task: Task, completed: Boolean) {
         viewModelScope.launch {
-            taskEditor.uncomplete(task)
-        }
-    }
-
-    fun complete(task: Task) {
-        viewModelScope.launch {
-            taskEditor.complete(task)
+            if (completed) {
+                taskEditor.complete(task)
+            } else {
+                taskEditor.uncomplete(task)
+            }
         }
     }
 }

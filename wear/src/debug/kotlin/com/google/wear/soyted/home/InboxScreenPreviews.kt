@@ -44,7 +44,9 @@ fun CirclesListPreview() {
             loginAction = {},
             isLoggedIn = true,
             focusRequester = remember { FocusRequester() },
-            scrollState = rememberScalingLazyListState()
+            scrollState = rememberScalingLazyListState(),
+            onToggle = { _, _ ->
+            }
         )
     }
 }
@@ -67,7 +69,9 @@ fun CirclesListNotLoggedInPreview() {
             loginAction = {},
             isLoggedIn = false,
             focusRequester = remember { FocusRequester() },
-            scrollState = rememberScalingLazyListState()
+            scrollState = rememberScalingLazyListState(),
+            onToggle = { _, _ ->
+            }
         )
     }
 }

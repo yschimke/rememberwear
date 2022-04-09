@@ -71,7 +71,7 @@ fun RememberWearAppScreens(
             scalingLazyColumnComposable(
                 route = Screens.Inbox.route,
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" }),
-                scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 2) }
+                scrollStateBuilder = { ScalingLazyListState() }
             ) {
                 InboxScreen(
                     modifier = Modifier.fillMaxSize(),
@@ -90,7 +90,7 @@ fun RememberWearAppScreens(
                     })
                 ),
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" }),
-                scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 1) }
+                scrollStateBuilder = { ScalingLazyListState() }
             ) {
                 TaskScreen(
                     modifier = Modifier.fillMaxSize(),

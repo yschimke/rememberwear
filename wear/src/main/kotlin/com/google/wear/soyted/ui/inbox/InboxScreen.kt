@@ -73,6 +73,9 @@ fun InboxScreen(
             onClick = {
                 navController.navigateToTask(it.task.id)
             },
+            onToggle = { task, completed ->
+               viewModel.complete(task.task, completed)
+            },
             voicePromptQuery = {
                 addTaskVoicePrompt.launch(VoicePrompt.voicePromptIntent)
             },
@@ -91,6 +94,7 @@ fun InboxScreen(
     scrollState: ScalingLazyListState,
     tasks: List<TaskAndTaskSeries>?,
     onClick: (TaskAndTaskSeries) -> Unit,
+    onToggle: (TaskAndTaskSeries, Boolean) -> Unit,
     voicePromptQuery: () -> Unit,
     loginAction: () -> Unit,
     isLoggedIn: Boolean?,
@@ -119,14 +123,15 @@ fun InboxScreen(
             }
         }
         if (tasks != null) {
-            items(tasks.size) {
+            items(tasks.size) { i ->
+                val task = tasks[i]
                 TaskChip(
-                    task = tasks[it],
+                    task = task,
                     onClick = {
-                        onClick(tasks[it])
+                        onClick(task)
                     },
-                    onToggle = {
-
+                    onToggle = { completed ->
+                        onToggle(task, completed)
                     }
                 )
             }
