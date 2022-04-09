@@ -52,10 +52,13 @@ class RememberWearTileProviderService : CoroutinesTileService() {
 
     private suspend fun getStablePrioritisedTasks(today: LocalDate?) =
         rememberWearDao.getAllTaskAndTaskSeries().map { tasks ->
-            tasks.filter {
-                it.isUrgentUncompleted(today) ||
-                        it.isCompletedOn(today)
-            }.sortedBy { it.task.dueDate ?: LocalDate.MAX }
+            tasks
+                .filter {
+                    it.isUrgentUncompleted(today) ||
+                            it.isCompletedOn(today)
+                }
+                .sortedBy { it.task.dueDate ?: LocalDate.MAX }
+                .take(2)
         }.first()
 
     suspend fun handleClick(lastClickableId: String) {
