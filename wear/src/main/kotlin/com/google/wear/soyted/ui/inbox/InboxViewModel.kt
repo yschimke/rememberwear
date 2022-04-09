@@ -19,10 +19,10 @@ package com.google.wear.soyted.ui.inbox
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.app.db.RememberWearDao
+import com.google.wear.soyted.app.db.Task
 import com.google.wear.soyted.app.work.ScheduledWork
-import com.google.wear.soyted.horologist.snackbar.SnackbarManager
+import com.google.wear.soyted.app.work.TaskEditor
 import com.google.wear.soyted.ui.login.AuthRepository
-import com.google.wear.soyted.ui.login.LoginFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,8 +31,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.time.Duration
-import java.time.Instant
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -40,7 +38,8 @@ import javax.inject.Inject
 class InboxViewModel @Inject constructor(
     private val rememberWearDao: RememberWearDao,
     private val scheduledWork: ScheduledWork,
-    val authRepository: AuthRepository,
+    private val taskEditor: TaskEditor,
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
     private val isRefreshingState = MutableStateFlow(false)
 
@@ -48,9 +47,14 @@ class InboxViewModel @Inject constructor(
 
     val state: StateFlow<InboxScreenState> = combine(
         isRefreshingState,
-        allTasks()
-    ) { isRefreshing, allTaskAndTaskSeries ->
-        InboxScreenState(tasks = allTaskAndTaskSeries, isRefreshing = isRefreshing)
+        allTasks(),
+        authRepository.isLoggedIn
+    ) { isRefreshing, allTaskAndTaskSeries, isLoggedIn ->
+        InboxScreenState(
+            tasks = allTaskAndTaskSeries,
+            isRefreshing = isRefreshing,
+            isLoggedIn = isLoggedIn
+        )
     }
         .stateIn(
             scope = viewModelScope,
@@ -78,16 +82,15 @@ class InboxViewModel @Inject constructor(
         }.sortedBy { it.task.completed }
     }
 
-    fun refetchIfStale() {
+    fun uncomplete(task: Task) {
         viewModelScope.launch {
-            val lastRefresh = rememberWearDao.getLastRefresh()
+            taskEditor.uncomplete(task)
+        }
+    }
 
-            val stale = lastRefresh == null ||
-                    Duration.between(lastRefresh, Instant.now()) > Duration.ofMinutes(10)
-
-            if (stale) {
-                refetchAllData()
-            }
+    fun complete(task: Task) {
+        viewModelScope.launch {
+            taskEditor.complete(task)
         }
     }
 }

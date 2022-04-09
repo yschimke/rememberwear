@@ -22,9 +22,9 @@ import java.time.LocalDate
 data class InboxScreenState(
     val tasks: List<TaskAndTaskSeries>? = null,
     val today: LocalDate = LocalDate.now(),
-    val isRefreshing: Boolean = false
+    val isRefreshing: Boolean = false,
+    val isLoggedIn: Boolean? = null
 ) {
-
     companion object {
         val Empty = InboxScreenState()
     }

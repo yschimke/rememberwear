@@ -21,9 +21,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.app.db.RememberWearDao
 import com.google.wear.soyted.app.db.Task
-import com.google.wear.soyted.app.work.ExternalUpdates
 import com.google.wear.soyted.app.work.TaskEditor
-import com.google.wear.soyted.horologist.snackbar.SnackbarManager
+import com.google.wear.soyted.snackbar.SnackbarManager
 import com.google.wear.soyted.ui.login.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -40,10 +39,7 @@ import javax.inject.Inject
 class TaskViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val rememberWearDao: RememberWearDao,
-    private val externalUpdates: ExternalUpdates,
     private val taskEditor: TaskEditor,
-    val authRepository: AuthRepository,
-    val snackbarManager: SnackbarManager,
 ) : ViewModel() {
     private val taskId: String = savedStateHandle["taskId"]!!
 
@@ -65,23 +61,13 @@ class TaskViewModel @Inject constructor(
 
     fun uncomplete(task: Task) {
         viewModelScope.launch {
-            try {
-                taskEditor.uncomplete(task)
-                externalUpdates.forceUpdates()
-            } catch (ioe: IOException) {
-                snackbarManager.showMessage("Unable to connect to server")
-            }
+            taskEditor.uncomplete(task)
         }
     }
 
     fun complete(task: Task) {
         viewModelScope.launch {
-            try {
-                taskEditor.complete(task)
-                externalUpdates.forceUpdates()
-            } catch (ioe: IOException) {
-                snackbarManager.showMessage("Unable to connect to server")
-            }
+            taskEditor.complete(task)
         }
     }
 }

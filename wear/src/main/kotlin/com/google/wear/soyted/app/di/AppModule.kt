@@ -24,7 +24,7 @@ import com.google.wear.soyted.app.api.AuthedService
 import com.google.wear.soyted.app.api.RememberTheMilkService
 import com.google.wear.soyted.app.db.RememberWearDao
 import com.google.wear.soyted.app.db.RememberWearDatabase
-import com.google.wear.soyted.horologist.snackbar.SnackbarManager
+import com.google.wear.soyted.snackbar.SnackbarManager
 import com.google.wear.soyted.ui.login.AuthRepository
 import dagger.Module
 import dagger.Provides

@@ -25,7 +25,6 @@ import com.google.wear.soyted.BuildConfig
 import com.google.wear.soyted.app.api.RememberTheMilkService
 import com.google.wear.soyted.app.api.model.auth.AuthRsp
 import com.google.wear.soyted.app.work.ScheduledWork
-import com.google.wear.soyted.horologist.snackbar.SnackbarManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

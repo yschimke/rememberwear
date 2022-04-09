@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.horologist.snackbar
+package com.google.wear.soyted.snackbar
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.dialog.Confirmation
-import com.google.wear.soyted.horologist.snackbar.material.SnackbarDuration
-import com.google.wear.soyted.horologist.snackbar.material.SnackbarHost
-import com.google.wear.soyted.horologist.snackbar.material.SnackbarHostState
+import com.google.android.horologist.compose.snackbar.SnackbarDuration
+import com.google.android.horologist.compose.snackbar.SnackbarHost
+import com.google.android.horologist.compose.snackbar.SnackbarHostState
 
 @Composable
 fun DialogSnackbarHost(

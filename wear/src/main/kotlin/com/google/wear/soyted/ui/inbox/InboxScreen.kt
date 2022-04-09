@@ -24,7 +24,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,9 +41,8 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
-import com.google.wear.soyted.home.TaskChip
-import com.google.wear.soyted.horologist.scrollableColumn
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.util.ReportFullyDrawn
@@ -68,8 +66,6 @@ fun InboxScreen(
         onRefresh = { viewModel.refetchAllData() },
         refreshTriggerDistance = 16.dp
     ) {
-        val isLoggedIn by viewModel.authRepository.isLoggedIn.collectAsState()
-
         InboxScreen(
             modifier = modifier,
             scrollState = scrollState,
@@ -83,7 +79,7 @@ fun InboxScreen(
             loginAction = {
                 navController.navigateToLoginDialog()
             },
-            isLoggedIn = isLoggedIn,
+            isLoggedIn = state.isLoggedIn,
             focusRequester = focusRequester
         )
     }
@@ -97,7 +93,7 @@ fun InboxScreen(
     onClick: (TaskAndTaskSeries) -> Unit,
     voicePromptQuery: () -> Unit,
     loginAction: () -> Unit,
-    isLoggedIn: Boolean,
+    isLoggedIn: Boolean?,
     focusRequester: FocusRequester
 ) {
     ScalingLazyColumn(
@@ -115,10 +111,7 @@ fun InboxScreen(
                 textAlign = TextAlign.Center
             )
         }
-        item {
-
-        }
-        if (!isLoggedIn) {
+        if (isLoggedIn == false) {
             item {
                 Button(onClick = loginAction) {
                     Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Login")
@@ -127,12 +120,18 @@ fun InboxScreen(
         }
         if (tasks != null) {
             items(tasks.size) {
-                TaskChip(task = tasks[it], onClick = {
-                    onClick(tasks[it])
-                })
+                TaskChip(
+                    task = tasks[it],
+                    onClick = {
+                        onClick(tasks[it])
+                    },
+                    onToggle = {
+
+                    }
+                )
             }
         }
-        if (isLoggedIn) {
+        if (isLoggedIn == true) {
             item {
                 Button(onClick = voicePromptQuery) {
                     Icon(imageVector = Icons.Default.AddCircle, contentDescription = "Add Task")

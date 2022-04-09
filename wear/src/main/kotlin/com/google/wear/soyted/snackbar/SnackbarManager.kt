@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.horologist.snackbar
+package com.google.wear.soyted.snackbar
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

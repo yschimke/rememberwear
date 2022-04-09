@@ -25,13 +25,11 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.wear.compose.material.ScalingLazyListState
-import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.google.android.horologist.compose.navscaffold.NavScaffoldViewModel
 import com.google.android.horologist.compose.navscaffold.WearNavScaffold
 import com.google.android.horologist.compose.navscaffold.scalingLazyColumnComposable
 import com.google.android.horologist.compose.navscaffold.wearNavComposable
-import com.google.wear.soyted.horologist.snackbar.DefaultSnackbarHost
+import com.google.wear.soyted.snackbar.DialogSnackbarHost
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.login.LoginDialog
@@ -47,11 +45,14 @@ fun RememberWearAppScreens(
     viewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController = rememberSwipeDismissableNavController(),
 ) {
-    val addTaskVoicePrompt = VoicePrompt.voicePromptLauncher(onCreateTask = {
-        viewModel.createTask(it)
-    }, onError = {
-        viewModel.showMessage(it)
-    })
+    val addTaskVoicePrompt = VoicePrompt.voicePromptLauncher(
+        onCreateTask = {
+            viewModel.createTask(it)
+        },
+        onError = {
+            viewModel.showMessage(it)
+        }
+    )
 
     RememberTheMilkTheme {
         val rtmNavController = NavController(navController)
@@ -61,7 +62,7 @@ fun RememberWearAppScreens(
             startDestination = Screens.Inbox.route,
             navController = navController,
             snackbar = {
-                DefaultSnackbarHost(
+                DialogSnackbarHost(
                     modifier = Modifier.fillMaxSize(),
                     hostState = viewModel.snackbarHostState
                 )
@@ -72,9 +73,6 @@ fun RememberWearAppScreens(
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" }),
                 scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 2) }
             ) {
-                it.viewModel.vignettePosition = NavScaffoldViewModel.VignetteMode.On(
-                    VignettePosition.TopAndBottom)
-
                 InboxScreen(
                     modifier = Modifier.fillMaxSize(),
                     navController = rtmNavController,
@@ -94,9 +92,6 @@ fun RememberWearAppScreens(
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" }),
                 scrollStateBuilder = { ScalingLazyListState(initialCenterItemIndex = 1) }
             ) {
-                it.viewModel.vignettePosition = NavScaffoldViewModel.VignetteMode.On(
-                    VignettePosition.TopAndBottom)
-
                 TaskScreen(
                     modifier = Modifier.fillMaxSize(),
                     navController = rtmNavController,

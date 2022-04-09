@@ -19,8 +19,8 @@ package com.google.wear.soyted.ui.home
 import androidx.lifecycle.viewModelScope
 import com.google.wear.soyted.app.work.ExternalUpdates
 import com.google.wear.soyted.app.work.TaskCreator
-import com.google.wear.soyted.horologist.snackbar.SnackbarManager
-import com.google.wear.soyted.horologist.snackbar.SnackbarViewModel
+import com.google.wear.soyted.snackbar.SnackbarManager
+import com.google.wear.soyted.snackbar.SnackbarViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException

@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.home
+package com.google.wear.soyted.ui.inbox
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.ChipDefaults.chipColors
-import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.SplitToggleChip
 import androidx.wear.compose.material.Text
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
 import com.google.wear.soyted.ui.util.relativeTime
@@ -38,49 +31,35 @@ fun TaskChip(
     modifier: Modifier = Modifier,
     task: TaskAndTaskSeries,
     onClick: () -> Unit,
+    onToggle: (Boolean) -> Unit,
 ) {
     val due = task.task.dueDate
     val today = LocalDate.now()
     val yesterday = remember { today.minusDays(1) }
 
-    val chipColor =
-        when {
-            task.isCompleted -> ChipDefaults.secondaryChipColors()
-            due != null && due > today -> chipColors(
-                backgroundColor = MaterialTheme.colors.primaryVariant
-            )
-            else -> ChipDefaults.primaryChipColors()
-        }
-    Chip(
+    SplitToggleChip(
         modifier = modifier,
+        checked = task.isCompleted,
         onClick = onClick,
-        colors = chipColor,
+        onCheckedChange = { onToggle(it) },
         label = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = task.taskSeries.name, maxLines = 2,
-                    color = MaterialTheme.colors.onPrimary,
-                    style = MaterialTheme.typography.title3,
-                )
-
-                if (due != null) {
-                    val color = if (task.isCompleted) {
-                        Color.Gray
-                    } else if (task.isUrgentUncompleted(yesterday)) {
-                        Color.Red
-                    } else {
-                        MaterialTheme.colors.secondaryVariant
-                    }
-                    Text(
-                        modifier = Modifier.sizeIn(minWidth = 36.dp, maxWidth = 48.dp),
-                        text = due.relativeTime(),
-                        color = color,
-                        maxLines = 2,
-                        style = MaterialTheme.typography.caption1
-                    )
-                }
-            }
+            Text(
+                text = task.taskSeries.name,
+            )
         },
+        secondaryLabel = ifNotNull(due) {
+            Text(
+                text = due.relativeTime(),
+                color = when {
+                    task.isCompleted -> Color.Gray
+                    task.isUrgentUncompleted(yesterday) -> Color.Red
+                    else -> Color.Unspecified
+                }
+            )
+        }
+
     )
 }
+
+fun ifNotNull(item: Any?, function: @Composable () -> Unit): @Composable (() -> Unit)? =
+    if (item != null) function else null

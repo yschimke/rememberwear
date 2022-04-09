@@ -18,11 +18,17 @@ package com.google.wear.soyted.home
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
+import com.google.wear.soyted.ui.inbox.TaskChip
 import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
+import java.time.Instant
 
 @Preview(
     widthDp = 228,
@@ -39,8 +45,18 @@ import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
     backgroundColor = 0xFF000000L
 )
 @Composable
-fun TaskChipPreview(@PreviewParameter(provider = TaskAndSeriesProvider::class) task: TaskAndTaskSeries) {
+fun TaskChipPreview(@PreviewParameter(provider = TaskAndSeriesProvider::class) taskParam: TaskAndTaskSeries) {
+    var task by remember { mutableStateOf(taskParam) }
+
     RememberTheMilkTheme {
-        TaskChip(task = task, onClick = {})
+        TaskChip(
+            task = task,
+            onClick = {},
+            onToggle = {
+                val currentTask = task.task
+                task =
+                    task.copy(task = currentTask.copy(completed = if (it) Instant.now() else null))
+            }
+        )
     }
 }

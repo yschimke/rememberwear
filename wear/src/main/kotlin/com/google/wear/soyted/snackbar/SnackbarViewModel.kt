@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.horologist.snackbar
+package com.google.wear.soyted.snackbar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.google.wear.soyted.horologist.snackbar.material.SnackbarDuration
-import com.google.wear.soyted.horologist.snackbar.material.SnackbarHostState
+import com.google.android.horologist.compose.snackbar.SnackbarDuration
+import com.google.android.horologist.compose.snackbar.SnackbarHostState
 import kotlinx.coroutines.launch
 
 /**

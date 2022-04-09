@@ -29,10 +29,10 @@ import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
+import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.google.wear.soyted.app.db.Note
 import com.google.wear.soyted.app.db.Task
 import com.google.wear.soyted.app.db.TaskSeries
-import com.google.wear.soyted.horologist.scrollableColumn
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.util.relativeTime
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
@@ -79,8 +79,7 @@ public fun TaskScreen(
     onUncomplete: (Task) -> Unit,
 ) {
     ScalingLazyColumn(
-        modifier = modifier
-            .scrollableColumn(focusRequester, scrollState),
+        modifier = modifier.scrollableColumn(focusRequester, scrollState),
         state = scrollState,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
