@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
+@file:OptIn(InternalComposeTracingApi::class)
+
 package com.google.wear.soyted.ui.util
 
 import android.content.Context
 import android.os.Trace
 import androidx.compose.runtime.Composer
 import androidx.compose.runtime.CompositionTracer
-import androidx.compose.runtime.ExperimentalComposeApi
+import androidx.compose.runtime.InternalComposeTracingApi
 import androidx.startup.Initializer
 
-@OptIn(ExperimentalComposeApi::class)
 class TracingInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         Composer.setTracer(object : CompositionTracer {
-            override fun traceEventStart(key: Int, info: String) {
+            override fun traceEventStart(key: Int, dirty1: Int, dirty2: Int, info: String) {
                 Trace.beginSection(info)
             }
+
+            override fun isTraceInProgress(): Boolean = true
 
             override fun traceEventEnd() {
                 Trace.endSection()

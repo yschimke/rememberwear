@@ -20,8 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.SplitToggleChip
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.ToggleChipDefaults
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
 import com.google.wear.soyted.ui.util.relativeTime
 import java.time.LocalDate
@@ -47,19 +49,23 @@ fun TaskChip(
                 text = task.taskSeries.name,
             )
         },
-        secondaryLabel = ifNotNull(due) {
-            Text(
-                text = due.relativeTime(),
-                color = when {
-                    task.isCompleted -> Color.Gray
-                    task.isUrgentUncompleted(yesterday) -> Color.Red
-                    else -> Color.Unspecified
-                }
+        secondaryLabel = if (due != null) {
+            {
+                Text(
+                    text = due.relativeTime(),
+                    color = when {
+                        task.isCompleted -> Color.Gray
+                        task.isUrgentUncompleted(yesterday) -> Color.Red
+                        else -> Color.Unspecified
+                    }
+                )
+            }
+        } else null,
+        toggleControl = {
+            Icon(
+                imageVector = ToggleChipDefaults.switchIcon(checked = task.isCompleted),
+                contentDescription = if (task.isCompleted) "On" else "Off",
             )
         }
-
     )
 }
-
-fun ifNotNull(item: Any?, function: @Composable () -> Unit): @Composable (() -> Unit)? =
-    if (item != null) function else null

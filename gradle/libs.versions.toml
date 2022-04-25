@@ -9,7 +9,7 @@ androidxroom = "2.5.0-alpha01"
 androidxwork = "2.8.0-alpha02"
 com-google-android-horologist = "0.0.15"
 googledagger = "2.41"
-kotlin = "1.6.10"
+kotlin = "1.6.20"
 kotlinx = "1.6.1"
 squareupmoshi = "1.13.0"
 squareupokhttp3 = "5.0.0-alpha.6"
@@ -61,7 +61,6 @@ kotlinx-coroutinescore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 kotlinx-coroutinesguava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "kotlinx" }
 kotlinx-coroutinesplayservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx" }
 kotlinx-coroutinestest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
-profileinstaller = "androidx.profileinstaller:profileinstaller:1.2.0-alpha02"
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxroom" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxroom" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxroom" }
@@ -101,9 +100,11 @@ work-testing = { module = "androidx.work:work-testing", version.ref = "androidxw
 
 [plugins]
 androidapplication = "com.android.application:7.3.0-alpha09"
+androidlibrary = "com.android.library:7.3.0-alpha09"
+androidtest = "com.android.test:7.3.0-alpha09"
 firebase = "com.google.gms.google-services:4.3.10"
 firebasecrashlytics = "com.google.firebase.crashlytics:2.8.1"
 firebaseperformance = "com.google.firebase.firebase-perf:1.4.1"
 hilt = "com.google.dagger.hilt.android:2.41"
-kotlinandroid = "org.jetbrains.kotlin.android:1.6.10"
-kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.10"
+kotlinandroid = "org.jetbrains.kotlin.android:1.6.20"
+kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.20"

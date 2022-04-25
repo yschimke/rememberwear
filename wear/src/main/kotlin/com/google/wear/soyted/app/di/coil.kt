@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.wear.soyted.home
+package com.google.wear.soyted.app.di
 
 import android.content.Context
 import android.util.Log

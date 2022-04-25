@@ -27,6 +27,8 @@ val versionProperties = Properties().apply {
 val versionCodeProperty = versionProperties.getProperty("VERSION_CODE").toInt()
 
 android {
+    namespace = "com.google.wear.soyted"
+
     compileSdk = 31
 
     defaultConfig {
@@ -46,7 +48,7 @@ android {
 
     composeOptions {
         // Not upgradeable
-        kotlinCompilerExtensionVersion = "1.2.0-alpha07"
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.ui.get()
     }
 
     kotlinOptions {
@@ -88,7 +90,6 @@ android {
             )
         }
         release {
-            isDefault = true
             buildConfigField(
                 "String",
                 "API_KEY",
@@ -143,19 +144,11 @@ dependencies {
     kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
     kapt(libs.dagger.hiltcompiler)
-    kapt(libs.squareup.moshikotlincodegen)
-    kaptTest(libs.dagger.hiltandroidcompiler)
     kapt(libs.tikxml.processor)
 
     implementation(libs.accompanist.swiperefresh)
-    implementation(libs.androidx.activityktx)
     implementation(libs.androidx.corektx)
-    implementation(libs.androidx.glanceweartiles)
-    implementation(libs.androidx.legacysupportv4)
     implementation(libs.androidx.lifecycleruntimektx)
-    implementation(libs.androidx.lifecycleservice)
-    implementation(libs.androidx.securitycryptoktx)
-    implementation(libs.androidx.wear)
     implementation(libs.coil.compose)
     implementation(libs.compose.materialiconscore)
     implementation(libs.compose.ui)
@@ -177,12 +170,9 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     implementation(libs.squareup.logcat)
-    implementation(libs.squareup.moshiadapters)
-    implementation(libs.squareup.moshikotlin)
     implementation(libs.squareup.okhttp3)
     implementation(libs.squareup.okhttp3brotli)
     implementation(libs.squareup.okhttp3logginginterceptor)
-    implementation(libs.squareup.retrofit2convertermoshi)
     implementation(libs.squareup.retrofit2retrofit)
     implementation(libs.tikxml.annotation)
     implementation(libs.tikxml.core)
@@ -190,28 +180,21 @@ dependencies {
     implementation(libs.wear.complicationsdata)
     implementation(libs.wear.complicationsdatasource)
     implementation(libs.wear.complicationsdatasourcektx)
-    implementation(libs.wear.composefoundation)
     implementation(libs.wear.composematerial)
     implementation(libs.wear.composenavigation)
     implementation(libs.wear.input)
-    implementation(libs.wear.phoneinteractions)
     implementation(libs.wear.remoteinteractions)
     implementation(libs.wear.tiles)
     implementation(libs.wear.tiles.material)
-    implementation(libs.wear.tilesproto)
     implementation(libs.work.runtimektx)
     implementation(platform(libs.squareup.okhttp3bom))
     implementation(libs.horologist.tiles)
     implementation(libs.horologist.compose.layout)
     implementation(libs.androidx.metrics.performance)
-    implementation(libs.profileinstaller)
-    implementation(libs.androidx.tracing.ktx)
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltcompiler)
-    testImplementation(libs.dagger.hiltandroidtesting)
-    testImplementation(libs.junit)
     androidTestAnnotationProcessor(libs.dagger.hiltandroidcompiler)
     androidTestImplementation(libs.test.espressocore)
     androidTestImplementation(libs.test.extjunit)
@@ -219,7 +202,6 @@ dependencies {
     androidTestImplementation(libs.dagger.hiltandroidtesting)
     androidTestImplementation(libs.kotlinx.coroutinestest)
     androidTestImplementation(libs.fastlane.screengrab)
-    testImplementation(libs.assertj.core)
     androidTestImplementation(libs.assertj.core)
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)

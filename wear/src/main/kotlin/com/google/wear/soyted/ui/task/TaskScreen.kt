@@ -87,14 +87,21 @@ public fun TaskScreen(
 
         if (task != null) {
             item {
+                val completed = task.completed != null
                 ToggleChip(
-                    checked = task.completed != null,
+                    checked = completed,
                     onCheckedChange = {
                         onToggle(task, it)
                     },
                     label = {
                         Text(
                             text = task.dueDate?.relativeTime(today) ?: "Completed",
+                        )
+                    },
+                    toggleControl = {
+                        Icon(
+                            imageVector = ToggleChipDefaults.switchIcon(checked = completed),
+                            contentDescription = if (completed) "On" else "Off",
                         )
                     }
                 )
@@ -105,7 +112,13 @@ public fun TaskScreen(
                     checked = false,
                     onCheckedChange = {
                     },
-                    label = {}
+                    label = {},
+                    toggleControl = {
+                        Icon(
+                            imageVector = ToggleChipDefaults.switchIcon(checked = false),
+                            contentDescription = "Off",
+                        )
+                    }
                 )
             }
         }
