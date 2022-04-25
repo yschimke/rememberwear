@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.firebase) apply false
     alias(libs.plugins.firebasecrashlytics) apply false
     alias(libs.plugins.firebaseperformance) apply false
-    id("com.autonomousapps.dependency-analysis") version "1.0.0-rc06"
+    id("com.autonomousapps.dependency-analysis") version "1.1.0"
 }
 
 tasks.create<Delete>("clean") {
