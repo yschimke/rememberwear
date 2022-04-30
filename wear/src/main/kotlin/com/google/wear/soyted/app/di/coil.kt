@@ -30,6 +30,7 @@ fun coilImageLoader(
 ) = ImageLoader.Builder(application)
     .crossfade(true)
     .okHttpClient(client::get)
+    .respectCacheHeaders(false)
     .apply {
         if (BuildConfig.DEBUG) {
             logger(DebugLogger(Log.VERBOSE))

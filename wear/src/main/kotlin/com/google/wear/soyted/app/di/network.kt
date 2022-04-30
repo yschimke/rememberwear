@@ -21,14 +21,9 @@ import com.google.wear.soyted.app.api.model.util.InstantTypeConverter
 import com.google.wear.soyted.ui.login.AuthRepository
 import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
-import okhttp3.HttpUrl
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Protocol
-import okhttp3.Response
+import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.brotli.BrotliInterceptor
-import okhttp3.logging.HttpLoggingInterceptor
 import okio.ByteString.Companion.encodeUtf8
 import retrofit2.Retrofit
 import java.time.Instant
@@ -50,17 +45,12 @@ fun retrofit(
 
 fun okHttpClient(authRepository: AuthRepository) = OkHttpClient.Builder()
     .apply {
-        if (BuildConfig.DEBUG) {
-//            eventListenerFactory(LoggingEventListener.Factory())
-
-            addInterceptor(HttpLoggingInterceptor().apply {
-                this.level = HttpLoggingInterceptor.Level.BODY
-            })
+        // Allow network inspector in debug builds
+        if (!BuildConfig.DEBUG) {
+            addInterceptor(BrotliInterceptor)
         }
     }
-    .addInterceptor(BrotliInterceptor)
     .addInterceptor(authInterceptor(authRepository))
-    .addNetworkInterceptor(cacheImagesInterceptor())
     .build()
 
 fun authInterceptor(authRepository: AuthRepository) = Interceptor { chain ->
@@ -116,33 +106,5 @@ fun authInterceptor(authRepository: AuthRepository) = Interceptor { chain ->
     response
 }
 
-fun HttpUrl.signature(): String {
-    val sig =
-        BuildConfig.API_SECRET + queryParameterNames.sorted()
-            .map { it + queryParameter(it) }
-            .joinToString("")
-    return sig
-}
-
-// Rewrite the Cache-Control header to cache all responses for a week.
-// Not all images have consistent cache headers.
-fun cacheImagesInterceptor() = Interceptor {
-    val response = it.proceed(it.request())
-
-    val isImage = response.body?.contentType()?.type == "image"
-
-    val forceCache = isImage200(response, isImage) || isImage301(response)
-    if (forceCache) {
-        response.newBuilder()
-            .header("Cache-Control", "max-age=604800,public")
-            .build()
-    } else {
-        response
-    }
-}
-
-private fun isImage200(response: Response, isImage: Boolean) =
-    response.code == 200 && isImage
-
-private fun isImage301(response: Response) =
-    response.code == 301 && response.request.url.pathSegments.last().endsWith(".jpg")
+fun HttpUrl.signature(): String = BuildConfig.API_SECRET + queryParameterNames.sorted()
+    .joinToString("") { it + queryParameter(it) }
