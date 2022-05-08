@@ -16,15 +16,28 @@
 
 package com.google.wear.soyted.app.api.model.util
 
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.nullable
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.time.Instant
 
-class InstantTypeConverter : com.tickaroo.tikxml.TypeConverter<Instant?> {
-    override fun read(value: String?): Instant? =
-        if (value.isNullOrBlank()) {
+class InstantTypeConverter : KSerializer<Instant?> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Instant", PrimitiveKind.STRING).nullable
+
+    override fun deserialize(decoder: Decoder): Instant? {
+        val value = decoder.decodeString()
+        return if (value.isBlank()) {
             null
         } else {
             Instant.parse(value)
         }
+    }
 
-    override fun write(value: Instant?): String? = value?.toString()
+    override fun serialize(encoder: Encoder, value: Instant?) {
+        encoder.encodeString(value?.toString().orEmpty())
+    }
 }

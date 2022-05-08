@@ -10,6 +10,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlinx-serialization")
 }
 
 val localProperties = Properties().apply {
@@ -55,7 +56,6 @@ android {
         freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
         freeCompilerArgs += "-opt-in=androidx.wear.compose.material.ExperimentalWearMaterialApi"
         freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
-        freeCompilerArgs += "-opt-in=androidx.wear.compose.navigation.rememberSwipeDismissableNavController"
         freeCompilerArgs += "-opt-in=com.google.android.horologist.compose.navscaffold.ExperimentalComposeLayoutApi"
         freeCompilerArgs += "-opt-in=kotlin.contracts.ExperimentalContracts"
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
@@ -144,7 +144,6 @@ dependencies {
     kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
     kapt(libs.dagger.hiltcompiler)
-    kapt(libs.tikxml.processor)
 
     implementation(libs.accompanist.swiperefresh)
     implementation(libs.androidx.corektx)
@@ -173,10 +172,6 @@ dependencies {
     implementation(libs.squareup.okhttp3)
     implementation(libs.squareup.okhttp3brotli)
     implementation(libs.squareup.okhttp3logginginterceptor)
-    implementation(libs.squareup.retrofit2retrofit)
-    implementation(libs.tikxml.annotation)
-    implementation(libs.tikxml.core)
-    implementation(libs.tikxml.retrofitconverter)
     implementation(libs.wear.complicationsdata)
     implementation(libs.wear.complicationsdatasource)
     implementation(libs.wear.complicationsdatasourcektx)
@@ -191,6 +186,17 @@ dependencies {
     implementation(libs.horologist.tiles)
     implementation(libs.horologist.compose.layout)
     implementation(libs.androidx.metrics.performance)
+
+    implementation("io.github.pdvrieze.xmlutil:core-android:0.84.2")
+    implementation("io.github.pdvrieze.xmlutil:serialization-android:0.84.2")
+    implementation("io.ktor:ktor-client-okhttp:2.0.0")
+    implementation("io.ktor:ktor-client-android:2.0.0")
+    implementation("io.ktor:ktor-client-content-negotiation:2.0.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-xml:2.0.1")
+    implementation(libs.squareup.retrofit2retrofit)
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.2")
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)

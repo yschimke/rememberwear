@@ -16,11 +16,12 @@
 
 package com.google.wear.soyted.app.api.model.timeline
 
-import com.tickaroo.tikxml.annotation.TextContent
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlValue
 
-@Xml(name = "timeline")
+@kotlinx.serialization.Serializable
+@SerialName("timeline")
 data class Timeline(
-    @TextContent
+    @XmlValue(true)
     val timeline: String
 )

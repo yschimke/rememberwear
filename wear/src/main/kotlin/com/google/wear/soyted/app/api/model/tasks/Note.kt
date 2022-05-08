@@ -16,19 +16,22 @@
 
 package com.google.wear.soyted.app.api.model.tasks
 
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.TextContent
-import com.tickaroo.tikxml.annotation.Xml
-import java.time.Instant
+import com.google.wear.soyted.app.api.model.util.InstantTypeConverter
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlValue
 import com.google.wear.soyted.app.db.Note as DBNote
+import java.time.Instant
 
-@Xml(name = "note")
+@kotlinx.serialization.Serializable
+@SerialName("note")
 data class Note(
-    @Attribute val id: String,
-    @Attribute val created: Instant,
-    @Attribute val modified: Instant,
-    @Attribute val title: String,
-    @TextContent val body: String,
+    val id: String,
+    @kotlinx.serialization.Serializable(InstantTypeConverter::class)
+    val created: Instant?,
+    @kotlinx.serialization.Serializable(InstantTypeConverter::class)
+    val modified: Instant?,
+    val title: String,
+    @XmlValue(true) val body: String,
 ) {
     fun toDBNote(taskSeriesId: String): DBNote =
         DBNote(id, taskSeriesId, created, modified, title, body)

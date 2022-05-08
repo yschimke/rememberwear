@@ -16,15 +16,14 @@
 
 package com.google.wear.soyted.app.api.model.tasks
 
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlElement
 
-@Xml(name = "list")
+@kotlinx.serialization.Serializable
+@SerialName("list")
 data class TaskList(
-    @Attribute
     var id: String,
 
-    @Element
+    @XmlElement(true)
     var taskseries: List<TaskSeries>?
 )

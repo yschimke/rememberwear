@@ -16,14 +16,12 @@
 
 package com.google.wear.soyted.app.api.model.post
 
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
 
-@Xml(name = "transaction")
+@kotlinx.serialization.Serializable
+@SerialName("transaction")
 data class Transaction(
-    @Attribute
     val id: String,
 
-    @Attribute
     var undoable: String
 )

@@ -31,6 +31,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.ktor.client.*
+import io.ktor.client.engine.okhttp.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.xml.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -47,7 +52,7 @@ object AppModule {
     @Singleton
     @Provides
     @Named(BaseUrl)
-    fun baseUrl() = "https://api.rememberthemilk.com/"
+    fun baseUrl() = "https://api.rememberthemilk.com"
 
     @Singleton
     @Provides
@@ -57,6 +62,19 @@ object AppModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, @Named(BaseUrl) baseUrl: String): Retrofit =
         retrofit(baseUrl, okHttpClient)
+
+    @Singleton
+    @Provides
+    fun provideHttpClient(okHttpClient: OkHttpClient): HttpClient {
+        return HttpClient(OkHttp) {
+            engine {
+                preconfigured = okHttpClient
+            }
+            install(ContentNegotiation) {
+                xml(contentType = ContentType("text", "xml"))
+            }
+        }
+    }
 
     @Singleton
     @Provides
@@ -81,6 +99,19 @@ object AppModule {
             authRepository
         )
     }
+
+//    @Singleton
+//    @Provides
+//    fun provideRememberWearService(
+//        client: HttpClient,
+//        authRepository: AuthRepository,
+//        @Named(BaseUrl) baseUrl: String
+//    ): RememberTheMilkService {
+//        return AuthedService(
+//            KtorRememberTheMilkService(baseUrl, client),
+//            authRepository
+//        )
+//    }
 
     @Singleton
     @Provides

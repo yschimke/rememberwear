@@ -16,17 +16,14 @@
 
 package com.google.wear.soyted.app.api.model.auth
 
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
 
-@Xml(name = "user")
+@kotlinx.serialization.Serializable
+@SerialName("user")
 data class User(
-    @Attribute
     val id: String,
 
-    @Attribute
     val username: String,
 
-    @Attribute
     val fullname: String,
 )

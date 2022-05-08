@@ -16,39 +16,35 @@
 
 package com.google.wear.soyted.app.api.model.tasks
 
+import com.google.wear.soyted.app.api.model.util.InstantTypeConverter
 import com.google.wear.soyted.app.db.Task
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
 import java.time.Instant
 import java.time.ZoneId
 
-@Xml(name = "task")
+@kotlinx.serialization.Serializable
+@SerialName("task")
 data class Task(
-    @Attribute
     val id: String,
 
-    @Attribute
+    @kotlinx.serialization.Serializable(InstantTypeConverter::class)
     val due: Instant?,
 
-    @Attribute
     val has_due_time: Int,
 
-    @Attribute
-    val added: Instant,
+    @kotlinx.serialization.Serializable(InstantTypeConverter::class)
+    val added: Instant?,
 
-    @Attribute
+    @kotlinx.serialization.Serializable(InstantTypeConverter::class)
     val completed: Instant?,
 
-    @Attribute
+    @kotlinx.serialization.Serializable(InstantTypeConverter::class)
     val deleted: Instant?,
 
-    @Attribute
     val priority: String,
 
-    @Attribute
     val postponed: String,
 
-    @Attribute
     val estimate: String,
 ) {
     fun toDBTask(taskSeriesId: String): Task = Task(

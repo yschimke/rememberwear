@@ -18,20 +18,19 @@ package com.google.wear.soyted.app.api.model.tags
 
 import com.google.wear.soyted.app.api.model.Err
 import com.google.wear.soyted.app.api.model.Rsp
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.Path
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlChildrenName
+import nl.adaptivity.xmlutil.serialization.XmlElement
 
-@Xml(name = "rsp")
+@kotlinx.serialization.Serializable
+@SerialName("rsp")
 data class TagsRsp(
-    @Attribute
     override val stat: String,
 
-    @Element
+    @XmlElement(true)
     override val err: Err?,
 
-    @Path("tags")
-    @Element
+    @XmlElement(true)
+    @XmlChildrenName("tag", "", "")
     var tags: List<Tag>?
 ) : Rsp

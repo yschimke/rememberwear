@@ -16,18 +16,18 @@
 
 package com.google.wear.soyted.app.api.model.auth
 
-import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.PropertyElement
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlElement
 
-@Xml(name = "auth")
+@kotlinx.serialization.Serializable
+@SerialName("auth")
 data class Auth(
-    @PropertyElement
+    @XmlElement(true)
     val token: String?,
 
-    @PropertyElement
+    @XmlElement(true)
     val perms: String,
 
-    @Element
+    @XmlElement(true)
     val user: User,
 )
