@@ -36,7 +36,7 @@ dagger-hiltandroidcompiler = { module = "com.google.dagger:hilt-android-compiler
 dagger-hiltandroidtesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "googledagger" }
 dagger-hiltcompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "googledagger" }
 fastlane-screengrab = "tools.fastlane:screengrab:2.1.1"
-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:20.1.2"
+firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.0.0"
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.2.10"
 gms-playserviceswearable = "com.google.android.gms:play-services-wearable:17.1.0"
 hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
