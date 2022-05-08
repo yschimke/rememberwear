@@ -17,27 +17,45 @@
 package com.google.wear.soyted.app.di
 
 import com.google.wear.soyted.BuildConfig
-import com.google.wear.soyted.app.api.model.util.InstantTypeConverter
 import com.google.wear.soyted.ui.login.AuthRepository
-import com.tickaroo.tikxml.TikXml
-import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
-import okhttp3.*
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import nl.adaptivity.xmlutil.serialization.XML
+import okhttp3.HttpUrl
+import okhttp3.Interceptor
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.brotli.BrotliInterceptor
 import okio.ByteString.Companion.encodeUtf8
 import retrofit2.Retrofit
 import java.time.Instant
+import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
+import nl.adaptivity.xmlutil.serialization.UnknownChildHandler
+import nl.adaptivity.xmlutil.serialization.XmlConfig
+import nl.adaptivity.xmlutil.serialization.XmlSerializationPolicy
 
 fun retrofit(
     baseUrl: String,
     okHttpClient: OkHttpClient
 ): Retrofit {
-    val parser = TikXml.Builder()
-        .addTypeConverter(Instant::class.java, InstantTypeConverter())
-        .build()
+    val xmlConverter = XML(
+        config = XmlConfig.Builder().apply {
+            policy = DefaultXmlSerializationPolicy(
+                pedantic = false,
+                autoPolymorphic = false,
+                unknownChildHandler = UnknownChildHandler { input, inputKind, descriptor, name, candidates ->
+                    listOf()
+                }
+            )
+        }
+    )
+        .asConverterFactory("text/xml".toMediaType())
 
     return Retrofit.Builder()
-        .addConverterFactory(TikXmlConverterFactory.create(parser))
+        .addConverterFactory(xmlConverter)
         .baseUrl(baseUrl)
         .client(okHttpClient)
         .build()

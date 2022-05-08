@@ -18,18 +18,17 @@ package com.google.wear.soyted.app.api.model.timeline
 
 import com.google.wear.soyted.app.api.model.Err
 import com.google.wear.soyted.app.api.model.Rsp
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Element
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlElement
 
-@Xml(name = "rsp")
+@kotlinx.serialization.Serializable
+@SerialName("rsp")
 data class TimelineRsp(
-    @Attribute
     override val stat: String,
 
-    @Element
+    @XmlElement(true)
     override val err: Err?,
 
-    @Element
+    @XmlElement(true)
     var timeline: Timeline
 ) : Rsp

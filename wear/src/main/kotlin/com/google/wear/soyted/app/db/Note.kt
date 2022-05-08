@@ -24,8 +24,8 @@ import java.time.Instant
 data class Note(
     @PrimaryKey val id: String,
     val taskSeriesId: String,
-    val created: Instant,
-    val modified: Instant,
+    val created: Instant?,
+    val modified: Instant?,
     val title: String,
     val body: String
 )

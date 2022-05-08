@@ -39,7 +39,7 @@ data class Task(
     @PrimaryKey val id: String,
     val taskSeriesId: String,
     val dueDate: LocalDate?,
-    val added: Instant,
+    val added: Instant?,
     val completed: Instant?,
     val deleted: Instant?,
     val edited: Boolean,

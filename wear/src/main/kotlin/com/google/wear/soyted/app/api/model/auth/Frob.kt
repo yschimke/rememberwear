@@ -16,11 +16,12 @@
 
 package com.google.wear.soyted.app.api.model.auth
 
-import com.tickaroo.tikxml.annotation.TextContent
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlValue
 
-@Xml(name = "frob")
+@kotlinx.serialization.Serializable
+@SerialName("frob")
 data class Frob(
-    @TextContent
+    @XmlValue(true)
     val frob: String,
 )

@@ -16,14 +16,12 @@
 
 package com.google.wear.soyted.app.api.model
 
-import com.tickaroo.tikxml.annotation.Attribute
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
 
-@Xml(name = "err")
+@kotlinx.serialization.Serializable
+@SerialName("err")
 data class Err(
-    @Attribute
     val code: String,
 
-    @Attribute
     val msg: String,
 )

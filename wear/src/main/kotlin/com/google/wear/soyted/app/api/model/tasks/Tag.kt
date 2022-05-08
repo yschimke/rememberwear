@@ -16,13 +16,14 @@
 
 package com.google.wear.soyted.app.api.model.tasks
 
-import com.tickaroo.tikxml.annotation.TextContent
-import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.serialization.SerialName
+import nl.adaptivity.xmlutil.serialization.XmlValue
 import com.google.wear.soyted.app.db.Tag as DBTag
 
-@Xml(name = "tag")
+@kotlinx.serialization.Serializable
+@SerialName("tag")
 data class Tag(
-    @TextContent val name: String,
+    @XmlValue(true) val name: String,
 ) {
     fun toDBTag(): DBTag = DBTag(name)
 }
