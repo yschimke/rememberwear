@@ -196,7 +196,7 @@ dependencies {
     implementation(libs.squareup.retrofit2retrofit)
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3")
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)
