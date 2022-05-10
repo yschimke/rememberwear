@@ -9,7 +9,7 @@ androidxroom = "2.5.0-alpha01"
 androidxwork = "2.8.0-alpha02"
 com-google-android-horologist = "0.0.17"
 googledagger = "2.41"
-kotlin = "1.6.21"
+kotlin = "1.6.20"
 kotlinx = "1.6.1"
 squareupmoshi = "1.13.0"
 squareupokhttp3 = "5.0.0-alpha.7"
@@ -67,10 +67,6 @@ test-espressocore = "androidx.test.espresso:espresso-core:3.5.0-alpha06"
 test-extjunit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 test-extjunitktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
 test-uiautomator = "androidx.test.uiautomator:uiautomator:2.2.0"
-tikxml-annotation = "com.tickaroo.tikxml:annotation:0.9.3-SNAPSHOT"
-tikxml-core = "com.tickaroo.tikxml:core:0.9.3-SNAPSHOT"
-tikxml-processor = "com.tickaroo.tikxml:processor:0.9.3-SNAPSHOT"
-tikxml-retrofitconverter = "com.tickaroo.tikxml:retrofit-converter:0.8.15"
 wear-complicationsdata = { module = "androidx.wear.watchface:watchface-complications-data", version.ref = "androidx-wear-watchface" }
 wear-complicationsdatasource = { module = "androidx.wear.watchface:watchface-complications-data-source", version.ref = "androidx-wear-watchface" }
 wear-complicationsdatasourcektx = { module = "androidx.wear.watchface:watchface-complications-data-source-ktx", version.ref = "androidx-wear-watchface" }
@@ -92,5 +88,5 @@ firebase = "com.google.gms.google-services:4.3.10"
 firebasecrashlytics = "com.google.firebase.crashlytics:2.8.1"
 firebaseperformance = "com.google.firebase.firebase-perf:1.4.1"
 hilt = "com.google.dagger.hilt.android:2.41"
-kotlinandroid = "org.jetbrains.kotlin.android:1.6.21"
-kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.21"
+kotlinandroid = "org.jetbrains.kotlin.android:1.6.20"
+kotlinkapt = "org.jetbrains.kotlin.kapt:1.6.20"
