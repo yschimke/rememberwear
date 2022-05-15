@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.firebase) apply false
     alias(libs.plugins.firebasecrashlytics) apply false
     alias(libs.plugins.firebaseperformance) apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
     id("com.autonomousapps.dependency-analysis") version "1.2.0"
 }
 
