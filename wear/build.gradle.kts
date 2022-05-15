@@ -35,7 +35,7 @@ android {
     defaultConfig {
         applicationId = "ee.schimke.wear.soyted"
         minSdk = 26
-        targetSdk = 30
+        targetSdk = 31
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
         versionCode = versionCodeProperty
         versionName = "release-$versionCodeProperty"
@@ -56,7 +56,7 @@ android {
         freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
         freeCompilerArgs += "-opt-in=androidx.wear.compose.material.ExperimentalWearMaterialApi"
         freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
-        freeCompilerArgs += "-opt-in=com.google.android.horologist.compose.navscaffold.ExperimentalComposeLayoutApi"
+        freeCompilerArgs += "-opt-in=com.google.android.horologist.compose.navscaffold.ExperimentalHorologistComposeLayoutApi"
         freeCompilerArgs += "-opt-in=kotlin.contracts.ExperimentalContracts"
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         freeCompilerArgs += "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"

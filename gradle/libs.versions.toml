@@ -4,21 +4,19 @@ androidx-hilt = "1.0.0"
 androidx-lifecycle = "2.5.0-rc01"
 androidx-test-ext = "1.1.4-alpha06"
 androidx-wear-watchface = "1.1.0-beta02"
-androidxactivity = "1.5.0-beta01"
 androidxroom = "2.5.0-alpha01"
 androidxwork = "2.8.0-alpha02"
 com-google-android-horologist = "0.0.19"
 googledagger = "2.42"
 kotlin = "1.6.21"
 kotlinx = "1.6.1"
-squareupmoshi = "1.13.0"
 squareupokhttp3 = "5.0.0-alpha.7"
 squareupretrofit2 = "2.9.0"
 wearcompose = "1.0.0-beta01"
-weartiles = "1.1.0-alpha05"
+weartiles = "1.1.0-alpha06"
 
 [libraries]
-accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.24.7-alpha"
+accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.24.8-beta"
 androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-rc02"
 androidx-corektx = "androidx.core:core-ktx:1.8.0-rc01"
 androidx-lifecycleruntimektx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
@@ -81,9 +79,9 @@ work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "an
 work-testing = { module = "androidx.work:work-testing", version.ref = "androidxwork" }
 
 [plugins]
-androidapplication = "com.android.application:7.3.0-beta01"
-androidlibrary = "com.android.library:7.3.0-beta01"
-androidtest = "com.android.test:7.3.0-beta01"
+androidapplication = "com.android.application:7.4.0-alpha02"
+androidlibrary = "com.android.library:7.4.0-alpha02"
+androidtest = "com.android.test:7.4.0-alpha02"
 firebase = "com.google.gms.google-services:4.3.10"
 firebasecrashlytics = "com.google.firebase.crashlytics:2.8.1"
 firebaseperformance = "com.google.firebase.firebase-perf:1.4.1"
