@@ -21,7 +21,7 @@ androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-rc02"
 androidx-corektx = "androidx.core:core-ktx:1.8.0-rc02"
 androidx-lifecycleruntimektx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha01"
-assertj-core = "org.assertj:assertj-core:3.22.0"
+assertj-core = "org.assertj:assertj-core:3.23.1"
 coil-compose = "io.coil-kt:coil-compose:2.1.0"
 compose-compiler = "androidx.compose.compiler:compiler:1.2.0-beta02"
 compose-materialiconscore = "androidx.compose.material:material-icons-core:1.2.0-beta02"
