@@ -61,7 +61,7 @@ squareup-okhttp3bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref 
 squareup-okhttp3brotli = { module = "com.squareup.okhttp3:okhttp-brotli", version.ref = "squareupokhttp3" }
 squareup-okhttp3logginginterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "squareupokhttp3" }
 squareup-retrofit2retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "squareupretrofit2" }
-test-espressocore = "androidx.test.espresso:espresso-core:3.5.0-alpha06"
+test-espressocore = "androidx.test.espresso:espresso-core:3.5.0-alpha07"
 test-extjunit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 test-extjunitktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
 test-uiautomator = "androidx.test.uiautomator:uiautomator:2.2.0"
