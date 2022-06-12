@@ -1,5 +1,5 @@
 [versions]
-androidx-compose-ui = "1.2.0-beta02"
+androidx-compose-ui = "1.2.0-beta03"
 androidx-hilt = "1.0.0"
 androidx-lifecycle = "2.5.0-rc01"
 androidx-test-ext = "1.1.4-alpha07"
@@ -23,8 +23,8 @@ androidx-lifecycleruntimektx = { module = "androidx.lifecycle:lifecycle-runtime-
 androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha01"
 assertj-core = "org.assertj:assertj-core:3.23.1"
 coil-compose = "io.coil-kt:coil-compose:2.1.0"
-compose-compiler = "androidx.compose.compiler:compiler:1.2.0-beta02"
-compose-materialiconscore = "androidx.compose.material:material-icons-core:1.2.0-beta02"
+compose-compiler = "androidx.compose.compiler:compiler:1.2.0-beta03"
+compose-materialiconscore = "androidx.compose.material:material-icons-core:1.2.0-beta03"
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-ui" }
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-compose-ui" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-compose-ui" }
