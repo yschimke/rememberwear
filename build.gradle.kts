@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.firebasecrashlytics) apply false
     alias(libs.plugins.firebaseperformance) apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
-    id("com.autonomousapps.dependency-analysis") version "1.4.0"
+    id("com.autonomousapps.dependency-analysis") version "1.5.0"
 }
 
 tasks.create<Delete>("clean") {
