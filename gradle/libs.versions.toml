@@ -17,7 +17,7 @@ weartiles = "1.1.0-alpha08"
 
 [libraries]
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.24.8-beta"
-androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0-rc03"
+androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0"
 androidx-corektx = "androidx.core:core-ktx:1.8.0"
 androidx-lifecycleruntimektx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha01"
