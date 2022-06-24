@@ -30,7 +30,7 @@ val versionCodeProperty = versionProperties.getProperty("VERSION_CODE").toInt()
 android {
     namespace = "com.google.wear.soyted"
 
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
         applicationId = "ee.schimke.wear.soyted"
