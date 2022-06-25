@@ -101,20 +101,7 @@
                 android:name="androidx.work.WorkManagerInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
-<!--            <meta-data-->
-<!--                android:name="com.google.wear.soyted.ui.util.TracingInitializer"-->
-<!--                android:value="androidx.startup" />-->
         </provider>
-
-        <receiver
-            android:name=".app.WorkaroundBroadcastReceiver"
-            android:exported="false"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.SCREEN_OFF" />
-                <action android:name="android.intent.action.SCREEN_ON" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

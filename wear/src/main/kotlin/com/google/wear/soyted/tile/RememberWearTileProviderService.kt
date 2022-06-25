@@ -22,7 +22,6 @@ import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders.Tile
 import com.google.android.horologist.tiles.CoroutinesTileService
 import com.google.wear.soyted.app.db.RememberWearDao
-import com.google.wear.soyted.tile.kt.buildResources
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -32,12 +31,25 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class RememberWearTileProviderService : CoroutinesTileService() {
+    private lateinit var renderer: RememberWearTileRenderer
+
     @Inject
     lateinit var rememberWearDao: RememberWearDao
 
-    override suspend fun resourcesRequest(
-        requestParams: RequestBuilders.ResourcesRequest
-    ): ResourceBuilders.Resources = buildResources()
+
+    override fun onCreate() {
+        super.onCreate()
+
+        renderer = RememberWearTileRenderer(this)
+    }
+
+
+    override suspend fun resourcesRequest(requestParams: RequestBuilders.ResourcesRequest): ResourceBuilders.Resources {
+        return renderer.produceRequestedResources(
+            resourceResults = Unit,
+            requestParams = requestParams
+        )
+    }
 
     override suspend fun tileRequest(requestParams: RequestBuilders.TileRequest): Tile {
         val lastClickableId = requestParams.state?.lastClickableId
@@ -47,7 +59,9 @@ class RememberWearTileProviderService : CoroutinesTileService() {
 
         val today = LocalDate.now()
         val tasks = getStablePrioritisedTasks(today)
-        return renderTile(requestParams, tasks, today)
+        val data = RememberWearTileRenderer.TileData(today = today, tasks = tasks)
+
+        return renderer.renderTimeline(data, requestParams)
     }
 
     private suspend fun getStablePrioritisedTasks(today: LocalDate?) =

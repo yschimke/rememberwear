@@ -16,16 +16,27 @@
 
 package com.google.wear.soyted.ui.inbox
 
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.SplitToggleChip
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChipDefaults
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
+import com.google.wear.soyted.previews.TaskAndSeriesProvider
+import com.google.wear.soyted.previews.WearPreviewDevices
+import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
 import com.google.wear.soyted.ui.util.relativeTime
+import java.time.Instant
 import java.time.LocalDate
 
 @Composable
@@ -40,7 +51,7 @@ fun TaskChip(
     val yesterday = remember { today.minusDays(1) }
 
     SplitToggleChip(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         checked = task.isCompleted,
         onClick = onClick,
         onCheckedChange = { onToggle(it) },
@@ -68,4 +79,23 @@ fun TaskChip(
             )
         }
     )
+}
+
+
+@WearPreviewDevices
+@Composable
+fun TaskChipPreview(@PreviewParameter(provider = TaskAndSeriesProvider::class) taskParam: TaskAndTaskSeries) {
+    var task by remember { mutableStateOf(taskParam) }
+
+    RememberTheMilkTheme {
+        TaskChip(
+            task = task,
+            onClick = {},
+            onToggle = {
+                val currentTask = task.task
+                task =
+                    task.copy(task = currentTask.copy(completed = if (it) Instant.now() else null))
+            }
+        )
+    }
 }

@@ -60,6 +60,9 @@ android {
         freeCompilerArgs += "-opt-in=kotlin.contracts.ExperimentalContracts"
         freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         freeCompilerArgs += "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+        freeCompilerArgs += "-opt-in=com.google.android.horologist.tiles.ExperimentalHorologistTilesApi"
+        freeCompilerArgs += "-opt-in=com.google.android.horologist.networks.ExperimentalHorologistNetworksApi"
+        freeCompilerArgs += "-opt-in=com.google.android.horologist.compose.tools.ExperimentalHorologistComposeToolsApi"
     }
 
     val releaseSigned = localProperties.hasProperty("keyStore")
@@ -185,6 +188,7 @@ dependencies {
     implementation(platform(libs.squareup.okhttp3bom))
     implementation(libs.horologist.tiles)
     implementation(libs.horologist.compose.layout)
+    implementation(libs.horologist.network.awareness)
     implementation(libs.androidx.metrics.performance)
 
     implementation("io.github.pdvrieze.xmlutil:core-android:0.84.0")
@@ -197,6 +201,8 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3")
+
+    debugImplementation(libs.horologist.compose.tools)
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)

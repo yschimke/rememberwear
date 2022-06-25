@@ -25,12 +25,15 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
@@ -39,12 +42,17 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
+import com.google.wear.soyted.previews.SampleData
+import com.google.wear.soyted.previews.TaskAndSeriesProvider
+import com.google.wear.soyted.previews.WearPreviewDevices
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.navigation.NavController
+import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
 import com.google.wear.soyted.ui.util.ReportFullyDrawn
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
 
@@ -147,5 +155,41 @@ fun InboxScreen(
 
     if (tasks != null) {
         ReportFullyDrawn()
+    }
+}
+
+@WearPreviewDevices
+@Composable
+fun CirclesListPreview() {
+    RememberTheMilkTheme {
+        InboxScreen(
+            tasks = SampleData.taskAndTaskSeries,
+            onClick = {},
+            voicePromptQuery = {},
+            loginAction = {},
+            isLoggedIn = true,
+            focusRequester = remember { FocusRequester() },
+            scrollState = rememberScalingLazyListState(),
+            onToggle = { _, _ ->
+            }
+        )
+    }
+}
+
+@WearPreviewDevices
+@Composable
+fun CirclesListNotLoggedInPreview() {
+    RememberTheMilkTheme {
+        InboxScreen(
+            tasks = listOf(),
+            onClick = {},
+            voicePromptQuery = {},
+            loginAction = {},
+            isLoggedIn = false,
+            focusRequester = remember { FocusRequester() },
+            scrollState = rememberScalingLazyListState(),
+            onToggle = { _, _ ->
+            }
+        )
     }
 }

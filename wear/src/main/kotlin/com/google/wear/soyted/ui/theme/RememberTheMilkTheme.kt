@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.temporal.ChronoUnit
 
-private val RememberTheMilkColorPalette = Colors(
+val RememberTheMilkColorPalette = Colors(
     primary = Color(0xff0060bfL), // #0060bf
     primaryVariant = Color(0xff668888L), // #e4eef8
     onPrimary = Color(0xFFffffffL),

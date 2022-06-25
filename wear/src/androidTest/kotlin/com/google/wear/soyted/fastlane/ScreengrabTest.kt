@@ -19,6 +19,7 @@ package com.google.wear.soyted.fastlane
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -28,7 +29,10 @@ import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.TimeSource
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.google.android.horologist.compose.tools.TileLayoutPreview
+import com.google.wear.soyted.previews.SampleData
 import com.google.wear.soyted.previews.TaskAndSeriesProvider
+import com.google.wear.soyted.tile.RememberWearTileRenderer
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.task.TaskScreen
 import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
@@ -47,7 +51,7 @@ class ScreengrabTest {
     @Test
     fun homeScreenshot() = screenshot("home_wear") {
         InboxScreen(
-            tasks = TaskAndSeriesProvider.taskAndTaskSeries,
+            tasks = SampleData.taskAndTaskSeries,
             onClick = { },
             voicePromptQuery = { },
             loginAction = { },
@@ -60,7 +64,7 @@ class ScreengrabTest {
 
     @Test
     fun taskScreenshot() = screenshot("task_wear") {
-        val task = TaskAndSeriesProvider.taskAndTaskSeries.first()
+        val task = SampleData.taskAndTaskSeries.first()
 
         TaskScreen(
             focusRequester = remember { FocusRequester() },
@@ -71,6 +75,13 @@ class ScreengrabTest {
             notes = listOf(),
             onToggle = { _, _ -> }
         )
+    }
+
+    @Test
+    fun tileScreenshot() = screenshot("tile") {
+        val context = LocalContext.current
+        val renderer = RememberWearTileRenderer(context)
+        TileLayoutPreview(state = SampleData.tileData, resourceState = Unit, renderer = renderer)
     }
 
     object FixedTimeSource: TimeSource {

@@ -21,9 +21,7 @@ import com.google.wear.soyted.BuildConfig
 import com.google.wear.soyted.app.work.TaskCreator
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runTest
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
@@ -31,20 +29,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class TaskCreatorTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
-
-    private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
 
     @Inject
     lateinit var taskCreator: TaskCreator
@@ -57,9 +46,7 @@ class TaskCreatorTest {
     }
 
     @Test
-    fun tasks() {
-        runBlocking(testScope.coroutineContext) {
-            taskCreator.create("Test")
-        }
+    fun tasks() = runTest {
+        taskCreator.create("Test")
     }
 }
