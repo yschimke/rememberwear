@@ -26,14 +26,16 @@ import javax.inject.Singleton
 @Singleton
 class TaskEditor @Inject constructor(
     val service: RememberTheMilkService,
-    val scheduledWork: ScheduledWork,
-    val dao: RememberWearDao
+    val dao: RememberWearDao,
+    val externalUpdates: ExternalUpdates,
 ) {
     suspend fun uncomplete(task: Task) {
         dao.upsertTask(task.copy(completed = null, edited = true))
+        externalUpdates.forceUpdates()
     }
 
     suspend fun complete(task: Task) {
         dao.upsertTask(task.copy(completed = Instant.now(), edited = true))
+        externalUpdates.forceUpdates()
     }
 }
