@@ -21,14 +21,14 @@ import android.text.format.DateUtils.MINUTE_IN_MILLIS
 import java.time.Instant
 import java.time.LocalDate
 
-fun Instant.relativeTime() = DateUtils.getRelativeTimeSpanString(
+fun Instant.relativeTime(now: Instant) = DateUtils.getRelativeTimeSpanString(
     toEpochMilli(),
-    System.currentTimeMillis(),
+    now.toEpochMilli(),
     MINUTE_IN_MILLIS,
     DateUtils.FORMAT_ABBREV_ALL
 ).toString()
 
-fun LocalDate?.relativeTime(today: LocalDate = LocalDate.now()): String {
+fun LocalDate?.relativeTime(today: LocalDate): String {
     return when {
         this == null -> ""
         this == today -> "Today"

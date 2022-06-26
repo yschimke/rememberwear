@@ -202,7 +202,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3")
 
-    debugImplementation(libs.horologist.compose.tools)
+    implementation(libs.horologist.compose.tools)
 
     kaptAndroidTest(libs.dagger.hiltandroidcompiler)
     testAnnotationProcessor(libs.dagger.hiltandroidcompiler)

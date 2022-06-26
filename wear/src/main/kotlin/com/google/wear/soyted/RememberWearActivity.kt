@@ -17,23 +17,14 @@
 package com.google.wear.soyted
 
 import android.os.Bundle
-import android.util.Log
-import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.ComposeView
-import androidx.metrics.performance.JankStats
-import androidx.metrics.performance.PerformanceMetricsState
 import androidx.navigation.NavHostController
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.wear.soyted.ui.home.RememberWearAppScreens
 import com.google.wear.soyted.ui.util.JankPrinter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asExecutor
-import java.text.DecimalFormat
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class RememberWearActivity : ComponentActivity() {

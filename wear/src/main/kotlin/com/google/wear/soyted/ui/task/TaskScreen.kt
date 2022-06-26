@@ -19,17 +19,29 @@ package com.google.wear.soyted.ui.task
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.compose.material.*
+import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListState
+import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.ToggleChip
+import androidx.wear.compose.material.ToggleChipDefaults
+import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.google.wear.soyted.app.db.Note
 import com.google.wear.soyted.app.db.Task
 import com.google.wear.soyted.app.db.TaskSeries
+import com.google.wear.soyted.previews.SampleData
+import com.google.wear.soyted.previews.WearPreviewDevices
+import com.google.wear.soyted.previews.WearPreviewFontSizes
 import com.google.wear.soyted.ui.navigation.NavController
+import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
 import com.google.wear.soyted.ui.util.relativeTime
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
 import java.time.LocalDate
@@ -89,6 +101,7 @@ public fun TaskScreen(
             item {
                 val completed = task.completed != null
                 ToggleChip(
+                    modifier = Modifier.fillMaxWidth(),
                     checked = completed,
                     onCheckedChange = {
                         onToggle(task, it)
@@ -131,5 +144,22 @@ public fun TaskScreen(
                 Text("")
             }
         }
+    }
+}
+
+@WearPreviewDevices
+@WearPreviewFontSizes
+@Composable
+fun TaskScreenPreview() {
+    RememberTheMilkTheme {
+        TaskScreen(
+            focusRequester = remember { FocusRequester() },
+            scrollState = rememberScalingLazyListState(),
+            taskSeries = SampleData.taskSeries,
+            task = SampleData.tasks.first(),
+            today = SampleData.localDateTime.toLocalDate(),
+            notes = null,
+            onToggle = { _, _ -> }
+        )
     }
 }

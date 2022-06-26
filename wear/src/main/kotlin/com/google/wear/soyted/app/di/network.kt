@@ -19,10 +19,12 @@ package com.google.wear.soyted.app.di
 import com.google.wear.soyted.BuildConfig
 import com.google.wear.soyted.ui.login.AuthRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
+import nl.adaptivity.xmlutil.serialization.UnknownChildHandler
 import nl.adaptivity.xmlutil.serialization.XML
+import nl.adaptivity.xmlutil.serialization.XmlConfig
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
@@ -31,11 +33,6 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.brotli.BrotliInterceptor
 import okio.ByteString.Companion.encodeUtf8
 import retrofit2.Retrofit
-import java.time.Instant
-import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
-import nl.adaptivity.xmlutil.serialization.UnknownChildHandler
-import nl.adaptivity.xmlutil.serialization.XmlConfig
-import nl.adaptivity.xmlutil.serialization.XmlSerializationPolicy
 
 fun retrofit(
     baseUrl: String,

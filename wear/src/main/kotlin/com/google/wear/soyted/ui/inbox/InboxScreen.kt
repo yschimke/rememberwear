@@ -32,8 +32,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
@@ -48,13 +46,13 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.android.horologist.compose.navscaffold.scrollableColumn
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
 import com.google.wear.soyted.previews.SampleData
-import com.google.wear.soyted.previews.TaskAndSeriesProvider
 import com.google.wear.soyted.previews.WearPreviewDevices
 import com.google.wear.soyted.ui.input.VoicePrompt
 import com.google.wear.soyted.ui.navigation.NavController
 import com.google.wear.soyted.ui.theme.RememberTheMilkTheme
 import com.google.wear.soyted.ui.util.ReportFullyDrawn
 import com.google.wear.soyted.ui.util.rememberStateWithLifecycle
+import java.time.LocalDate
 
 @Composable
 fun InboxScreen(
@@ -68,6 +66,7 @@ fun InboxScreen(
     val state by rememberStateWithLifecycle(viewModel.state)
     val tasks = state.tasks
     val isRefreshing = state.isRefreshing
+    val today = remember { LocalDate.now() }
 
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
@@ -91,7 +90,8 @@ fun InboxScreen(
                 navController.navigateToLoginDialog()
             },
             isLoggedIn = state.isLoggedIn,
-            focusRequester = focusRequester
+            focusRequester = focusRequester,
+            today = today
         )
     }
 }
@@ -101,6 +101,7 @@ fun InboxScreen(
     modifier: Modifier = Modifier,
     scrollState: ScalingLazyListState,
     tasks: List<TaskAndTaskSeries>?,
+    today: LocalDate,
     onClick: (TaskAndTaskSeries) -> Unit,
     onToggle: (TaskAndTaskSeries, Boolean) -> Unit,
     voicePromptQuery: () -> Unit,
@@ -140,7 +141,8 @@ fun InboxScreen(
                     },
                     onToggle = { completed ->
                         onToggle(task, completed)
-                    }
+                    },
+                    today = today
                 )
             }
         }
@@ -171,7 +173,8 @@ fun CirclesListPreview() {
             focusRequester = remember { FocusRequester() },
             scrollState = rememberScalingLazyListState(),
             onToggle = { _, _ ->
-            }
+            },
+            today = SampleData.localDateTime.toLocalDate()
         )
     }
 }
@@ -188,8 +191,8 @@ fun CirclesListNotLoggedInPreview() {
             isLoggedIn = false,
             focusRequester = remember { FocusRequester() },
             scrollState = rememberScalingLazyListState(),
-            onToggle = { _, _ ->
-            }
+            onToggle = { _, _ -> },
+            today = SampleData.localDateTime.toLocalDate()
         )
     }
 }

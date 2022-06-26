@@ -26,7 +26,6 @@ import com.google.wear.soyted.app.api.model.timeline.TimelineRsp
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import kotlin.text.get
 
 // https://api.rememberthemilk.com/services/rest/\?method\=rtm.lists.getList
 class KtorRememberTheMilkService(val baseUrl: String, val client: HttpClient): RememberTheMilkService {

@@ -31,7 +31,6 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.android.horologist.compose.tools.TileLayoutPreview
 import com.google.wear.soyted.previews.SampleData
-import com.google.wear.soyted.previews.TaskAndSeriesProvider
 import com.google.wear.soyted.tile.RememberWearTileRenderer
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.task.TaskScreen
@@ -58,7 +57,8 @@ class ScreengrabTest {
             isLoggedIn = true,
             focusRequester = remember { FocusRequester() },
             scrollState = rememberScalingLazyListState(),
-            onToggle = { _, _ -> }
+            onToggle = { _, _ -> },
+            today = SampleData.localDateTime.toLocalDate()
         )
     }
 

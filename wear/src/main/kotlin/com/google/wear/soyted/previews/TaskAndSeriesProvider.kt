@@ -17,14 +17,8 @@
 package com.google.wear.soyted.previews
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.google.wear.soyted.app.db.Task
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
-import com.google.wear.soyted.app.db.TaskSeries
-import com.google.wear.soyted.previews.SampleData.localDateTime
 import com.google.wear.soyted.previews.SampleData.taskAndTaskSeries
-import com.google.wear.soyted.previews.SampleData.timestamp
-import java.time.Instant
-import java.time.LocalDate
 
 class TaskAndSeriesProvider : PreviewParameterProvider<TaskAndTaskSeries> {
     override val values: Sequence<TaskAndTaskSeries> = taskAndTaskSeries.asSequence()

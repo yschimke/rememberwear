@@ -19,8 +19,8 @@ package com.google.wear.soyted.app.api.model.tasks
 import com.google.wear.soyted.app.api.model.util.InstantTypeConverter
 import kotlinx.serialization.SerialName
 import nl.adaptivity.xmlutil.serialization.XmlValue
-import com.google.wear.soyted.app.db.Note as DBNote
 import java.time.Instant
+import com.google.wear.soyted.app.db.Note as DBNote
 
 @kotlinx.serialization.Serializable
 @SerialName("note")
