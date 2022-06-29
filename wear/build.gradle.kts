@@ -49,7 +49,7 @@ android {
 
     composeOptions {
         // Not upgradeable
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.ui.get()
+        kotlinCompilerExtensionVersion = "1.2.0"
     }
 
     kotlinOptions {
