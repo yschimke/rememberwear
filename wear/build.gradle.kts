@@ -200,7 +200,7 @@ dependencies {
     implementation(libs.squareup.retrofit2retrofit)
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.4.0")
 
     implementation(libs.horologist.compose.tools)
 
