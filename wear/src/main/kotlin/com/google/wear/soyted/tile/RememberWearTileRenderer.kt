@@ -1,27 +1,24 @@
 package com.google.wear.soyted.tile
 
 import android.content.Context
-import android.graphics.Color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.wear.tiles.ActionBuilders
-import androidx.wear.tiles.ColorBuilders.ColorProp
-import androidx.wear.tiles.DeviceParametersBuilders
+import androidx.wear.tiles.DeviceParametersBuilders.DeviceParameters
 import androidx.wear.tiles.DimensionBuilders.DpProp
 import androidx.wear.tiles.LayoutElementBuilders.Column
 import androidx.wear.tiles.LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER
 import androidx.wear.tiles.LayoutElementBuilders.LayoutElement
-import androidx.wear.tiles.LayoutElementBuilders.Row
 import androidx.wear.tiles.LayoutElementBuilders.Spacer
 import androidx.wear.tiles.ModifiersBuilders.Clickable
 import androidx.wear.tiles.ModifiersBuilders.Modifiers
 import androidx.wear.tiles.ModifiersBuilders.Semantics
 import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.ResourceBuilders.Resources
-import androidx.wear.tiles.material.Button
-import androidx.wear.tiles.material.ButtonColors
+import androidx.wear.tiles.material.Chip
+import androidx.wear.tiles.material.ChipColors
 import androidx.wear.tiles.material.Colors
 import androidx.wear.tiles.material.CompactChip
 import androidx.wear.tiles.material.Text
@@ -58,16 +55,16 @@ class RememberWearTileRenderer(context: Context) :
 
     override fun renderTile(
         state: TileData,
-        deviceParameters: DeviceParametersBuilders.DeviceParameters,
+        deviceParameters: DeviceParameters,
     ): LayoutElement {
         return PrimaryLayout.Builder(deviceParameters)
-            .setContent(bodyLayout(state))
+            .setContent(bodyLayout(state, deviceParameters))
             .setPrimaryChipContent(actionChip(deviceParameters))
             .build()
     }
 
     fun actionChip(
-        deviceParameters: DeviceParametersBuilders.DeviceParameters,
+        deviceParameters: DeviceParameters,
     ): LayoutElement =
         CompactChip.Builder(
             context,
@@ -81,8 +78,10 @@ class RememberWearTileRenderer(context: Context) :
 
     fun bodyLayout(
         state: TileData,
+        deviceParameters: DeviceParameters
     ) = Column.Builder().apply {
         setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
+        
         if (state.tasks.isEmpty()) {
             addContent(
                 emptyNotice()
@@ -92,91 +91,30 @@ class RememberWearTileRenderer(context: Context) :
                 if (i > 0) {
                     addContent(Spacer.Builder()
                         .setHeight(DpProp.Builder()
-                            .setValue(10f)
+                            .setValue(5f)
                             .build())
                         .build())
                 }
                 addContent(
-                    taskRow(task, state.today)
+                    taskRowChip(task, state.today, deviceParameters)
                 )
             }
         }
     }.build()
 
-    fun taskRow(
+    fun taskRowChip(
         task: TaskAndTaskSeries,
-        today: LocalDate
-    ) = Row.Builder().apply {
-        addContent(
-            Column.Builder()
-                .apply {
-                    addContent(
-                        Text.Builder(
-                            context,
-                            task.taskSeries.name
-                        ).apply {
-                            setMaxLines(2)
-                            setTypography(Typography.TYPOGRAPHY_BODY2)
-                            setColor(
-                                ColorProp.Builder()
-                                    .setArgb(theme.onSurface)
-                                    .build()
-                            )
-                            val builder = Modifiers.Builder()
-                            builder.setSemantics(
-                                Semantics.Builder().setContentDescription(
-                                    task.taskSeries.name
-                                ).build()
-                            )
-                            setModifiers(
-                                builder.build()
-                            )
-                        }.build()
-                    )
-                    if (task.task.dueDate != null) {
-                        val relativeTime = task.task.dueDate.relativeTime(today)
-                        addContent(
-                            Text.Builder(
-                                context,
-                                relativeTime
-                            ).apply {
-                                setMaxLines(1)
-                                setTypography(Typography.TYPOGRAPHY_CAPTION2)
-                                setColor(
-                                    ColorProp.Builder()
-                                        .setArgb(Color.LTGRAY)
-                                        .build()
-                                )
-                                val builder = Modifiers.Builder()
-                                builder.setSemantics(
-                                    Semantics.Builder().setContentDescription(
-                                        relativeTime
-                                    ).build()
-                                )
-                                setModifiers(
-                                    builder.build()
-                                )
-                            }.build()
-                        )
-                    }
-                }.build()
-        )
-        addContent(Spacer.Builder()
-            .setWidth(DpProp.Builder()
-                .setValue(10f)
-                .build())
-            .build())
-        addContent(
-            Button.Builder(
-                context,
-                actionClickable((if (task.isCompleted) "uncomplete:" else "complete:") + task.task.id)
-            ).apply {
-                setSize(36f)
-                setIconContent(if (task.isCompleted) "check" else "checkoff")
-                setButtonColors(ButtonColors(theme.surface, theme.primary))
-            }.build()
-        )
-    }.build()
+        today: LocalDate,
+        deviceParameters: DeviceParameters
+    ): Chip =
+        Chip.Builder(context, actionClickable((if (task.isCompleted) "uncomplete:" else "complete:") + task.task.id), deviceParameters)
+            .setPrimaryTextLabelIconContent(
+                task.taskSeries.name,
+                task.task.dueDate.relativeTime(today),
+                if (task.isCompleted) "check" else "checkoff"
+            )
+            .setChipColors(ChipColors.primaryChipColors(theme))
+            .build()
 
     fun emptyNotice() = Text.Builder(
         context,
@@ -220,7 +158,7 @@ class RememberWearTileRenderer(context: Context) :
 
     override fun Resources.Builder.produceRequestedResources(
         resourceResults: Unit,
-        deviceParameters: DeviceParametersBuilders.DeviceParameters,
+        deviceParameters: DeviceParameters,
         resourceIds: MutableList<String>,
     ) {
         addStatusIcons()
