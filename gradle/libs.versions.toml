@@ -12,7 +12,7 @@ kotlin = "1.7.10"
 kotlinx = "1.6.4"
 squareupokhttp3 = "5.0.0-alpha.7"
 squareupretrofit2 = "2.9.0"
-wearcompose = "1.0.0-rc02"
+wearcompose = "1.0.0"
 weartiles = "1.1.0-beta01"
 
 [libraries]
