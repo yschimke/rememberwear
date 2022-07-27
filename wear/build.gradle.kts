@@ -192,7 +192,7 @@ dependencies {
     implementation(libs.androidx.metrics.performance)
 
     implementation("io.github.pdvrieze.xmlutil:core-android:0.84.0")
-    implementation("io.github.pdvrieze.xmlutil:serialization-android:0.84.0")
+    implementation("io.github.pdvrieze.xmlutil:serialization-android:0.84.2")
     implementation("io.ktor:ktor-client-okhttp:2.0.3")
     implementation("io.ktor:ktor-client-android:2.0.3")
     implementation("io.ktor:ktor-client-content-negotiation:2.0.3")
