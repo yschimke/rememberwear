@@ -20,7 +20,7 @@ accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.24
 androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.0"
 androidx-corektx = "androidx.core:core-ktx:1.8.0"
 androidx-lifecycleruntimektx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
-androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha02"
+androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha03"
 assertj-core = "org.assertj:assertj-core:3.23.1"
 coil-compose = "io.coil-kt:coil-compose:2.1.0"
 compose-compiler = "androidx.compose.compiler:compiler:1.2.0"
