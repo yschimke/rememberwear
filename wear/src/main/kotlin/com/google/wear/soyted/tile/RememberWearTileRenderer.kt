@@ -108,11 +108,9 @@ class RememberWearTileRenderer(context: Context) :
         deviceParameters: DeviceParameters
     ): Chip =
         Chip.Builder(context, actionClickable((if (task.isCompleted) "uncomplete:" else "complete:") + task.task.id), deviceParameters)
-            .setPrimaryTextLabelIconContent(
-                task.taskSeries.name,
-                task.task.dueDate.relativeTime(today),
-                if (task.isCompleted) "check" else "checkoff"
-            )
+            .setPrimaryLabelContent(task.taskSeries.name)
+            .setIconContent(if (task.isCompleted) "check" else "checkoff")
+            .setSecondaryLabelContent(task.task.dueDate.relativeTime(today))
             .setChipColors(ChipColors.primaryChipColors(theme))
             .build()
 
