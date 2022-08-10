@@ -13,7 +13,7 @@ kotlinx = "1.6.4"
 squareupokhttp3 = "5.0.0-alpha.7"
 squareupretrofit2 = "2.9.0"
 wearcompose = "1.0.0"
-weartiles = "1.1.0-beta01"
+weartiles = "1.1.0-rc01"
 
 [libraries]
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.25.0"
