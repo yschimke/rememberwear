@@ -146,7 +146,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.firebase:firebase-crashlytics:18.2.9")
+    implementation("com.google.firebase:firebase-crashlytics:18.2.12")
     implementation("com.google.firebase:firebase-analytics:20.1.2")
     kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
