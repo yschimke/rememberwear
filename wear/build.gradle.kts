@@ -11,6 +11,8 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 val localProperties = Properties().apply {
@@ -30,12 +32,12 @@ val versionCodeProperty = versionProperties.getProperty("VERSION_CODE").toInt()
 android {
     namespace = "com.google.wear.soyted"
 
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "ee.schimke.wear.soyted"
         minSdk = 26
-        targetSdk = 31
+        targetSdk = 33
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
         versionCode = versionCodeProperty
         versionName = "release-$versionCodeProperty"
@@ -144,6 +146,8 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-crashlytics:18.2.9")
+    implementation("com.google.firebase:firebase-analytics:20.1.2")
     kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
     kapt(libs.dagger.hiltcompiler)
