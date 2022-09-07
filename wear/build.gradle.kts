@@ -200,7 +200,7 @@ dependencies {
     implementation("io.ktor:ktor-client-okhttp:2.1.0")
     implementation("io.ktor:ktor-client-android:2.1.1")
     implementation("io.ktor:ktor-client-content-negotiation:2.1.0")
-    implementation("io.ktor:ktor-serialization-kotlinx-xml:2.1.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-xml:2.1.1")
     implementation(libs.squareup.retrofit2retrofit)
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
