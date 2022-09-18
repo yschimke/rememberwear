@@ -62,7 +62,7 @@ class ScheduledWork @Inject constructor(
 
         workManager.enqueueUniquePeriodicWork(
             "periodicLocationRefresh",
-            ExistingPeriodicWorkPolicy.REPLACE,
+            ExistingPeriodicWorkPolicy.UPDATE,
             refreshWorker
         )
     }

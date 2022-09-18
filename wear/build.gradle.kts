@@ -11,8 +11,10 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    if (File("google-services.json").exists()) {
+        id("com.google.gms.google-services")
+        id("com.google.firebase.crashlytics")
+    }
 }
 
 val localProperties = Properties().apply {
@@ -51,7 +53,7 @@ android {
 
     composeOptions {
         // Not upgradeable
-        kotlinCompilerExtensionVersion = "1.2.0"
+        kotlinCompilerExtensionVersion = "1.3.1"
     }
 
     kotlinOptions {
@@ -162,9 +164,9 @@ dependencies {
     implementation(libs.dagger.hiltandroid)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-//    if (file("google-services.json").exists()) {
-//        implementation(libs.firebase.performance)
-//    }
+    if (file("google-services.json").exists()) {
+        implementation(libs.firebase.performance)
+    }
     implementation(libs.gms.playserviceswearable)
     implementation(libs.hilt.navigationcompose)
     implementation(libs.hilt.work)
@@ -228,8 +230,8 @@ dependencies {
 fun Any?.writeBuildConfigString(): String =
     if (this != null && this != "") "\"${this}\"" else "null"
 
-//if (file("google-services.json").exists()) {
-//    apply(plugin = "com.google.gms.google-services")
-//    apply(plugin = "com.google.firebase.crashlytics")
-////    apply(plugin = "com.google.firebase.firebase-perf")
-//}
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = "com.google.firebase.crashlytics")
+    apply(plugin = "com.google.firebase.firebase-perf")
+}

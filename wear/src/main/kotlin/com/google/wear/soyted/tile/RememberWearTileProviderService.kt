@@ -20,7 +20,7 @@ import android.content.Context
 import androidx.wear.tiles.RequestBuilders
 import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders.Tile
-import com.google.android.horologist.tiles.CoroutinesTileService
+import com.google.android.horologist.tiles.SuspendingTileService
 import com.google.wear.soyted.app.db.RememberWearDao
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -30,7 +30,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RememberWearTileProviderService : CoroutinesTileService() {
+class RememberWearTileProviderService : SuspendingTileService() {
     private lateinit var renderer: RememberWearTileRenderer
 
     @Inject
@@ -46,7 +46,7 @@ class RememberWearTileProviderService : CoroutinesTileService() {
 
     override suspend fun resourcesRequest(requestParams: RequestBuilders.ResourcesRequest): ResourceBuilders.Resources {
         return renderer.produceRequestedResources(
-            resourceResults = Unit,
+            resourceState = Unit,
             requestParams = requestParams
         )
     }
