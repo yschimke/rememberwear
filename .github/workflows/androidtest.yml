@@ -5,7 +5,7 @@ on:
 
 jobs:
   androidTest:
-    runs-on: macos-latest
+    runs-on: buildjet-2vcpu-ubuntu-2204
     steps:
       - name: Checkout
         uses: actions/checkout@v3
