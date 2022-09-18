@@ -29,9 +29,12 @@ jobs:
 
       - name: AVD cache
         uses: actions/cache@v3
+        id: avd-cache
         with:
-          path: ~/.android/avd
-          key: ${{ runner.os }}-avd-v1
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: ${{ runner.os }}-avd-v2
 
       # Create a new emulator snapshot if it isn't present in the cache.
       - name: Create AVD snapshot
