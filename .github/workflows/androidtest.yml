@@ -1,4 +1,4 @@
-name: Android CI
+name: Android Instrumentation Tests
 
 on:
   workflow_dispatch:
