@@ -82,7 +82,7 @@ work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "an
 work-testing = { module = "androidx.work:work-testing", version.ref = "androidxwork" }
 
 [plugins]
-androidapplication = "com.android.application:7.4.0-alpha10"
+androidapplication = "com.android.application:7.4.0-beta01"
 androidlibrary = "com.android.library:7.4.0-beta01"
 androidtest = "com.android.test:7.4.0-beta01"
 firebase = "com.google.gms.google-services:4.3.14"
