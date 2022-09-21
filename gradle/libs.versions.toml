@@ -37,7 +37,7 @@ fastlane-screengrab = "tools.fastlane:screengrab:2.1.1"
 firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.1.1"
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.2.13"
 firebase-performance = "com.google.firebase:firebase-perf-ktx:20.1.1"
-gms-playserviceswearable = "com.google.android.gms:play-services-wearable:17.1.0"
+gms-playserviceswearable = "com.google.android.gms:play-services-wearable:18.0.0"
 hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 hilt-navigationcompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
