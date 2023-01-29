@@ -23,9 +23,11 @@ import com.google.wear.soyted.app.api.model.post.PostRsp
 import com.google.wear.soyted.app.api.model.tags.TagsRsp
 import com.google.wear.soyted.app.api.model.tasks.TasksRsp
 import com.google.wear.soyted.app.api.model.timeline.TimelineRsp
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.client.request.post
 
 // https://api.rememberthemilk.com/services/rest/\?method\=rtm.lists.getList
 class KtorRememberTheMilkService(val baseUrl: String, val client: HttpClient): RememberTheMilkService {

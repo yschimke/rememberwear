@@ -24,11 +24,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.horologist.compose.navscaffold.WearNavScaffold
-import com.google.android.horologist.compose.navscaffold.scalingLazyColumnComposable
-import com.google.android.horologist.compose.navscaffold.wearNavComposable
+import com.google.android.horologist.compose.navscaffold.composable
+import com.google.android.horologist.compose.navscaffold.scrollable
 import com.google.wear.soyted.snackbar.DialogSnackbarHost
 import com.google.wear.soyted.ui.inbox.InboxScreen
 import com.google.wear.soyted.ui.input.VoicePrompt
@@ -68,21 +67,19 @@ fun RememberWearAppScreens(
                 )
             }
         ) {
-            scalingLazyColumnComposable(
+            scrollable(
                 route = Screens.Inbox.route,
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/" }),
-                scrollStateBuilder = { ScalingLazyListState() }
             ) {
                 InboxScreen(
                     modifier = Modifier.fillMaxSize(),
                     navController = rtmNavController,
                     addTaskVoicePrompt = addTaskVoicePrompt,
-                    scrollState = it.scrollableState,
-                    focusRequester = it.viewModel.focusRequester
+                    columnState = it.columnState,
                 )
             }
 
-            scalingLazyColumnComposable(
+            scrollable(
                 route = Screens.Task.route + "/{taskId}",
                 arguments = listOf(
                     navArgument("taskId", builder = {
@@ -90,19 +87,15 @@ fun RememberWearAppScreens(
                     })
                 ),
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/app/#all/{taskId}" }),
-                scrollStateBuilder = { ScalingLazyListState() }
             ) {
                 TaskScreen(
-                    modifier = Modifier.fillMaxSize(),
                     navController = rtmNavController,
-                    scrollState = it.scrollableState,
-                    focusRequester = it.viewModel.focusRequester
+                    columnState = it.columnState,
                 )
             }
 
-            wearNavComposable(Screens.LoginDialog.route) { _, _ ->
+            composable(Screens.LoginDialog.route) {
                 LoginDialog(
-                    modifier = Modifier.fillMaxSize(),
                     navController = rtmNavController
                 )
             }

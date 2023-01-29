@@ -16,7 +16,7 @@
 
 package com.google.wear.soyted.snackbar
 
-import java.util.*
+import java.util.UUID
 
 data class UiMessage(
     val message: String,

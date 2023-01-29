@@ -23,7 +23,7 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.work.WorkManager
 import com.google.wear.soyted.R
-import java.util.*
+import java.util.UUID
 
 /**
  * Create the notification and required channel (O+) for running work in a foreground service.

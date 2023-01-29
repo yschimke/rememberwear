@@ -19,21 +19,17 @@ package com.google.wear.soyted.ui.task
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.ToggleChipDefaults
-import androidx.wear.compose.material.rememberScalingLazyListState
-import com.google.android.horologist.compose.navscaffold.scrollableColumn
+import com.google.android.horologist.compose.layout.ScalingLazyColumn
+import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
+import com.google.android.horologist.compose.layout.ScalingLazyColumnState
 import com.google.wear.soyted.app.db.Note
 import com.google.wear.soyted.app.db.Task
 import com.google.wear.soyted.app.db.TaskSeries
@@ -48,18 +44,14 @@ import java.time.LocalDate
 
 @Composable
 fun TaskScreen(
-    modifier: Modifier = Modifier,
     viewModel: TaskViewModel = hiltViewModel(),
     navController: NavController,
-    scrollState: ScalingLazyListState,
-    focusRequester: FocusRequester
+    columnState: ScalingLazyColumnState,
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
 
     TaskScreen(
-        modifier = modifier,
-        focusRequester = focusRequester,
-        scrollState = scrollState,
+        columnState = columnState,
         taskSeries = state.taskSeries,
         task = state.todayTask,
         today = state.today,
@@ -73,9 +65,7 @@ fun TaskScreen(
 
 @Composable
 public fun TaskScreen(
-    modifier: Modifier = Modifier,
-    focusRequester: FocusRequester,
-    scrollState: ScalingLazyListState,
+    columnState: ScalingLazyColumnState,
     taskSeries: TaskSeries?,
     task: Task?,
     today: LocalDate,
@@ -83,9 +73,7 @@ public fun TaskScreen(
     onToggle: (Task, Boolean) -> Unit,
 ) {
     ScalingLazyColumn(
-        modifier = modifier.scrollableColumn(focusRequester, scrollState),
-        state = scrollState,
-        horizontalAlignment = Alignment.CenterHorizontally
+        columnState = columnState,
     ) {
         item {
             Text(
@@ -153,8 +141,7 @@ public fun TaskScreen(
 fun TaskScreenPreview() {
     RememberTheMilkTheme {
         TaskScreen(
-            focusRequester = remember { FocusRequester() },
-            scrollState = rememberScalingLazyListState(),
+            columnState = ScalingLazyColumnDefaults.belowTimeText().create(),
             taskSeries = SampleData.taskSeries,
             task = SampleData.tasks.first(),
             today = SampleData.localDateTime.toLocalDate(),

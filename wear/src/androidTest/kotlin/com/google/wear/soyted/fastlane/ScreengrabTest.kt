@@ -28,7 +28,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.TimeSource
 import androidx.wear.compose.material.TimeText
-import androidx.wear.compose.material.rememberScalingLazyListState
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
+import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
 import com.google.android.horologist.compose.tools.TileLayoutPreview
 import com.google.wear.soyted.previews.SampleData
 import com.google.wear.soyted.tile.RememberWearTileRenderer
@@ -55,8 +56,7 @@ class ScreengrabTest {
             voicePromptQuery = { },
             loginAction = { },
             isLoggedIn = true,
-            focusRequester = remember { FocusRequester() },
-            scrollState = rememberScalingLazyListState(),
+            columnState = ScalingLazyColumnDefaults.belowTimeText().create(),
             onToggle = { _, _ -> },
             today = SampleData.localDateTime.toLocalDate()
         )
@@ -67,8 +67,7 @@ class ScreengrabTest {
         val task = SampleData.taskAndTaskSeries.first()
 
         TaskScreen(
-            focusRequester = remember { FocusRequester() },
-            scrollState = rememberScalingLazyListState(),
+            columnState = ScalingLazyColumnDefaults.belowTimeText().create(),
             taskSeries = task.taskSeries,
             task = task.task,
             today = LocalDate.of(2021, 2, 18),

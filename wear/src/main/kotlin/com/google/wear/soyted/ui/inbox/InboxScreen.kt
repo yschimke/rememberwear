@@ -26,9 +26,7 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -37,13 +35,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.rememberScalingLazyListState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.google.android.horologist.compose.navscaffold.scrollableColumn
+import com.google.android.horologist.compose.layout.ScalingLazyColumn
+import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
+import com.google.android.horologist.compose.layout.ScalingLazyColumnState
 import com.google.wear.soyted.app.db.TaskAndTaskSeries
 import com.google.wear.soyted.previews.SampleData
 import com.google.wear.soyted.previews.WearPreviewDevices
@@ -57,11 +54,10 @@ import java.time.LocalDate
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
-    scrollState: ScalingLazyListState,
+    columnState: ScalingLazyColumnState,
     viewModel: InboxViewModel = hiltViewModel(),
     navController: NavController,
     addTaskVoicePrompt: ManagedActivityResultLauncher<Intent, ActivityResult>,
-    focusRequester: FocusRequester
 ) {
     val state by rememberStateWithLifecycle(viewModel.state)
     val tasks = state.tasks
@@ -75,7 +71,7 @@ fun InboxScreen(
     ) {
         InboxScreen(
             modifier = modifier,
-            scrollState = scrollState,
+            columnState = columnState,
             tasks = tasks,
             onClick = {
                 navController.navigateToTask(it.task.id)
@@ -90,7 +86,6 @@ fun InboxScreen(
                 navController.navigateToLoginDialog()
             },
             isLoggedIn = state.isLoggedIn,
-            focusRequester = focusRequester,
             today = today
         )
     }
@@ -99,7 +94,7 @@ fun InboxScreen(
 @Composable
 fun InboxScreen(
     modifier: Modifier = Modifier,
-    scrollState: ScalingLazyListState,
+    columnState: ScalingLazyColumnState,
     tasks: List<TaskAndTaskSeries>?,
     today: LocalDate,
     onClick: (TaskAndTaskSeries) -> Unit,
@@ -107,14 +102,11 @@ fun InboxScreen(
     voicePromptQuery: () -> Unit,
     loginAction: () -> Unit,
     isLoggedIn: Boolean?,
-    focusRequester: FocusRequester
 ) {
     ScalingLazyColumn(
         modifier = modifier
-            .scrollableColumn(focusRequester, scrollState)
             .semantics { contentDescription = "Inbox List" },
-        state = scrollState,
-        horizontalAlignment = Alignment.CenterHorizontally
+        columnState = columnState,
     ) {
         item {
             Text(
@@ -170,11 +162,10 @@ fun CirclesListPreview() {
             voicePromptQuery = {},
             loginAction = {},
             isLoggedIn = true,
-            focusRequester = remember { FocusRequester() },
-            scrollState = rememberScalingLazyListState(),
             onToggle = { _, _ ->
             },
-            today = SampleData.localDateTime.toLocalDate()
+            today = SampleData.localDateTime.toLocalDate(),
+            columnState = ScalingLazyColumnDefaults.belowTimeText().create()
         )
     }
 }
@@ -189,10 +180,9 @@ fun CirclesListNotLoggedInPreview() {
             voicePromptQuery = {},
             loginAction = {},
             isLoggedIn = false,
-            focusRequester = remember { FocusRequester() },
-            scrollState = rememberScalingLazyListState(),
             onToggle = { _, _ -> },
-            today = SampleData.localDateTime.toLocalDate()
+            today = SampleData.localDateTime.toLocalDate(),
+            columnState = ScalingLazyColumnDefaults.belowTimeText().create()
         )
     }
 }

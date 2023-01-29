@@ -28,7 +28,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.SplitToggleChip
-import androidx.wear.compose.material.SplitToggleChipColors
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChipDefaults
 import com.google.wear.soyted.app.db.TaskAndTaskSeries

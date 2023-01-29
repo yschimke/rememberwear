@@ -24,8 +24,6 @@ import androidx.metrics.performance.JankStats
 import androidx.metrics.performance.PerformanceMetricsState
 import com.google.wear.soyted.BuildConfig
 import com.google.wear.soyted.ui.navigation.Screens
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asExecutor
 import java.util.concurrent.TimeUnit
 
 /**
