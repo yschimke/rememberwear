@@ -198,7 +198,7 @@ dependencies {
 
     implementation("io.github.pdvrieze.xmlutil:core-android:0.84.3")
     implementation("io.github.pdvrieze.xmlutil:serialization-android:0.84.3")
-    implementation("io.ktor:ktor-client-okhttp:2.2.2")
+    implementation("io.ktor:ktor-client-okhttp:2.2.3")
     implementation("io.ktor:ktor-client-android:2.2.2")
     implementation("io.ktor:ktor-client-content-negotiation:2.2.2")
     implementation("io.ktor:ktor-serialization-kotlinx-xml:2.2.2")
