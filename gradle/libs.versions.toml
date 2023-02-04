@@ -7,7 +7,7 @@ androidx-wear-watchface = "1.1.1"
 androidxroom = "2.5.0"
 androidxwork = "2.8.0-rc01"
 compose-compiler = "1.4.0"
-com-google-android-horologist = "0.3.0"
+com-google-android-horologist = "0.3.1"
 googledagger = "2.44.2"
 kotlin = "1.8.0"
 kotlinx = "1.6.4"
@@ -83,9 +83,9 @@ work-runtimektx = { module = "androidx.work:work-runtime-ktx", version.ref = "an
 work-testing = { module = "androidx.work:work-testing", version.ref = "androidxwork" }
 
 [plugins]
-androidapplication = "com.android.application:7.4.0"
+androidapplication = "com.android.application:7.4.1"
 androidlibrary = "com.android.library:7.4.1"
-androidtest = "com.android.test:7.4.0"
+androidtest = "com.android.test:7.4.1"
 firebase = "com.google.gms.google-services:4.3.15"
 firebasecrashlytics = "com.google.firebase.crashlytics:2.9.2"
 firebaseperformance = "com.google.firebase.firebase-perf:1.4.2"
