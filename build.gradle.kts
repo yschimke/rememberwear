@@ -21,7 +21,7 @@ plugins {
         alias(libs.plugins.firebaseperformance) apply false
     }
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
-    id("com.autonomousapps.dependency-analysis") version "1.18.0"
+    id("com.autonomousapps.dependency-analysis") version "1.19.0"
 }
 
 tasks.create<Delete>("clean") {
