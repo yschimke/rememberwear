@@ -26,7 +26,7 @@ ktor-client-okhttp = "2.2.4"
 serialization-android = "0.85.0"
 squareupokhttp3 = "5.0.0-alpha.11"
 squareupretrofit2 = "2.9.0"
-wearcompose = "1.2.0-alpha05"
+wearcompose = "1.2.0-alpha06"
 weartiles = "1.1.0"
 
 [libraries]
