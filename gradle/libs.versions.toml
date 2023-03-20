@@ -85,7 +85,7 @@ work-testing = { module = "androidx.work:work-testing", version.ref = "androidxw
 [plugins]
 androidapplication = "com.android.application:7.4.1"
 androidlibrary = "com.android.library:7.4.2"
-androidtest = "com.android.test:7.4.1"
+androidtest = "com.android.test:7.4.2"
 firebase = "com.google.gms.google-services:4.3.15"
 firebasecrashlytics = "com.google.firebase.crashlytics:2.9.4"
 firebaseperformance = "com.google.firebase.firebase-perf:1.4.2"
