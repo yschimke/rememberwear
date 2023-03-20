@@ -6,11 +6,24 @@ androidx-test-ext = "1.1.5"
 androidx-wear-watchface = "1.1.1"
 androidxroom = "2.5.0"
 androidxwork = "2.8.0"
-compose-compiler = "1.4.0"
+compose-compiler = "1.4.3"
 com-google-android-horologist = "0.3.9"
+core-android = "0.85.0"
+firebase-analytics = "21.2.0"
+firebase-crashlytics = "18.3.5"
+google-services = "4.3.15"
 googledagger = "2.45"
-kotlin = "1.8.0"
+gradle = "7.4.2"
+kotlin = "1.8.10"
 kotlinx = "1.6.4"
+kotlinx-datetime-jvm = "0.4.0"
+ksp = "1.8.10-1.0.9"
+retrofit2-kotlinx-serialization-converter = "0.8.0"
+ktor-serialization-kotlinx-xml = "2.2.4"
+ktor-client-content-negotiation = "2.2.4"
+ktor-client-android = "2.2.4"
+ktor-client-okhttp = "2.2.4"
+serialization-android = "0.85.0"
 squareupokhttp3 = "5.0.0-alpha.11"
 squareupretrofit2 = "2.9.0"
 wearcompose = "1.2.0-alpha05"
@@ -30,6 +43,7 @@ compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compos
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-compose-ui" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-compose-ui" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose-ui" }
+core-android = { module = "io.github.pdvrieze.xmlutil:core-android", version.ref = "core-android" }
 dagger-hiltandroid = { module = "com.google.dagger:hilt-android", version.ref = "googledagger" }
 dagger-hiltandroidcompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "googledagger" }
 dagger-hiltandroidtesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "googledagger" }
@@ -39,6 +53,10 @@ firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.2.0"
 firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.3.5"
 firebase-performance = "com.google.firebase:firebase-perf-ktx:20.3.1"
 gms-playserviceswearable = "com.google.android.gms:play-services-wearable:18.0.0"
+google-firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebase-analytics" }
+google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version.ref = "firebase-crashlytics" }
+google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 hilt-navigationcompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
@@ -56,9 +74,16 @@ kotlinx-coroutinescore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 kotlinx-coroutinesguava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "kotlinx" }
 kotlinx-coroutinesplayservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx" }
 kotlinx-coroutinestest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
+kotlinx-datetime-jvm = { module = "org.jetbrains.kotlinx:kotlinx-datetime-jvm", version.ref = "kotlinx-datetime-jvm" }
+retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2-kotlinx-serialization-converter" }
+ktor-serialization-kotlinx-xml = { module = "io.ktor:ktor-serialization-kotlinx-xml", version.ref = "ktor-serialization-kotlinx-xml" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client-content-negotiation" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-client-android" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor-client-okhttp" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxroom" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxroom" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxroom" }
+serialization-android = { module = "io.github.pdvrieze.xmlutil:serialization-android", version.ref = "serialization-android" }
 squareup-logcat = "com.squareup.logcat:logcat:0.1"
 squareup-okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "squareupokhttp3" }
 squareup-okhttp3bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "squareupokhttp3" }
@@ -92,3 +117,4 @@ firebaseperformance = "com.google.firebase.firebase-perf:1.4.2"
 hilt = "com.google.dagger.hilt.android:2.45"
 kotlinandroid = "org.jetbrains.kotlin.android:1.8.0"
 kotlinkapt = "org.jetbrains.kotlin.kapt:1.8.0"
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

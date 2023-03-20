@@ -1,5 +1,7 @@
 @file:Suppress("SuspiciousCollectionReassignment")
 
+import com.android.build.gradle.BaseExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.konan.properties.hasProperty
 import java.util.Properties
 import java.io.FileInputStream
@@ -9,6 +11,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
     if (File("google-services.json").exists()) {
@@ -146,11 +149,46 @@ android {
     }
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+    (this as? org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions)?.let {
+        it.jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
+
+val javaToolchains = project.extensions.getByType<JavaToolchainService>()
+
+extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension> {
+    jvmToolchain(11)
+}
+
+extensions.findByName("android")?.apply{
+    this as BaseExtension
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(11)
+        targetCompatibility = JavaVersion.toVersion(11)
+    }
+}
+
 dependencies {
-    implementation("com.google.firebase:firebase-crashlytics:18.3.5")
-    implementation("com.google.firebase:firebase-analytics:21.2.0")
+    implementation(libs.google.firebase.crashlytics)
+    implementation(libs.google.firebase.analytics)
     kapt(libs.hilt.compiler)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
     kapt(libs.dagger.hiltcompiler)
 
     implementation(libs.accompanist.swiperefresh)
@@ -196,16 +234,16 @@ dependencies {
     implementation(libs.horologist.network.awareness)
     implementation(libs.androidx.metrics.performance)
 
-    implementation("io.github.pdvrieze.xmlutil:core-android:0.84.3")
-    implementation("io.github.pdvrieze.xmlutil:serialization-android:0.84.3")
-    implementation("io.ktor:ktor-client-okhttp:2.2.3")
-    implementation("io.ktor:ktor-client-android:2.2.3")
-    implementation("io.ktor:ktor-client-content-negotiation:2.2.3")
-    implementation("io.ktor:ktor-serialization-kotlinx-xml:2.2.3")
+    implementation(libs.core.android)
+    implementation(libs.serialization.android)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.xml)
     implementation(libs.squareup.retrofit2retrofit)
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.4.0")
+    implementation(libs.kotlinx.datetime.jvm)
 
     implementation(libs.horologist.compose.tools)
 
