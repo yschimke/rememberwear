@@ -9,3 +9,5 @@ fastlane/pc-*.json
 /fastlane/report.xml
 /wear/release/
 /wear/google-services.json
+/fastlane/upload-keystore-orig.jks
+/fastlane/upload-keystores.jks

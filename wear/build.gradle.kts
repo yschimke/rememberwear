@@ -42,7 +42,7 @@ android {
     defaultConfig {
         applicationId = "ee.schimke.wear.soyted"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 30
         testInstrumentationRunner = "com.google.wear.soyted.junit.CustomTestRunner"
         versionCode = versionCodeProperty
         versionName = "release-$versionCodeProperty"
