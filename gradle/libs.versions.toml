@@ -1,20 +1,20 @@
 [versions]
-androidx-compose-ui = "1.4.0-rc01"
+androidx-compose-ui = "1.5.0-alpha03"
 androidx-hilt = "1.0.0"
-androidx-lifecycle = "2.6.0"
+androidx-lifecycle = "2.6.1"
 androidx-test-ext = "1.1.5"
 androidx-wear-watchface = "1.1.1"
-androidxroom = "2.5.0"
-androidxwork = "2.8.0"
+androidxroom = "2.5.1"
+androidxwork = "2.8.1"
 compose-compiler = "1.4.3"
-com-google-android-horologist = "0.3.11"
+com-google-android-horologist = "0.4.1"
 core-android = "0.85.0"
-firebase-analytics = "21.2.0"
-firebase-crashlytics = "18.3.5"
+firebase-analytics = "21.2.2"
+firebase-crashlytics = "18.3.6"
 google-services = "4.3.15"
 googledagger = "2.45"
 gradle = "8.0.0"
-kotlin = "1.8.10"
+kotlin = "1.8.20"
 kotlinx = "1.6.4"
 kotlinx-datetime-jvm = "0.4.0"
 ksp = "1.8.10-1.0.9"
@@ -26,19 +26,19 @@ ktor-client-okhttp = "2.2.4"
 serialization-android = "0.85.0"
 squareupokhttp3 = "5.0.0-alpha.11"
 squareupretrofit2 = "2.9.0"
-wearcompose = "1.2.0-alpha05"
+wearcompose = "1.2.0-alpha09"
 weartiles = "1.1.0"
 
 [libraries]
 accompanist-swiperefresh = "com.google.accompanist:accompanist-swiperefresh:0.28.0"
 androidx-benchmarkmacro = "androidx.benchmark:benchmark-macro-junit4:1.1.1"
-androidx-corektx = "androidx.core:core-ktx:1.9.0"
+androidx-corektx = "androidx.core:core-ktx:1.10.0"
 androidx-lifecycleruntimektx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
-androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha03"
+androidx-metrics-performance = "androidx.metrics:metrics-performance:1.0.0-alpha04"
 assertj-core = "org.assertj:assertj-core:3.24.2"
-coil-compose = "io.coil-kt:coil-compose:2.2.2"
-compose-compiler = "androidx.compose.compiler:compiler:1.4.3"
-compose-materialiconscore = "androidx.compose.material:material-icons-core:1.3.1"
+coil-compose = "io.coil-kt:coil-compose:2.3.0"
+compose-compiler = "androidx.compose.compiler:compiler:1.4.6"
+compose-materialiconscore = "androidx.compose.material:material-icons-core:1.4.2"
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-ui" }
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-compose-ui" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-compose-ui" }
@@ -49,8 +49,8 @@ dagger-hiltandroidcompiler = { module = "com.google.dagger:hilt-android-compiler
 dagger-hiltandroidtesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "googledagger" }
 dagger-hiltcompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "googledagger" }
 fastlane-screengrab = "tools.fastlane:screengrab:2.1.1"
-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.2.0"
-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.3.5"
+firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.2.2"
+firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.3.6"
 firebase-performance = "com.google.firebase:firebase-perf-ktx:20.3.1"
 gms-playserviceswearable = "com.google.android.gms:play-services-wearable:18.0.0"
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebase-analytics" }
@@ -64,7 +64,7 @@ horologist-compose-layout = { module = "com.google.android.horologist:horologist
 horologist-tiles = { module = "com.google.android.horologist:horologist-tiles", version.ref = "com-google-android-horologist" }
 horologist-compose-tools = { module = "com.google.android.horologist:horologist-compose-tools", version.ref = "com-google-android-horologist" }
 horologist-network-awareness = { module = "com.google.android.horologist:horologist-network-awareness", version.ref = "com-google-android-horologist" }
-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.8"
+jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.9"
 junit = "junit:junit:4.13.2"
 kotlin-annotationprocessinggradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
