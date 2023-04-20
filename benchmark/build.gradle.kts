@@ -1,9 +1,13 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("org.jetbrains.kotlin.android")
     id("com.android.test")
 }
 
 android {
+    namespace = "com.google.wear.soyted.benchmark"
+
     compileSdk = 32
 
     defaultConfig {
@@ -31,12 +35,6 @@ android {
 
     targetProjectPath(":wear")
     experimentalProperties["android.experimental.self-instrumenting"] = true
-
-    variantFilter {
-        if (buildType.name.contains("release") || buildType.name.contains("debug")) {
-            ignore = true
-        }
-    }
 }
 
 dependencies {
@@ -48,6 +46,6 @@ dependencies {
 
 androidComponents {
     beforeVariants(selector().all()) { variant ->
-        variant.enabled = variant.buildType == "benchmark"
+        variant.enable = variant.buildType == "benchmark"
     }
 }
