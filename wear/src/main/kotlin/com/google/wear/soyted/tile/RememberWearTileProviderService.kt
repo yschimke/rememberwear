@@ -17,8 +17,8 @@
 package com.google.wear.soyted.tile
 
 import android.content.Context
+import androidx.wear.protolayout.ResourceBuilders
 import androidx.wear.tiles.RequestBuilders
-import androidx.wear.tiles.ResourceBuilders
 import androidx.wear.tiles.TileBuilders.Tile
 import com.google.android.horologist.tiles.SuspendingTileService
 import com.google.wear.soyted.app.db.RememberWearDao
@@ -52,8 +52,8 @@ class RememberWearTileProviderService : SuspendingTileService() {
     }
 
     override suspend fun tileRequest(requestParams: RequestBuilders.TileRequest): Tile {
-        val lastClickableId = requestParams.state?.lastClickableId
-        if (!lastClickableId.isNullOrEmpty()) {
+        val lastClickableId = requestParams.currentState.lastClickableId
+        if (lastClickableId.isNotEmpty()) {
             handleClick(lastClickableId)
         }
 

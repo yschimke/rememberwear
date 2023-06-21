@@ -231,6 +231,7 @@ dependencies {
     implementation(libs.horologist.compose.layout)
     implementation(libs.horologist.network.awareness)
     implementation(libs.androidx.metrics.performance)
+    implementation(libs.androidx.protolayout.material)
 
     implementation(libs.core.android)
     implementation(libs.serialization.android)

@@ -5,25 +5,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.wear.tiles.ActionBuilders
-import androidx.wear.tiles.DeviceParametersBuilders.DeviceParameters
-import androidx.wear.tiles.DimensionBuilders.DpProp
-import androidx.wear.tiles.LayoutElementBuilders.Column
-import androidx.wear.tiles.LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER
-import androidx.wear.tiles.LayoutElementBuilders.LayoutElement
-import androidx.wear.tiles.LayoutElementBuilders.Spacer
-import androidx.wear.tiles.ModifiersBuilders.Clickable
-import androidx.wear.tiles.ModifiersBuilders.Modifiers
-import androidx.wear.tiles.ModifiersBuilders.Semantics
-import androidx.wear.tiles.ResourceBuilders
-import androidx.wear.tiles.ResourceBuilders.Resources
-import androidx.wear.tiles.material.Chip
-import androidx.wear.tiles.material.ChipColors
-import androidx.wear.tiles.material.Colors
-import androidx.wear.tiles.material.CompactChip
-import androidx.wear.tiles.material.Text
-import androidx.wear.tiles.material.Typography
-import androidx.wear.tiles.material.layouts.PrimaryLayout
+import androidx.wear.protolayout.*
+import androidx.wear.protolayout.DeviceParametersBuilders.DeviceParameters
+import androidx.wear.protolayout.DimensionBuilders.DpProp
+import androidx.wear.protolayout.DimensionBuilders.ExpandedDimensionProp
+import androidx.wear.protolayout.LayoutElementBuilders.Column
+import androidx.wear.protolayout.LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER
+import androidx.wear.protolayout.LayoutElementBuilders.Image
+import androidx.wear.protolayout.LayoutElementBuilders.LayoutElement
+import androidx.wear.protolayout.LayoutElementBuilders.Spacer
+import androidx.wear.protolayout.LayoutElementBuilders.Text
+import androidx.wear.protolayout.ModifiersBuilders.Clickable
+import androidx.wear.protolayout.ModifiersBuilders.Modifiers
+import androidx.wear.protolayout.ModifiersBuilders.Semantics
+import androidx.wear.protolayout.ResourceBuilders.Resources
+import androidx.wear.protolayout.material.Chip
+import androidx.wear.protolayout.material.ChipColors
+import androidx.wear.protolayout.material.Colors
+import androidx.wear.protolayout.material.CompactChip
+import androidx.wear.protolayout.material.Typography
+import androidx.wear.protolayout.material.layouts.PrimaryLayout
 import com.google.android.horologist.compose.tools.ExperimentalHorologistComposeToolsApi
 import com.google.android.horologist.compose.tools.TileLayoutPreview
 import com.google.android.horologist.tiles.render.SingleTileLayoutRenderer
@@ -58,10 +59,17 @@ class RememberWearTileRenderer(context: Context) :
         deviceParameters: DeviceParameters,
     ): LayoutElement {
         return PrimaryLayout.Builder(deviceParameters)
+            .setPrimaryLabelTextContent(
+                Image.Builder()
+                    .setResourceId("note")
+                    .build()
+            )
             .setContent(bodyLayout(state, deviceParameters))
             .setPrimaryChipContent(actionChip(deviceParameters))
             .build()
     }
+
+    val expandedDimensionProp = ExpandedDimensionProp.Builder().build()
 
     fun actionChip(
         deviceParameters: DeviceParameters,
@@ -90,8 +98,7 @@ class RememberWearTileRenderer(context: Context) :
             state.tasks.forEachIndexed { i, task ->
                 if (i > 0) {
                     addContent(Spacer.Builder()
-                        .setHeight(DpProp.Builder()
-                            .setValue(5f)
+                        .setHeight(DpProp.Builder(5f)
                             .build())
                         .build())
                 }
@@ -105,16 +112,17 @@ class RememberWearTileRenderer(context: Context) :
     fun taskRowChip(
         task: TaskAndTaskSeries,
         today: LocalDate,
-        deviceParameters: DeviceParameters
+        deviceParameters: DeviceParametersBuilders.DeviceParameters
     ): Chip =
         Chip.Builder(context, actionClickable((if (task.isCompleted) "uncomplete:" else "complete:") + task.task.id), deviceParameters)
             .setPrimaryLabelContent(task.taskSeries.name)
             .setIconContent(if (task.isCompleted) "check" else "checkoff")
             .setSecondaryLabelContent(task.task.dueDate.relativeTime(today))
             .setChipColors(ChipColors.primaryChipColors(theme))
+            .setWidth(deviceParameters.screenWidthDp * 0.85f)
             .build()
 
-    fun emptyNotice() = Text.Builder(
+    fun emptyNotice() = androidx.wear.protolayout.material.Text.Builder(
         context,
         "No overdue tasks"
     ).apply {
