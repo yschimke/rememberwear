@@ -5,19 +5,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.wear.protolayout.*
+import androidx.wear.protolayout.ActionBuilders
+import androidx.wear.protolayout.DeviceParametersBuilders
 import androidx.wear.protolayout.DeviceParametersBuilders.DeviceParameters
 import androidx.wear.protolayout.DimensionBuilders.DpProp
 import androidx.wear.protolayout.DimensionBuilders.ExpandedDimensionProp
+import androidx.wear.protolayout.DimensionBuilders.expand
 import androidx.wear.protolayout.LayoutElementBuilders.Column
 import androidx.wear.protolayout.LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER
 import androidx.wear.protolayout.LayoutElementBuilders.Image
 import androidx.wear.protolayout.LayoutElementBuilders.LayoutElement
 import androidx.wear.protolayout.LayoutElementBuilders.Spacer
-import androidx.wear.protolayout.LayoutElementBuilders.Text
 import androidx.wear.protolayout.ModifiersBuilders.Clickable
 import androidx.wear.protolayout.ModifiersBuilders.Modifiers
 import androidx.wear.protolayout.ModifiersBuilders.Semantics
+import androidx.wear.protolayout.ResourceBuilders
 import androidx.wear.protolayout.ResourceBuilders.Resources
 import androidx.wear.protolayout.material.Chip
 import androidx.wear.protolayout.material.ChipColors
@@ -89,7 +91,8 @@ class RememberWearTileRenderer(context: Context) :
         deviceParameters: DeviceParameters
     ) = Column.Builder().apply {
         setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
-        
+        setWidth(expand())
+
         if (state.tasks.isEmpty()) {
             addContent(
                 emptyNotice()
@@ -119,7 +122,7 @@ class RememberWearTileRenderer(context: Context) :
             .setIconContent(if (task.isCompleted) "check" else "checkoff")
             .setSecondaryLabelContent(task.task.dueDate.relativeTime(today))
             .setChipColors(ChipColors.primaryChipColors(theme))
-            .setWidth(deviceParameters.screenWidthDp * 0.85f)
+            .setWidth(expand())
             .build()
 
     fun emptyNotice() = androidx.wear.protolayout.material.Text.Builder(
