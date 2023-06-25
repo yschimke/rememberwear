@@ -66,7 +66,7 @@ horologist-compose-layout = { module = "com.google.android.horologist:horologist
 horologist-tiles = { module = "com.google.android.horologist:horologist-tiles", version.ref = "com-google-android-horologist" }
 horologist-compose-tools = { module = "com.google.android.horologist:horologist-compose-tools", version.ref = "com-google-android-horologist" }
 horologist-network-awareness = { module = "com.google.android.horologist:horologist-network-awareness", version.ref = "com-google-android-horologist" }
-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.9"
+jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.10"
 junit = "junit:junit:4.13.2"
 kotlin-annotationprocessinggradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
