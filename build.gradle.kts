@@ -3,7 +3,7 @@ buildscript {
         classpath(libs.gradle)
         classpath(libs.google.services)
         if (file("wear/google-services.json").exists()) {
-            classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.4")
+            classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.9")
         }
     }
 }
