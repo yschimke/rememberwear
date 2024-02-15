@@ -22,7 +22,7 @@ plugins {
     }
     alias(libs.plugins.ksp) apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
-    id("com.autonomousapps.dependency-analysis") version "1.19.0"
+    id("com.autonomousapps.dependency-analysis") version "1.30.0"
 }
 
 tasks.create<Delete>("clean") {
